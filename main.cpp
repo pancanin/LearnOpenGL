@@ -20,6 +20,13 @@ const char* vertexShaderSource = "#version 330 core\n"
 	"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 	"}\0";
 
+const char* fragmentShaderSource = "#version 330 core\n"
+"out vec4 FragColor;\n"
+"void main()\n"
+"{\n"
+"FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"}\n";
+
 int main() {
 	glfwInit();
 
@@ -59,6 +66,12 @@ int main() {
 			0.5f, -0.5f, 0.0f
 		};
 
+		unsigned int VAO;
+		glGenVertexArrays(1, &VAO);
+
+		glBindVertexArray(VAO);
+
+
 		unsigned int VBO;
 		glGenBuffers(1, &VBO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -69,6 +82,35 @@ int main() {
 
 		glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 		glCompileShader(vertexShader);
+
+		unsigned int fragmentShader;
+		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+		glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+		glCompileShader(fragmentShader);
+
+		unsigned int shaderProgram;
+		shaderProgram = glCreateProgram();
+
+		glAttachShader(shaderProgram, vertexShader);
+		glAttachShader(shaderProgram, fragmentShader);
+		glLinkProgram(shaderProgram);
+
+		glUseProgram(shaderProgram);
+
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+
+		// Arg 1: remember we set location to 0 in the shader
+		// Arg 2: each vertex has 3 values, it is a vec3
+		// Arg 3: data type of each element
+		// Arg 4: do we want the data to be normalised, we already normalised it, so no.
+		// Arg 5: the stride - offset between consequitive vectors
+		// Arg 6: offset in memory where data begins.
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
