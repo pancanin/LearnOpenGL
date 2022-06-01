@@ -13,6 +13,16 @@ void processInput(GLFWwindow* window)
 		glfwSetWindowShouldClose(window, true);
 }
 
+unsigned int registerShader(unsigned int type, const char* shaderSource) {
+	unsigned int vertexShader;
+	vertexShader = glCreateShader(type);
+
+	glShaderSource(vertexShader, 1, &shaderSource, NULL);
+	glCompileShader(vertexShader);
+
+	return vertexShader;
+}
+
 const char* vertexShaderSource = "#version 330 core\n"
 	"layout (location = 0) in vec3 aPos;\n"
 	"void main()\n"
@@ -53,62 +63,52 @@ int main() {
 	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+	unsigned int vertexShaderId = registerShader(GL_VERTEX_SHADER, vertexShaderSource);
+	unsigned int fragmentShaderId = registerShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+
+	unsigned int shaderProgram;
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShaderId);
+	glAttachShader(shaderProgram, fragmentShaderId);
+	glLinkProgram(shaderProgram);
+
+	glUseProgram(shaderProgram);
+
+	float vertices[] = {
+			-0.25f, 0.25f, 0.0f,
+			0.25f, 0.25f, 0.0f,
+			0.25f, -0.25f, 0.0f,
+			-0.25f, -0.25f, 0.0f
+	};
+
+	float order[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	unsigned int vertexBufferObject;
+	glGenBuffers(1, &vertexBufferObject);
+
+	unsigned int vertexArrayObject;
+	glGenVertexArrays(1, &vertexArrayObject);
+
+	glBindVertexArray(vertexArrayObject);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	
+	glBindVertexArray(vertexArrayObject);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
 
 		glClearColor(0.2f, 0.3f, 0.75f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		float vertices[] = {
-			0.0f, 0.5f, 0.0f,
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f
-		};
-
-		unsigned int VAO;
-		glGenVertexArrays(1, &VAO);
-
-		glBindVertexArray(VAO);
-
-
-		unsigned int VBO;
-		glGenBuffers(1, &VBO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-		unsigned int vertexShader;
-		vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-		glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-		glCompileShader(vertexShader);
-
-		unsigned int fragmentShader;
-		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-		glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-		glCompileShader(fragmentShader);
-
-		unsigned int shaderProgram;
-		shaderProgram = glCreateProgram();
-
-		glAttachShader(shaderProgram, vertexShader);
-		glAttachShader(shaderProgram, fragmentShader);
-		glLinkProgram(shaderProgram);
-
-		glUseProgram(shaderProgram);
-
-		glDeleteShader(vertexShader);
-		glDeleteShader(fragmentShader);
-
-		// Arg 1: remember we set location to 0 in the shader
-		// Arg 2: each vertex has 3 values, it is a vec3
-		// Arg 3: data type of each element
-		// Arg 4: do we want the data to be normalised, we already normalised it, so no.
-		// Arg 5: the stride - offset between consequitive vectors
-		// Arg 6: offset in memory where data begins.
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
