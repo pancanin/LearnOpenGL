@@ -25,28 +25,21 @@ unsigned int registerShader(unsigned int type, const char* shaderSource) {
 
 const char* vertexShaderSource = "#version 330 core\n"
 	"layout (location = 0) in vec3 aPos;\n"
-	"out vec4 packageForDeliveryToTheFragmentShader;"
+	"layout (location = 1) in vec3 aColor;\n"
+	"out vec3 outColor;"
 	"void main()\n"
 	"{\n"
 	"   gl_Position = vec4(aPos, 1.0);\n"
-	"	packageForDeliveryToTheFragmentShader = vec4(aPos.x, 0.0, 0.0, 1.0);\n"
+	"	outColor = aColor;\n"
 	"}\0";
 
 const char* fragmentShaderSource = "#version 330 core\n"
+"in vec3 outColor;"
 "out vec4 FragColor;\n"
-"uniform vec4 myColor;"
 "void main()\n"
 "{\n"
-"FragColor = myColor;\n"
+"FragColor = vec4(outColor, 1.0);\n"
 "}\n";
-
-const char* fragmentYellowShaderSource = "#version 330 core\n"
-	"out vec4 FragColor;\n"
-	"uniform vec4 myColor;"
-	"void main()\n"
-	"{\n"
-	"FragColor = myColor;\n"
-	"}\n";
 
 int main() {
 	glfwInit();
@@ -76,7 +69,6 @@ int main() {
 
 	unsigned int vertexShaderId = registerShader(GL_VERTEX_SHADER, vertexShaderSource);
 	unsigned int fragmentShaderId = registerShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
-	unsigned int yellowFragmentShaderId = registerShader(GL_FRAGMENT_SHADER, fragmentYellowShaderSource);
 
 	unsigned int shaderProgram;
 	shaderProgram = glCreateProgram();
@@ -87,51 +79,30 @@ int main() {
 
 	unsigned int yellowShaderProgram = glCreateProgram();
 	glAttachShader(yellowShaderProgram, vertexShaderId);
-	glAttachShader(yellowShaderProgram, yellowFragmentShaderId);
 	glLinkProgram(yellowShaderProgram);
 
 	float triangle1[] = {
-		-0.9f, -1.0f, 0.0f,  // left 
-		-0.0f, -1.0f, 0.0f,  // right
-		-0.45f, 0.0f, 0.0f,  // top 
+		-0.9f, -1.0f, 0.0f, 1.0, 0.0, 0.0,
+		-0.0f, -1.0f, 0.0f, 0.0, 1.0, 0.0,
+		-0.45f, 0.0f, 0.0f, 0.0, 0.0, 1.0
 	};
 
-	float triangle2[] = {
-		0.0f, -1.0f, 0.0f,  // left
-		0.9f, -1.0f, 0.0f,  // right
-		0.45f, 0.0f, 0.0f   // top 
-	};
-
-	float triangle3[] = {
-		-0.45f, 0.0f, 0.0f,
-		0.45f, 0.0f, 0.0f,
-		0.0f, 1.0f, 0.0f
-	};
-
-	unsigned int VBOs[3], VAOs[3];
-	glGenBuffers(3, VBOs);
-	glGenVertexArrays(3, VAOs);
+	unsigned int VBOs[1], VAOs[1];
+	glGenBuffers(1, VBOs);
+	glGenVertexArrays(1, VAOs);
 
 	// triangle 1 setup
 	glBindVertexArray(VAOs[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle1), triangle1, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	
+	// configuring position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// triangle 2 setup
-	glBindVertexArray(VAOs[1]);
-	glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle2), triangle2, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// triangle 3 setup
-	glBindVertexArray(VAOs[2]);
-	glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle3), triangle3, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glEnableVertexAttribArray(0);
+	// configuring color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	int nrAttributes;
 	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
@@ -146,18 +117,7 @@ int main() {
 
 		glUseProgram(shaderProgram);
 
-		float time = glfwGetTime();
-		float green = sin(time);
-		int vertexColorLocation = glGetUniformLocation(shaderProgram, "myColor");
-		glUniform4f(vertexColorLocation, 0.0, green, 0.0, 1.0);
-
 		glBindVertexArray(VAOs[0]);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
-		glBindVertexArray(VAOs[1]);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
-		glBindVertexArray(VAOs[2]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
