@@ -26,20 +26,20 @@ unsigned int registerShader(unsigned int type, const char* shaderSource) {
 const char* vertexShaderSource = "#version 330 core\n"
 	"layout (location = 0) in vec3 aPos;\n"
 	"layout (location = 1) in vec3 aColor;\n"
-	"out vec3 outColor;"
+	"out vec4 outColor;"
 	"uniform float rightOffset;"
 	"void main()\n"
 	"{\n"
-	"   gl_Position = vec4(aPos.x + rightOffset, -aPos.y, aPos.z, 1.0);\n"
-	"	outColor = aColor;\n"
+	"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+	"	outColor = gl_Position;\n"
 	"}\0";
 
 const char* fragmentShaderSource = "#version 330 core\n"
-"in vec3 outColor;"
+"in vec4 outColor;"
 "out vec4 FragColor;\n"
 "void main()\n"
 "{\n"
-"FragColor = vec4(outColor, 1.0);\n"
+"FragColor = outColor;\n"
 "}\n";
 
 int main() {
@@ -83,9 +83,9 @@ int main() {
 	glLinkProgram(yellowShaderProgram);
 
 	float triangle1[] = {
-		-0.9f, -1.0f, 0.0f, 1.0, 0.0, 0.0,
-		-0.0f, -1.0f, 0.0f, 0.0, 1.0, 0.0,
-		-0.45f, 0.0f, 0.0f, 0.0, 0.0, 1.0
+		0.0f, -1.0f, 0.0f, 1.0, 0.0, 0.0,
+		1.0f, -1.0f, 0.0f, 0.0, 1.0, 0.0,
+		0.45f, 0.0f, 0.0f, 0.0, 0.0, 1.0
 	};
 
 	unsigned int VBOs[1], VAOs[1];
@@ -118,7 +118,7 @@ int main() {
 
 		glUseProgram(shaderProgram);
 		int rightOffsetLocation = glGetUniformLocation(shaderProgram, "rightOffset");
-		glUniform1f(rightOffsetLocation, 0.5f);
+		glUniform1f(rightOffsetLocation, 1.0f);
 
 		glBindVertexArray(VAOs[0]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
