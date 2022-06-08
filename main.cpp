@@ -29,22 +29,23 @@ const char* vertexShaderSource = "#version 330 core\n"
 	"void main()\n"
 	"{\n"
 	"   gl_Position = vec4(aPos, 1.0);\n"
-	"	packageForDeliveryToTheFragmentShader = vec4(0.0, 0.7, 0.0, 1.0);\n"
+	"	packageForDeliveryToTheFragmentShader = vec4(aPos.x, 0.0, 0.0, 1.0);\n"
 	"}\0";
 
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
-"in vec4 packageForDeliveryToTheFragmentShader;\n"
+"uniform vec4 myColor;"
 "void main()\n"
 "{\n"
-"FragColor = packageForDeliveryToTheFragmentShader;\n"
+"FragColor = myColor;\n"
 "}\n";
 
 const char* fragmentYellowShaderSource = "#version 330 core\n"
 	"out vec4 FragColor;\n"
+	"uniform vec4 myColor;"
 	"void main()\n"
 	"{\n"
-	"FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
+	"FragColor = myColor;\n"
 	"}\n";
 
 int main() {
@@ -145,11 +146,15 @@ int main() {
 
 		glUseProgram(shaderProgram);
 
+		float time = glfwGetTime();
+		float green = sin(time);
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "myColor");
+		glUniform4f(vertexColorLocation, 0.0, green, 0.0, 1.0);
+
 		glBindVertexArray(VAOs[0]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glBindVertexArray(VAOs[1]);
-		glUseProgram(yellowShaderProgram);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glBindVertexArray(VAOs[2]);
@@ -160,7 +165,6 @@ int main() {
 	}
 
 	glfwTerminate();
-
 
 	return 0;
 }
