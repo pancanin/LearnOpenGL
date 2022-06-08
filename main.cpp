@@ -25,16 +25,19 @@ unsigned int registerShader(unsigned int type, const char* shaderSource) {
 
 const char* vertexShaderSource = "#version 330 core\n"
 	"layout (location = 0) in vec3 aPos;\n"
+	"out vec4 packageForDeliveryToTheFragmentShader;"
 	"void main()\n"
 	"{\n"
-	"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+	"   gl_Position = vec4(aPos, 1.0);\n"
+	"	packageForDeliveryToTheFragmentShader = vec4(0.0, 0.7, 0.0, 1.0);\n"
 	"}\0";
 
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec4 packageForDeliveryToTheFragmentShader;\n"
 "void main()\n"
 "{\n"
-"FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"FragColor = packageForDeliveryToTheFragmentShader;\n"
 "}\n";
 
 const char* fragmentYellowShaderSource = "#version 330 core\n"
@@ -128,6 +131,10 @@ int main() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle3), triangle3, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(0);
+
+	int nrAttributes;
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+	std::cout << "Maximum nr of vertex attributes supported: " << nrAttributes << std::endl;
 		
 	while (!glfwWindowShouldClose(window))
 	{
