@@ -87,20 +87,26 @@ int main() {
 	glLinkProgram(yellowShaderProgram);
 
 	float triangle1[] = {
-		-0.9f, -0.5f, 0.0f,  // left 
-		-0.0f, -0.5f, 0.0f,  // right
-		-0.45f, 0.5f, 0.0f,  // top 
+		-0.9f, -1.0f, 0.0f,  // left 
+		-0.0f, -1.0f, 0.0f,  // right
+		-0.45f, 0.0f, 0.0f,  // top 
 	};
 
 	float triangle2[] = {
-		0.0f, -0.5f, 0.0f,  // left
-		0.9f, -0.5f, 0.0f,  // right
-		0.45f, 0.5f, 0.0f   // top 
+		0.0f, -1.0f, 0.0f,  // left
+		0.9f, -1.0f, 0.0f,  // right
+		0.45f, 0.0f, 0.0f   // top 
 	};
 
-	unsigned int VBOs[2], VAOs[2];
-	glGenBuffers(2, VBOs);
-	glGenVertexArrays(2, VAOs);
+	float triangle3[] = {
+		-0.45f, 0.0f, 0.0f,
+		0.45f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f
+	};
+
+	unsigned int VBOs[3], VAOs[3];
+	glGenBuffers(3, VBOs);
+	glGenVertexArrays(3, VAOs);
 
 	// triangle 1 setup
 	glBindVertexArray(VAOs[0]);
@@ -111,8 +117,15 @@ int main() {
 
 	// triangle 2 setup
 	glBindVertexArray(VAOs[1]);
-	glBindBuffer(1, VBOs[1]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle2), triangle2, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	// triangle 3 setup
+	glBindVertexArray(VAOs[2]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangle3), triangle3, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(0);
 		
@@ -127,8 +140,12 @@ int main() {
 
 		glBindVertexArray(VAOs[0]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
-		glBindVertexArray(VAOs[1]);
 
+		glBindVertexArray(VAOs[1]);
+		glUseProgram(yellowShaderProgram);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		glBindVertexArray(VAOs[2]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
