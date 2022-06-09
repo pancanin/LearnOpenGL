@@ -45,7 +45,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "uniform sampler2D texture2;\n"
 "void main()\n"
 "{\n"
-"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.5);\n"
+"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord - vec2(TexCoord.x * 2, 0.0)), 0.5);\n"
 "}\n";
 
 int main() {
