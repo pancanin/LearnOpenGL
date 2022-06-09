@@ -29,18 +29,23 @@ const char* vertexShaderSource = "#version 330 core\n"
 	"layout (location = 1) in vec3 aColor;\n"
 	"layout (location = 2) in vec2 aTextureCoord;\n"
 	"out vec4 outColor;"
+	"out vec2 TexCoord;"
 	"void main()\n"
 	"{\n"
 	"   gl_Position = vec4(aPos, 1.0);\n"
 	"	outColor = vec4(aColor, 1.0);\n"
+	"	TexCoord = aTextureCoord;\n"
 	"}\0";
 
 const char* fragmentShaderSource = "#version 330 core\n"
 "in vec4 outColor;"
+"in vec2 TexCoord;"
 "out vec4 FragColor;\n"
+"uniform sampler2D texture1;\n"
+"uniform sampler2D texture2;\n"
 "void main()\n"
 "{\n"
-"FragColor = outColor;\n"
+"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.5);\n"
 "}\n";
 
 int main() {
@@ -134,27 +139,42 @@ int main() {
 		0.5f, 1.0f   // top-center corner
 	};
 
+	stbi_set_flip_vertically_on_load(true);
 	int width, height, nrChannels;
 	unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
 
 	unsigned int containerTexture;
 	glGenTextures(1, &containerTexture);
-
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, containerTexture);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
+	unsigned int containerTexture2;
+	glGenTextures(1, &containerTexture2);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, containerTexture2);
+
+	int width2, height2, nrChannels2;
+	unsigned char* data2 = stbi_load("meopengl.jpg", &width2, &height2, &nrChannels2, 0);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width2, height2, 0, GL_RGB, GL_UNSIGNED_BYTE, data2);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
 	stbi_image_free(data);
-		
+	stbi_image_free(data2);
+
+	glUseProgram(shaderProgram);
+	glUniform1i(glGetUniformLocation(shaderProgram, "texture1"), 0);
+	glUniform1i(glGetUniformLocation(shaderProgram, "texture2"), 1);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
 
 		glClearColor(0.2f, 0.3f, 0.75f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		glUseProgram(shaderProgram);
 
 		glBindVertexArray(VAOs[0]);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
