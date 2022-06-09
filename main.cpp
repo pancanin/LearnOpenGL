@@ -45,7 +45,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "uniform sampler2D texture2;\n"
 "void main()\n"
 "{\n"
-"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord - vec2(TexCoord.x * 2, 0.0)), 0.5);\n"
+"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord - vec2(TexCoord.x * 2, 0.0)), -0.1);\n"
 "}\n";
 
 int main() {
@@ -55,7 +55,7 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Valeri Learns OpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1200, 800, "Valeri Learns OpenGL", NULL, NULL);
 	
 	if (window == NULL) {
 		std::cout << "Failed to create window" << std::endl;
@@ -71,7 +71,7 @@ int main() {
 		return -1;
 	}
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, 1200, 800);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	unsigned int vertexShaderId = registerShader(GL_VERTEX_SHADER, vertexShaderSource);
@@ -91,10 +91,10 @@ int main() {
 
 	float rectangle[] = {
 		// positions          // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+		1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f,   // top right
+		1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f,   // bottom right
+	   -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	   -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f    // top left 
 	};
 
 	unsigned int indices[] = {  // note that we start from 0!
@@ -147,6 +147,9 @@ int main() {
 	glGenTextures(1, &containerTexture);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, containerTexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
