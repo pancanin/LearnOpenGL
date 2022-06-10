@@ -11,10 +11,16 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
+float xCameraPos = 0.0f;
+
 void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_RIGHT))
+		xCameraPos += 1.0f;
+	if (glfwGetKey(window, GLFW_KEY_LEFT))
+		xCameraPos -= 1.0f;
 }
 
 unsigned int registerShader(unsigned int type, const char* shaderSource) {
@@ -220,6 +226,8 @@ int main() {
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
+	
+
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
@@ -230,9 +238,14 @@ int main() {
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, glm::radians(-55.0f) * (float)glfwGetTime(), glm::vec3(1.0, 1.0, 0.0));
 
+		const float radius = 10.0f;
+		float camX = sin(glfwGetTime()) * radius;
+		float camZ = cos(glfwGetTime()) * radius;
 		glm::mat4 view = glm::mat4(1.0f);
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::translate(view, glm::vec3(-9.0f, -5.0f, -19.0f));
+		view = view = glm::lookAt(glm::vec3(camX, 0.0f, camZ),
+			glm::vec3(0.0f, 0.0f, 0.0f),
+			glm::vec3(0.0f, 1.0f, 0.0f));
 
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 1.5f, 100.0f);
@@ -255,6 +268,8 @@ int main() {
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
+
+
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
