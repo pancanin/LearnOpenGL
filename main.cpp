@@ -33,10 +33,12 @@ const char* vertexShaderSource = "#version 330 core\n"
 	"layout (location = 2) in vec2 aTextureCoord;\n"
 	"out vec4 outColor;"
 	"out vec2 TexCoord;"
-	"uniform mat4 trans;"
+	"uniform mat4 model;"
+	"uniform mat4 view;"
+	"uniform mat4 projection;"
 	"void main()\n"
 	"{\n"
-	"   gl_Position = trans * vec4(aPos, 1.0);\n"
+	"   gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
 	"	outColor = vec4(aColor, 1.0);\n"
 	"	TexCoord = aTextureCoord;\n"
 	"}\0";
@@ -59,7 +61,7 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(1200, 800, "Valeri Learns OpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "Valeri Learns OpenGL", NULL, NULL);
 	
 	if (window == NULL) {
 		std::cout << "Failed to create window" << std::endl;
@@ -75,7 +77,7 @@ int main() {
 		return -1;
 	}
 
-	glViewport(0, 0, 1200, 800);
+	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	unsigned int vertexShaderId = registerShader(GL_VERTEX_SHADER, vertexShaderSource);
@@ -176,8 +178,6 @@ int main() {
 	glUniform1i(glGetUniformLocation(shaderProgram, "texture1"), 0);
 	glUniform1i(glGetUniformLocation(shaderProgram, "texture2"), 1);
 
-	
-
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
@@ -185,13 +185,20 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.75f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glm::mat4 transform = glm::mat4(1.0f);
-		transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0, 0.0, 1.0));
-		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0, 1.0, 0.0));
-		transform = glm::scale(transform, glm::vec3(0.5, 0.5, 0.5));
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0, 0.0, 0.0));
+
+		glm::mat4 view = glm::mat4(1.0f);
+		// note that we're translating the scene in the reverse direction of where we want to move
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		glm::mat4 projection;
+		projection = glm::perspective(glm::radians(55.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 		
 
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "trans"), 1, GL_FALSE, glm::value_ptr(transform));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 		glBindVertexArray(VAOs[0]);
 
