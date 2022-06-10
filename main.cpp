@@ -3,6 +3,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "stb_image.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
@@ -30,9 +33,10 @@ const char* vertexShaderSource = "#version 330 core\n"
 	"layout (location = 2) in vec2 aTextureCoord;\n"
 	"out vec4 outColor;"
 	"out vec2 TexCoord;"
+	"uniform mat4 trans;"
 	"void main()\n"
 	"{\n"
-	"   gl_Position = vec4(aPos, 1.0);\n"
+	"   gl_Position = trans * vec4(aPos, 1.0);\n"
 	"	outColor = vec4(aColor, 1.0);\n"
 	"	TexCoord = aTextureCoord;\n"
 	"}\0";
@@ -45,7 +49,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "uniform sampler2D texture2;\n"
 "void main()\n"
 "{\n"
-"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord - vec2(TexCoord.x * 2, 0.0)), -0.1);\n"
+"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord - vec2(TexCoord.x * 2, 0.0)), 0.5);\n"
 "}\n";
 
 int main() {
@@ -172,6 +176,8 @@ int main() {
 	glUniform1i(glGetUniformLocation(shaderProgram, "texture1"), 0);
 	glUniform1i(glGetUniformLocation(shaderProgram, "texture2"), 1);
 
+	
+
 	while (!glfwWindowShouldClose(window))
 	{
 		processInput(window);
@@ -179,7 +185,16 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.75f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glm::mat4 transform = glm::mat4(1.0f);
+		transform = glm::rotate(transform, glm::radians(45.0f), glm::vec3(0.0, 0.0, 1.0));
+		transform = glm::rotate(transform, (float)glfwGetTime(), glm::vec3(1.0, 1.0, 0.0));
+		transform = glm::scale(transform, glm::vec3(0.5, 0.5, 0.5));
+		
+
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "trans"), 1, GL_FALSE, glm::value_ptr(transform));
+
 		glBindVertexArray(VAOs[0]);
+
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
