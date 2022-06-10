@@ -12,6 +12,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 float xCameraPos = 0.0f;
+float zCameraPos = 3.0f;
+
+float currentFrameDelta = 0.0f;
+float previousFrameDelta = 0.0f;
 
 void processInput(GLFWwindow* window)
 {
@@ -21,6 +25,10 @@ void processInput(GLFWwindow* window)
 		xCameraPos += 1.0f;
 	if (glfwGetKey(window, GLFW_KEY_LEFT))
 		xCameraPos -= 1.0f;
+	if (glfwGetKey(window, GLFW_KEY_UP))
+		zCameraPos += 1.0f;
+	if (glfwGetKey(window, GLFW_KEY_DOWN))
+		zCameraPos -= 1.0f;
 }
 
 unsigned int registerShader(unsigned int type, const char* shaderSource) {
@@ -230,6 +238,9 @@ int main() {
 
 	while (!glfwWindowShouldClose(window))
 	{
+		float currentTime = (float)glfwGetTime();
+		currentFrameDelta = currentTime - previousFrameDelta;
+		previousFrameDelta = currentFrameDelta;
 		processInput(window);
 
 		glClearColor(0.2f, 0.3f, 0.75f, 1.0f);
@@ -243,7 +254,7 @@ int main() {
 		float camZ = cos(glfwGetTime()) * radius;
 		glm::mat4 view = glm::mat4(1.0f);
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = view = glm::lookAt(glm::vec3(camX, 0.0f, camZ),
+		view = view = glm::lookAt(glm::vec3(xCameraPos, 0.0f, zCameraPos),
 			glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3(0.0f, 1.0f, 0.0f));
 
