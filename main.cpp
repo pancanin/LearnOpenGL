@@ -60,9 +60,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 		glm::sin(glm::radians(pitch)),
 		glm::sin(glm::radians(yaw)) * glm::cos(glm::radians(pitch))
 	));
-
-	std::cout << glm::cos(glm::radians(yaw)) << " and yaw is " << yaw << std::endl;
-	//std::cout << cameraFront.y << " and pitch is " << pitch << std::endl;
 }
 
 float xCameraPos = 0.0f;
@@ -80,9 +77,9 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_LEFT))
 		cameraPos -= glm::vec3(cameraSpeed, 0.0f, 0.0f);
 	if (glfwGetKey(window, GLFW_KEY_UP))
-		cameraPos += cameraFront * cameraSpeed;
+		cameraPos += cameraFront * cameraSpeed * glm::vec3(1.0f, 0.0f, 1.0f);
 	if (glfwGetKey(window, GLFW_KEY_DOWN))
-		cameraPos -= cameraFront * cameraSpeed;
+		cameraPos -= cameraFront * cameraSpeed * glm::vec3(1.0f, 0.0f, 1.0f);
 }
 
 unsigned int registerShader(unsigned int type, const char* shaderSource) {
