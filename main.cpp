@@ -102,17 +102,16 @@ const char* vertexShaderSource = "#version 330 core\n"
 	"void main()\n"
 	"{\n"
 	"   gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
-	"	TexCoord = aTextureCoord;\n"
+	"	TexCoord = vec2(aTextureCoord.x, 1.0 - aTextureCoord.y);\n"
 	"}\0";
 
 const char* fragmentShaderSource = "#version 330 core\n"
 "in vec2 TexCoord;"
 "out vec4 FragColor;\n"
 "uniform sampler2D texture1;\n"
-"uniform sampler2D texture2;\n"
 "void main()\n"
 "{\n"
-"FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), 0.2);\n"
+"FragColor = texture(texture1, TexCoord);\n"
 "}\n";
 
 int main() {
@@ -219,7 +218,7 @@ int main() {
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 	/*unsigned int EBO;
@@ -242,7 +241,8 @@ int main() {
 	glBindTexture(GL_TEXTURE_2D, containerTexture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
