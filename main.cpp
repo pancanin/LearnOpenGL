@@ -11,6 +11,60 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
+int width = 800;
+int height = 600;
+
+int previousMouseX = 0;
+int prevMouseY = 0;
+int mouseX = 0;
+int mouseY = 0;
+
+float pitch = 0.0f;
+float yaw = 0.0f;
+
+float cameraSpeed = 0.001f;
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	previousMouseX = mouseX;
+	prevMouseY = mouseY;
+	mouseX = xpos;
+	mouseY = ypos;
+
+	float screenMid = height / 2;
+
+	if (ypos <= screenMid) {
+		pitch = ((screenMid - ypos) * 90) / screenMid;
+	}
+	else {
+		pitch = -(((ypos - screenMid) * 90) / screenMid);
+	}
+
+	float screenMidX = width / 2;
+
+	// calculating yaw
+	if (xpos <= screenMidX) {
+		yaw = -((screenMidX - xpos) * 90) / screenMidX;
+	}
+	else {
+		yaw = (((xpos - screenMidX) * 90) / screenMidX);
+	}
+
+	yaw -= 90; // we need to offset things by 90 degrees so that the default yaw looks at negative z direction instead of 
+	// positive x
+
+	cameraFront = glm::normalize(glm::vec3(
+		glm::cos(glm::radians(yaw)),
+		glm::sin(glm::radians(pitch)),
+		glm::sin(glm::radians(yaw)) * glm::cos(glm::radians(pitch))
+	));
+
+	std::cout << glm::cos(glm::radians(yaw)) << " and yaw is " << yaw << std::endl;
+	//std::cout << cameraFront.y << " and pitch is " << pitch << std::endl;
+}
+
 float xCameraPos = 0.0f;
 float zCameraPos = 3.0f;
 
@@ -22,13 +76,13 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT))
-		xCameraPos += 1.0f;
+		cameraPos += glm::vec3(cameraSpeed, 0.0f, 0.0f);
 	if (glfwGetKey(window, GLFW_KEY_LEFT))
-		xCameraPos -= 1.0f;
+		cameraPos -= glm::vec3(cameraSpeed, 0.0f, 0.0f);
 	if (glfwGetKey(window, GLFW_KEY_UP))
-		zCameraPos += 1.0f;
+		cameraPos += cameraFront * cameraSpeed;
 	if (glfwGetKey(window, GLFW_KEY_DOWN))
-		zCameraPos -= 1.0f;
+		cameraPos -= cameraFront * cameraSpeed;
 }
 
 unsigned int registerShader(unsigned int type, const char* shaderSource) {
@@ -71,7 +125,7 @@ int main() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Valeri Learns OpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(width, height, "Valeri Learns OpenGL", NULL, NULL);
 	
 	if (window == NULL) {
 		std::cout << "Failed to create window" << std::endl;
@@ -89,6 +143,7 @@ int main() {
 
 	glViewport(0, 0, 800, 600);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
 
 	unsigned int vertexShaderId = registerShader(GL_VERTEX_SHADER, vertexShaderSource);
 	unsigned int fragmentShaderId = registerShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
@@ -254,9 +309,11 @@ int main() {
 		float camZ = cos(glfwGetTime()) * radius;
 		glm::mat4 view = glm::mat4(1.0f);
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = view = glm::lookAt(glm::vec3(xCameraPos, 0.0f, zCameraPos),
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f));
+		
+		view = view = glm::lookAt(cameraPos,
+			
+			cameraPos + cameraFront,
+			cameraUp);
 
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, 1.5f, 100.0f);
