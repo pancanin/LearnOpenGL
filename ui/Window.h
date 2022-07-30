@@ -11,10 +11,12 @@ public:
 	~Window();
 
 	bool init(int width, int height, const std::string& label);
-	void makeActive();
-	void close();
-	const GLFWwindow* getRaw();
-	void deinit();
+	void makeActive() const;
+	void close() const;
+	bool shouldClose() const;
+	void swapBuffers() const;
+	GLFWwindow* getRaw() const;
+	void deinit() const;
 
 	int getWidth() const { return width; }
 	int getHeight() const { return height; }

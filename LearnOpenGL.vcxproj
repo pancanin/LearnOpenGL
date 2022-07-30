@@ -143,13 +143,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
+    <ClCompile Include="graphics\Graphics.cpp" />
+    <ClCompile Include="input\KeyboardInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stb_image.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="ui\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="graphics\Graphics.h" />
+    <ClInclude Include="input\KeyboardInput.h" />
     <ClInclude Include="stb_image.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="ui\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
