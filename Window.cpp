@@ -2,16 +2,16 @@
 
 #include <GLFW/glfw3.h>
 
-int Window::init(int width, int height, const std::string& label) {
+bool Window::init(int width, int height, const std::string& label) {
 	window = glfwCreateWindow(width, height, label.c_str(), NULL, NULL);
 	glViewport(0, 0, width, height);
 	this->width = width;
 	this->height = height;
 
-	return window == nullptr ? -1 : 0;
+	return window == nullptr;
 }
 
-void Window::assignAsMain() {
+void Window::makeActive() {
 	glfwMakeContextCurrent(window);
 }
 
@@ -20,7 +20,7 @@ void Window::close()
 	glfwSetWindowShouldClose(window, true);
 }
 
-GLFWwindow* Window::getRaw() {
+const GLFWwindow* Window::getRaw() {
 	return window;
 }
 

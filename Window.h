@@ -10,10 +10,10 @@ class Window
 public:
 	~Window();
 
-	int init(int width, int height, const std::string& label);
-	void assignAsMain();
+	bool init(int width, int height, const std::string& label);
+	void makeActive();
 	void close();
-	GLFWwindow* getRaw();
+	const GLFWwindow* getRaw();
 	void deinit();
 
 	int getWidth() const { return width; }
