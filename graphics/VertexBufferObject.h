@@ -2,11 +2,13 @@
 
 class VertexBufferObject {
 public:
-	void init();
+	void init(unsigned int glBufferType);
 	void bind();
-	void fillBuffer(float* data, int size);
+	void unbind();
+	void fillBuffer(void* data, int size);
 
 	~VertexBufferObject();
 private:
 	unsigned int id;
+	unsigned int glBufferType;
 };

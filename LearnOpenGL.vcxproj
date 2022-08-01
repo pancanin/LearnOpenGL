@@ -160,6 +160,7 @@
     <ClInclude Include="graphics\VertexBufferObject.h" />
     <ClInclude Include="input\KeyboardInput.h" />
     <ClInclude Include="models\Object.h" />
+    <ClInclude Include="models\Rect.h" />
     <ClInclude Include="models\Triangle.h" />
     <ClInclude Include="models\TypeDefs.h" />
     <ClInclude Include="stb_image.h" />

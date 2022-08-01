@@ -80,6 +80,9 @@
     <ClInclude Include="graphics\VertexArrayObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="models\Rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\simple_vertex.glsl" />

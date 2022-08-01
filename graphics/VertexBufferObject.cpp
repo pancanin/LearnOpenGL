@@ -3,19 +3,25 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-void VertexBufferObject::init()
+void VertexBufferObject::init(unsigned int glBufferType)
 {
 	glGenBuffers(1, &id);
+	this->glBufferType = glBufferType;
 }
 
 void VertexBufferObject::bind()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, id);
+	glBindBuffer(glBufferType, id);
 }
 
-void VertexBufferObject::fillBuffer(float* data, int size)
+void VertexBufferObject::unbind()
 {
-	glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), data, GL_STATIC_DRAW);
+	glBindBuffer(glBufferType, 0);
+}
+
+void VertexBufferObject::fillBuffer(void* data, int size)
+{
+	glBufferData(glBufferType, size * sizeof(float), data, GL_STATIC_DRAW);
 }
 
 VertexBufferObject::~VertexBufferObject()

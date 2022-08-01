@@ -2,5 +2,5 @@
 
 class Object {
 public:
-	virtual float* toVertexArray(int& outSize) const = 0;
+	virtual float* toVertexArray(unsigned int& outSize) const = 0;
 };

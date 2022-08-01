@@ -16,6 +16,7 @@
 
 #include "models/TypeDefs.h"
 #include "models/Triangle.h"
+#include "models/Rect.h"
 
 const int width = 800;
 const int height = 600;
@@ -46,22 +47,42 @@ int main() {
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
 
-	int size = 0;
+	unsigned int size = 0;
 	Triangle trngl(Point3D(0, 0.5, 0.0), Point3D(-0.5, 0.0, 0.0), Point3D(0.5, 0, 0));
+	auto trgPtr = std::make_shared<Triangle>(trngl);
+	
 	float* trnglData = trngl.toVertexArray(size);
 
-	VertexBufferObject bufferObject;
-	VertexArrayObject coordinatesAttrVAO;
+	unsigned int rectVertSize = 0;
+	Rect rectec(Point3D(-0.25, 0.5, 0), 0.10, 0.10);
+	auto rectPtr = std::make_shared<Rect>(rectec);
+	float* rectData = rectPtr->toVertexArray(rectVertSize);
+	unsigned int indices[] = {
+				0, 1, 3,
+				1, 2, 3
+	};
 
-	coordinatesAttrVAO.init();
-	bufferObject.init();
-	
-	coordinatesAttrVAO.bind();
+	/*VertexBufferObject bufferObject;
+	bufferObject.init(GL_ARRAY_BUFFER);
 	bufferObject.bind();
+	bufferObject.fillBuffer(trnglData, size);*/
+
+	VertexArrayObject coordinatesAttrVAO;
+	coordinatesAttrVAO.init();
+	coordinatesAttrVAO.bind();
+
+	VertexBufferObject elementBuffer;
+	elementBuffer.init(GL_ELEMENT_ARRAY_BUFFER);
+	elementBuffer.bind();
+	elementBuffer.fillBuffer(indices, sizeof(indices));
+
+	VertexBufferObject rectBufferObject;
+	rectBufferObject.init(GL_ARRAY_BUFFER);
+	rectBufferObject.bind();
+	rectBufferObject.fillBuffer(rectData, rectVertSize);
+
 	
-	bufferObject.fillBuffer(trnglData, size);
 	coordinatesAttrVAO.addAttribute(0, 3, 3, 0);
-	
 	
 	while (!window->shouldClose()) {
 		window->clear();
@@ -70,7 +91,8 @@ int main() {
 			window->close();
 		}
 
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		window->swapBuffers();
 		graphics.pollEvents();

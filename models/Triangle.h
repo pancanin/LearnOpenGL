@@ -6,7 +6,7 @@
 struct Triangle : public Object {
 	Triangle(Point3D p1, Point3D p2, Point3D p3) : p1(p1), p2(p2), p3(p3) {}
 
-	float* toVertexArray(int& outSize) const override {
+	float* toVertexArray(unsigned int& outSize) const override {
 		float* arr = new float[9];
 
 		arr[0] = p1.x;
