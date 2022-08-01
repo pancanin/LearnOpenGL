@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../models/VertexAttribute.h"
+
 /*
 * Configuration object for attributes. Makes it easy to switch between attribute configurations
 * by first setting up one instance per each set of attributes and then switching between them by calling bind() on the desired instance.
@@ -17,7 +19,7 @@ public:
 	*		it will have a stride of 3 times sizeof(float).
 	* offset - how many float values we have between the start of the current vertex and the current coordinates.
 	*/
-	void addAttribute(unsigned int id, unsigned int size, unsigned int stride, unsigned int offset) const;
+	void addAttribute(VertexAttribute attribute) const;
 private:
 	unsigned int id;
 };

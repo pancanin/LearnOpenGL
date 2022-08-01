@@ -13,8 +13,8 @@ void VertexArrayObject::bind()
 	glBindVertexArray(id);
 }
 
-void VertexArrayObject::addAttribute(unsigned int id, unsigned int size, unsigned int stride, unsigned int offset) const
+void VertexArrayObject::addAttribute(VertexAttribute attribute) const
 {
-	glVertexAttribPointer(id, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
-	glEnableVertexAttribArray(id);
+	glVertexAttribPointer(attribute.id, attribute.size, GL_FLOAT, GL_FALSE, attribute.stride * sizeof(float), (void*)(attribute.offset * sizeof(float)));
+	glEnableVertexAttribArray(attribute.id);
 }

@@ -2,6 +2,7 @@
 #include <memory>
 #include <iterator>
 #include <algorithm>
+#include <vector>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -21,6 +22,7 @@
 #include "models/Rect.h"
 
 #include "graphics/ObjectComponent.h"
+#include "models/VertexAttribute.h"
 
 const int width = 800;
 const int height = 600;
@@ -54,20 +56,14 @@ int main() {
 	Triangle trngl(Point3D(0, 0.5, 0.0), Point3D(-0.5, 0.0, 0.0), Point3D(0.5, 0, 0));
 	Triangle trian2(Point3D(0, 0.5, 0.0), Point3D(0.75, 0.75, 0.0), Point3D(0.5, 0, 0));
 
-	auto coordinatesAttrVAOPtr = std::make_shared<VertexArrayObject>();
-	coordinatesAttrVAOPtr->init();
-	coordinatesAttrVAOPtr->bind();
-
+	VertexAttribute coordinateAttribute(0, 3, 3, 0);
 	ObjectComponent objComponent;
-	objComponent.init(coordinatesAttrVAOPtr, 3, trian2.getComponentsCount());
+	objComponent.init(std::vector<VertexAttribute>{coordinateAttribute}, 3, trian2.getComponentsCount());
 	objComponent.activate();
-	coordinatesAttrVAOPtr->addAttribute(0, 3, 3, 0); // VertexAttribute struct that will abstract parameters for add attribute and VAO can live in the component
 	objComponent.addObject(trngl);
 	objComponent.addObject(trian2);
 	objComponent.loadBuffer();
 
-	
-	
 	while (!window->shouldClose()) {
 		window->clear();
 

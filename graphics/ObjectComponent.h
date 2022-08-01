@@ -11,31 +11,36 @@
 #include "../models/Triangle.h"
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
+#include "../models/VertexAttribute.h"
 
 class ObjectComponent
 {
 public:
 	void init(
-		std::shared_ptr<VertexArrayObject> vertexArrayObjectPtr,
+		std::vector<VertexAttribute> attributes,
 		unsigned int verticesPerObject,
 		unsigned int componentsPerObject
 		) {
-		this->vao = vertexArrayObjectPtr;
 		this->verticesPerObject = verticesPerObject;
 		this->componentsPerObject = componentsPerObject;
-		this->buffer = nullptr;
 		this->vbo.init(GL_ARRAY_BUFFER);
+		this->vao.init();
+		
+		activate();
+
+		for (auto& attr : attributes) {
+			this->vao.addAttribute(attr);
+		}
 	}
 
 	void activate() {
-		this->vao->bind();
+		this->vao.bind();
 		this->vbo.bind();
 	}
 
 	void loadBuffer() {
-		clearBuffer();
 		unsigned int totalComponentsCount = componentsPerObject * objects.size();
-		buffer = new float[totalComponentsCount];
+		float* buffer = new float[totalComponentsCount];
 
 		int offset = 0;
 
@@ -45,9 +50,11 @@ public:
 
 			std::memcpy(buffer + offset, components, componentsPerObject * sizeof(float));
 			offset += componentsPerObject;
+			delete[] components;
 		}
 
 		vbo.fillBuffer(buffer, totalComponentsCount);
+		delete[] buffer;
 	}
 
 	void draw() {
@@ -57,13 +64,6 @@ public:
 
 	void deactivate() {
 		this->vbo.unbind();
-		clearBuffer();
-	}
-
-	void clearBuffer() {
-		if (buffer != nullptr) {
-			delete[] buffer;
-		}
 	}
 
 	std::shared_ptr<Triangle> addObject(Triangle o) {
@@ -77,10 +77,9 @@ public:
 	}
 private:
 	std::vector<std::shared_ptr<Triangle>> objects;
-	std::shared_ptr<VertexArrayObject> vao;
+	VertexArrayObject vao;
 	VertexBufferObject vbo;
 	unsigned int verticesPerObject;
 	unsigned int componentsPerObject;
-	float* buffer;
 };
 

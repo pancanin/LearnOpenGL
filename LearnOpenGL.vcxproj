@@ -165,6 +165,7 @@
     <ClInclude Include="models\Rect.h" />
     <ClInclude Include="models\Triangle.h" />
     <ClInclude Include="models\TypeDefs.h" />
+    <ClInclude Include="models\VertexAttribute.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ui\Window.h" />
     <ClInclude Include="utils\ShaderLoader.h" />
