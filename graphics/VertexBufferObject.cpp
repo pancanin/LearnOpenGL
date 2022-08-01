@@ -15,7 +15,7 @@ void VertexBufferObject::bind()
 
 void VertexBufferObject::fillBuffer(float* data, int size)
 {
-	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), data, GL_STATIC_DRAW);
 }
 
 VertexBufferObject::~VertexBufferObject()

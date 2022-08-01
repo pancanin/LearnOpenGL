@@ -11,6 +11,12 @@
 #include "utils/ShaderLoader.h"
 #include "graphics/ShaderProgram.h"
 
+#include "graphics/VertexArrayObject.h"
+#include "graphics/VertexBufferObject.h"
+
+#include "models/TypeDefs.h"
+#include "models/Triangle.h"
+
 const int width = 800;
 const int height = 600;
 
@@ -37,10 +43,25 @@ int main() {
 	shaderProgram.link();
 	shaderProgram.use();
 
-	
-
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
+
+	int size = 0;
+	Triangle trngl(Point3D(0, 0.5, 0.0), Point3D(-0.5, 0.0, 0.0), Point3D(0.5, 0, 0));
+	float* trnglData = trngl.toVertexArray(size);
+
+	VertexBufferObject bufferObject;
+	VertexArrayObject coordinatesAttrVAO;
+
+	coordinatesAttrVAO.init();
+	bufferObject.init();
+	
+	coordinatesAttrVAO.bind();
+	bufferObject.bind();
+	
+	bufferObject.fillBuffer(trnglData, size);
+	coordinatesAttrVAO.addAttribute(0, 3, 3, 0);
+	
 	
 	while (!window->shouldClose()) {
 		window->clear();
@@ -48,6 +69,8 @@ int main() {
 		if (keyboardInput.isKeyPressed(GLFW_KEY_ESCAPE)) {
 			window->close();
 		}
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		window->swapBuffers();
 		graphics.pollEvents();

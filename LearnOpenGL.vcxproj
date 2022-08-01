@@ -145,6 +145,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
     <ClCompile Include="graphics\ShaderProgram.cpp" />
+    <ClCompile Include="graphics\VertexArrayObject.cpp" />
     <ClCompile Include="graphics\VertexBufferObject.cpp" />
     <ClCompile Include="input\KeyboardInput.cpp" />
     <ClCompile Include="main.cpp" />
@@ -155,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="graphics\Graphics.h" />
     <ClInclude Include="graphics\ShaderProgram.h" />
+    <ClInclude Include="graphics\VertexArrayObject.h" />
     <ClInclude Include="graphics\VertexBufferObject.h" />
     <ClInclude Include="input\KeyboardInput.h" />
     <ClInclude Include="models\Object.h" />
