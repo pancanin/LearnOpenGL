@@ -2,5 +2,6 @@
 
 class Object {
 public:
-	virtual float* toVertexArray(unsigned int& outSize) const = 0;
+	virtual float* toVertexArray() const = 0;
+	virtual unsigned int getComponentsCount() const = 0;
 };

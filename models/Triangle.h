@@ -6,8 +6,8 @@
 struct Triangle : public Object {
 	Triangle(Point3D p1, Point3D p2, Point3D p3) : p1(p1), p2(p2), p3(p3) {}
 
-	float* toVertexArray(unsigned int& outSize) const override {
-		float* arr = new float[9];
+	float* toVertexArray() const override {
+		float* arr = new float[getComponentsCount()];
 
 		arr[0] = p1.x;
 		arr[1] = p1.y;
@@ -21,8 +21,11 @@ struct Triangle : public Object {
 		arr[7] = p3.y;
 		arr[8] = p3.z;
 
-		outSize = 9;
 		return arr;
+	}
+
+	unsigned int getComponentsCount() const {
+		return 9;
 	}
 
 	Point3D p1;

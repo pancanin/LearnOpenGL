@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
+    <ClCompile Include="graphics\ObjectComponent.cpp" />
     <ClCompile Include="graphics\ShaderProgram.cpp" />
     <ClCompile Include="graphics\VertexArrayObject.cpp" />
     <ClCompile Include="graphics\VertexBufferObject.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics\Graphics.h" />
+    <ClInclude Include="graphics\ObjectComponent.h" />
     <ClInclude Include="graphics\ShaderProgram.h" />
     <ClInclude Include="graphics\VertexArrayObject.h" />
     <ClInclude Include="graphics\VertexBufferObject.h" />
