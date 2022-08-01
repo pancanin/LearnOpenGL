@@ -5,12 +5,12 @@
 
 bool Graphics::init() const
 {
-	glfwInit();
+	return glfwInit();
+}
 
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		return false;
-	}
+bool Graphics::loadFunctionDefinitions() const
+{
+	return gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 }
 
 void Graphics::pollEvents() const

@@ -144,16 +144,29 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
+    <ClCompile Include="graphics\ShaderProgram.cpp" />
+    <ClCompile Include="graphics\VertexBufferObject.cpp" />
     <ClCompile Include="input\KeyboardInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="ui\Window.cpp" />
+    <ClCompile Include="utils\ShaderLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics\Graphics.h" />
+    <ClInclude Include="graphics\ShaderProgram.h" />
+    <ClInclude Include="graphics\VertexBufferObject.h" />
     <ClInclude Include="input\KeyboardInput.h" />
+    <ClInclude Include="models\Object.h" />
+    <ClInclude Include="models\Triangle.h" />
+    <ClInclude Include="models\TypeDefs.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ui\Window.h" />
+    <ClInclude Include="utils\ShaderLoader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\simple_fragment.glsl" />
+    <None Include="shaders\simple_vertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

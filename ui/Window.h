@@ -12,6 +12,7 @@ public:
 
 	bool init(int width, int height, const std::string& label);
 	void makeActive() const;
+	void clear() const;
 	void close() const;
 	bool shouldClose() const;
 	void swapBuffers() const;
