@@ -20,6 +20,7 @@ public:
 	void use();
 	void setUniformMat4(const std::string& uniformVarName, const glm::mat4& value);
 	void setUniformVec4(const std::string& uniformVarName, const glm::vec4& value);
+	void setUniformF(const std::string& uniformVarName, float value);
 private:
 	unsigned int shaderProgram;
 	std::unordered_map<unsigned int, unsigned int> shaderTypeToShaderId;

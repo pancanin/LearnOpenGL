@@ -102,7 +102,7 @@ int main() {
 		std::cout << green << std::endl;
 
 		shaderProgram.use();
-		shaderProgram.setUniformVec4("ourColor", glm::vec4(0.0f, green, 0.0f, 1.0f));
+		shaderProgram.setUniformF("offset", 0.5);
 		objComponent.activate();
 		objComponent.draw();
 		shaderProgram2.use();
