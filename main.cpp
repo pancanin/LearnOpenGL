@@ -64,6 +64,12 @@ int main() {
 	objComponent.addObject(trian2);
 	objComponent.loadBuffer();
 
+	ObjectComponent objComponent2;
+	objComponent2.init(std::vector<VertexAttribute>{coordinateAttribute}, 3, trian2.getComponentsCount());
+	objComponent2.activate();
+	objComponent2.addObject(trian2);
+	objComponent2.loadBuffer();
+
 	while (!window->shouldClose()) {
 		window->clear();
 
@@ -71,7 +77,10 @@ int main() {
 			window->close();
 		}
 
+		objComponent.activate();
 		objComponent.draw();
+		objComponent2.activate();
+		objComponent2.draw();
 
 		window->swapBuffers();
 		graphics.pollEvents();
