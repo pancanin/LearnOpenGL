@@ -8,11 +8,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "../models/Triangle.h"
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
 #include "../models/VertexAttribute.h"
 
+template <typename T>
 class ObjectComponent
 {
 public:
@@ -58,7 +58,7 @@ public:
 	}
 
 	void draw() {
-		// GL_TRIANGLES - hardcoded...fix
+		// GL_Triangles - hardcoded...fix
 		glDrawArrays(GL_TRIANGLES, 0, verticesPerObject * objects.size());
 	}
 
@@ -66,8 +66,8 @@ public:
 		this->vbo.unbind();
 	}
 
-	std::shared_ptr<Triangle> addObject(Triangle o) {
-		auto objPtr = std::make_shared<Triangle>(o);
+	std::shared_ptr<T> addObject(T o) {
+		auto objPtr = std::make_shared<T>(o);
 		objects.push_back(objPtr);
 		return objPtr;
 	}
@@ -76,7 +76,7 @@ public:
 		deactivate();
 	}
 private:
-	std::vector<std::shared_ptr<Triangle>> objects;
+	std::vector<std::shared_ptr<T>> objects;
 	VertexArrayObject vao;
 	VertexBufferObject vbo;
 	unsigned int verticesPerObject;

@@ -92,10 +92,17 @@
     <ClInclude Include="models\VertexAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="models\ColorTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="models\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\simple_vertex.glsl" />
     <None Include="shaders\simple_fragment.glsl" />
     <None Include="shaders\fragment_2.glsl" />
+    <None Include="shaders\color_vertex.glsl" />
   </ItemGroup>
 </Project>

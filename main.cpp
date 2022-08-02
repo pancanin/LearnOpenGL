@@ -20,6 +20,8 @@
 #include "models/TypeDefs.h"
 #include "models/Triangle.h"
 #include "models/Rect.h"
+#include "models/ColorTriangle.h"
+#include "models/Vertex.h"
 
 #include "graphics/ObjectComponent.h"
 #include "models/VertexAttribute.h"
@@ -50,11 +52,12 @@ int main() {
 	shaderProgram.link();
 	shaderProgram.use();
 
+	std::string colorVertexShader = loader.load("color_vertex");
 	std::string fragmentShaderSource2 = loader.load("fragment_2");
 	ShaderProgram shaderProgram2;
 	shaderProgram2.init();
 
-	shaderProgram2.attachVertexShader(vertexShaderSource.data());
+	shaderProgram2.attachVertexShader(colorVertexShader.data());
 	shaderProgram2.attachFragmentShader(fragmentShaderSource2.data());
 	shaderProgram2.link();
 
@@ -62,20 +65,28 @@ int main() {
 	keyboardInput.init(window);
 
 	Triangle trngl(Point3D(0, 0.5, 0.0), Point3D(-0.5, 0.0, 0.0), Point3D(0.5, 0, 0));
-	Triangle trian2(Point3D(0, 0.5, 0.0), Point3D(0.75, 0.75, 0.0), Point3D(0.5, 0, 0));
+	
 
 	VertexAttribute coordinateAttribute(0, 3, 3, 0);
-	ObjectComponent objComponent;
-	objComponent.init(std::vector<VertexAttribute>{coordinateAttribute}, 3, trian2.getComponentsCount());
+	ObjectComponent<Triangle> objComponent;
+	objComponent.init(std::vector<VertexAttribute>{coordinateAttribute}, 3, trngl.getComponentsCount());
 	objComponent.activate();
 	objComponent.addObject(trngl);
-	objComponent.addObject(trian2);
 	objComponent.loadBuffer();
 
-	ObjectComponent objComponent2;
-	objComponent2.init(std::vector<VertexAttribute>{coordinateAttribute}, 3, trian2.getComponentsCount());
+	ColorTriangle clrTr(
+		Vertex(Point3D(0, 0.5, 0.0), Color(1.0f, 0.0f, 0.0f, 1.0f)),
+		Vertex(Point3D(0.75, 0.75, 0.0), Color(0.0f, 1.0f, 0.0f, 1.0f)),
+		Vertex(Point3D(0.5, 0, 0), Color(0.0f, 0.0f, 1.0f, 1.0f))
+	);
+
+	unsigned int stride = 7; // 3 for coordinates and 4 for color
+	VertexAttribute coordinateAttributeForColorTriangle(0, 3, stride, 0);
+	VertexAttribute colorAttribute(1, 4, stride, 3);
+	ObjectComponent<ColorTriangle> objComponent2;
+	objComponent2.init(std::vector<VertexAttribute>{coordinateAttributeForColorTriangle, colorAttribute}, 3, clrTr.getComponentsCount());
 	objComponent2.activate();
-	objComponent2.addObject(trian2);
+	objComponent2.addObject(clrTr);
 	objComponent2.loadBuffer();
 
 	while (!window->shouldClose()) {
