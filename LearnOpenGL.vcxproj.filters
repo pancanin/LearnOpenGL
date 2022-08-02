@@ -96,5 +96,6 @@
   <ItemGroup>
     <None Include="shaders\simple_vertex.glsl" />
     <None Include="shaders\simple_fragment.glsl" />
+    <None Include="shaders\fragment_2.glsl" />
   </ItemGroup>
 </Project>

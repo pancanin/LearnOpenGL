@@ -50,6 +50,14 @@ int main() {
 	shaderProgram.link();
 	shaderProgram.use();
 
+	std::string fragmentShaderSource2 = loader.load("fragment_2");
+	ShaderProgram shaderProgram2;
+	shaderProgram2.init();
+
+	shaderProgram2.attachVertexShader(vertexShaderSource.data());
+	shaderProgram2.attachFragmentShader(fragmentShaderSource2.data());
+	shaderProgram2.link();
+
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
 
@@ -77,8 +85,10 @@ int main() {
 			window->close();
 		}
 
+		shaderProgram.use();
 		objComponent.activate();
 		objComponent.draw();
+		shaderProgram2.use();
 		objComponent2.activate();
 		objComponent2.draw();
 

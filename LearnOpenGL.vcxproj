@@ -171,6 +171,7 @@
     <ClInclude Include="utils\ShaderLoader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\fragment_2.glsl" />
     <None Include="shaders\simple_fragment.glsl" />
     <None Include="shaders\simple_vertex.glsl" />
   </ItemGroup>
