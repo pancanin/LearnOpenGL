@@ -27,6 +27,11 @@ void ShaderProgram::attachShader(unsigned int shaderType, const char* shaderSour
 	glAttachShader(shaderProgram, shaderTypeToShaderId[shaderType]);
 }
 
+int ShaderProgram::findLocation(const std::string& uniformVarName)
+{
+	return glGetUniformLocation(shaderProgram, uniformVarName.c_str());
+}
+
 void ShaderProgram::link()
 {
 	glLinkProgram(shaderProgram);
@@ -43,6 +48,10 @@ void ShaderProgram::use()
 
 void ShaderProgram::setUniformMat4(const std::string& uniformVarName, const glm::mat4& value)
 {
-	int modelLoc = glGetUniformLocation(shaderProgram, uniformVarName.c_str());
-	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(value));
+	glUniformMatrix4fv(findLocation(uniformVarName), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void ShaderProgram::setUniformVec4(const std::string& uniformVarName, const glm::vec4& value)
+{
+	glUniform4f(findLocation(uniformVarName), value.x, value.y, value.z, value.a);
 }

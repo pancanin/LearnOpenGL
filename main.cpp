@@ -85,7 +85,13 @@ int main() {
 			window->close();
 		}
 
+		auto time = glfwGetTime();
+		float green = (sin(time) / 2.0f) + 0.75f;
+
+		std::cout << green << std::endl;
+
 		shaderProgram.use();
+		shaderProgram.setUniformVec4("ourColor", glm::vec4(0.0f, green, 0.0f, 1.0f));
 		objComponent.activate();
 		objComponent.draw();
 		shaderProgram2.use();

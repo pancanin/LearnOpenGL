@@ -19,10 +19,12 @@ public:
 	void link();
 	void use();
 	void setUniformMat4(const std::string& uniformVarName, const glm::mat4& value);
+	void setUniformVec4(const std::string& uniformVarName, const glm::vec4& value);
 private:
 	unsigned int shaderProgram;
 	std::unordered_map<unsigned int, unsigned int> shaderTypeToShaderId;
 
 	void attachShader(unsigned int shaderType, const char* shaderSourceCode);
+	int findLocation(const std::string& uniformVarName);
 };
 
