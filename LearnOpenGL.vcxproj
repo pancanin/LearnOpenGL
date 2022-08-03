@@ -79,7 +79,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\libs\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\libs\source;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Freeware Sys\source\repos\pancanin\LearnOpenGL\libs;D:\libs\source;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\Users\Freeware Sys\source\repos\pancanin\LearnOpenGL\libs;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -153,6 +154,7 @@
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="ui\Window.cpp" />
     <ClCompile Include="utils\ShaderLoader.cpp" />
+    <ClCompile Include="utils\TextureComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics\Graphics.h" />
@@ -164,6 +166,7 @@
     <ClInclude Include="models\ColorTriangle.h" />
     <ClInclude Include="models\Object.h" />
     <ClInclude Include="models\Rect.h" />
+    <ClInclude Include="models\TexturedTriangle.h" />
     <ClInclude Include="models\Triangle.h" />
     <ClInclude Include="models\TypeDefs.h" />
     <ClInclude Include="models\Vertex.h" />
@@ -171,12 +174,15 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ui\Window.h" />
     <ClInclude Include="utils\ShaderLoader.h" />
+    <ClInclude Include="utils\TextureComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\color_vertex.glsl" />
     <None Include="shaders\fragment_2.glsl" />
     <None Include="shaders\simple_fragment.glsl" />
     <None Include="shaders\simple_vertex.glsl" />
+    <None Include="shaders\texture_fragment.glsl" />
+    <None Include="shaders\texture_vertex.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

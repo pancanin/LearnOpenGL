@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "../glm/glm.hpp"
+#include "../libs/glm/glm.hpp"
 
 /*
 * A shader program is a configuration of vertex, fragment and optionally geometry shader.

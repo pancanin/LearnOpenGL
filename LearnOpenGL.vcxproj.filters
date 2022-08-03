@@ -48,6 +48,9 @@
     <ClCompile Include="graphics\ObjectComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utils\TextureComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -98,11 +101,19 @@
     <ClInclude Include="models\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utils\TextureComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="models\TexturedTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\simple_vertex.glsl" />
     <None Include="shaders\simple_fragment.glsl" />
     <None Include="shaders\fragment_2.glsl" />
     <None Include="shaders\color_vertex.glsl" />
+    <None Include="shaders\texture_fragment.glsl" />
+    <None Include="shaders\texture_vertex.glsl" />
   </ItemGroup>
 </Project>

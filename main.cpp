@@ -26,6 +26,10 @@
 #include "graphics/ObjectComponent.h"
 #include "models/VertexAttribute.h"
 
+#include "models/TexturedTriangle.h"
+
+#include "utils/TextureComponent.h"
+
 const int width = 800;
 const int height = 600;
 
@@ -61,6 +65,19 @@ int main() {
 	shaderProgram2.attachFragmentShader(fragmentShaderSource2.data());
 	shaderProgram2.link();
 
+	std::string textureVertexShaderSource = loader.load("texture_vertex");
+	std::string textureFragmentShaderSource = loader.load("texture_fragment");
+	ShaderProgram textureShaders;
+	textureShaders.init();
+	textureShaders.attachVertexShader(textureVertexShaderSource.data());
+	textureShaders.attachFragmentShader(textureFragmentShaderSource.data());
+	textureShaders.link();
+
+	TextureComponent texture;
+	texture.init();
+	texture.load("assets/container.jpg");
+	texture.bind(GL_TEXTURE0);
+
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
 
@@ -89,6 +106,28 @@ int main() {
 	objComponent2.addObject(clrTr);
 	objComponent2.loadBuffer();
 
+	TexturedTriangle texTri(
+		Point3D(-1.0f, 1.0f, 0.0f),
+		TextureCoordinate(0.0f, 1.0f),
+		Point3D(0.0f, 1.0f, 0.0f),
+		TextureCoordinate(0.0f, 0.0f),
+		Point3D(0.0f, 0.0f, 0.0f),
+		TextureCoordinate(1.0f, 1.0f)
+	);
+
+	stride = 6; // 3 for coordinates and 2 for texture
+	VertexAttribute coordinateAttributeForTextureTriangle(0, 3, stride, 0);
+	VertexAttribute textureAttribute(1, 2, stride, 3);
+	ObjectComponent<TexturedTriangle> objComponentTexture;
+	objComponentTexture.init(
+		std::vector<VertexAttribute>{coordinateAttributeForTextureTriangle, textureAttribute},
+		3,
+		texTri.getComponentsCount()
+	);
+	objComponentTexture.activate();
+	objComponentTexture.addObject(texTri);
+	objComponentTexture.loadBuffer();
+
 	while (!window->shouldClose()) {
 		window->clear();
 
@@ -96,18 +135,18 @@ int main() {
 			window->close();
 		}
 
-		auto time = glfwGetTime();
-		float green = (sin(time) / 2.0f) + 0.75f;
-
-		std::cout << green << std::endl;
-
 		shaderProgram.use();
 		shaderProgram.setUniformF("offset", 0.5);
 		objComponent.activate();
 		objComponent.draw();
+
 		shaderProgram2.use();
 		objComponent2.activate();
 		objComponent2.draw();
+
+		textureShaders.use();
+		objComponentTexture.activate();
+		objComponentTexture.draw();
 
 		window->swapBuffers();
 		graphics.pollEvents();
