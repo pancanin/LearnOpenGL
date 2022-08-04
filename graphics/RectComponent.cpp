@@ -23,11 +23,14 @@ void RectComponent::deactivate()
 {
 	ObjectComponent<Rect>::deactivate();
 	elementBuffer.unbind();
-
-	std::cout << "deactivate of rectcomponent called" << std::endl;
 }
 
 void RectComponent::draw()
 {
 	glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
+}
+
+RectComponent::~RectComponent()
+{
+	deactivate();
 }

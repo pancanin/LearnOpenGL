@@ -19,11 +19,11 @@ struct Rect : public Object {
 		arr[5] = origin.z;
 
 		arr[6] = origin.x + width;
-		arr[7] = origin.y + height;
+		arr[7] = origin.y - height;
 		arr[8] = origin.z;
 
 		arr[9] = origin.x;
-		arr[10] = origin.y + height;
+		arr[10] = origin.y - height;
 		arr[11] = origin.z;
 
 		return arr;

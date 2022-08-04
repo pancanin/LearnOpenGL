@@ -15,5 +15,6 @@ private:
 	int nChannels;
 	unsigned int id;
 	unsigned char* data;
+	bool hasAlpha;
 };
 

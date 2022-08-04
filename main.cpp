@@ -50,80 +50,19 @@ int main() {
 	shaderProgram.attachVertexShader("simple_vertex");
 	shaderProgram.attachFragmentShader("simple_fragment");
 	shaderProgram.link();
-	shaderProgram.use();
-
-	ShaderProgram shaderProgram2;
-	shaderProgram2.init();
-
-	shaderProgram2.attachVertexShader("color_vertex");
-	shaderProgram2.attachFragmentShader("fragment_2");
-	shaderProgram2.link();
 
 	TextureComponent texture;
 	texture.init();
-	texture.load("assets/container.jpg");
+	texture.load("assets/face.png");
 	texture.bind(GL_TEXTURE0);
-
-	ShaderProgram textureShaders;
-	textureShaders.init();
-	textureShaders.attachVertexShader("texture_vertex");
-	textureShaders.attachFragmentShader("texture_fragment");
-	textureShaders.link();
 
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
 
-	Triangle trngl(Point3D(0, 0.5, 0.0), Point3D(-0.5, 0.0, 0.0), Point3D(0.5, 0, 0));
-	
-
 	VertexAttribute coordinateAttribute(0, 3, 3, 0);
-	ObjectComponent<Triangle> objComponent;
-	objComponent.init(std::vector<VertexAttribute>{coordinateAttribute}, 3, trngl.getComponentsCount());
-	objComponent.activate();
-	objComponent.addObject(trngl);
-	objComponent.loadBuffer();
-
-	ColorTriangle clrTr(
-		Vertex(Point3D(0, 0.5, 0.0), Color(1.0f, 0.0f, 0.0f, 1.0f)),
-		Vertex(Point3D(0.75, 0.75, 0.0), Color(0.0f, 1.0f, 0.0f, 1.0f)),
-		Vertex(Point3D(0.5, 0, 0), Color(0.0f, 0.0f, 1.0f, 1.0f))
-	);
-
-	unsigned int stride = Triangle::coordinateComponentsPerVertex + ColorTriangle::colorComponentsPerVertex;
-	VertexAttribute coordinateAttributeForColorTriangle(0, 3, stride, 0);
-	VertexAttribute colorAttribute(1, 4, stride, 3);
-	ObjectComponent<ColorTriangle> objComponent2;
-	objComponent2.init(std::vector<VertexAttribute>{coordinateAttributeForColorTriangle, colorAttribute}, 3, clrTr.getComponentsCount());
-	objComponent2.activate();
-	objComponent2.addObject(clrTr);
-	objComponent2.loadBuffer();
-
-	TexturedTriangle texTri(
-		Point3D(0.0f, 0.75f, 0.0f),
-		TextureCoordinate(0.0f, 1.0f),
-		Point3D(-0.75f, -0.5f, 0.0f),
-		TextureCoordinate(1.0f, 1.0f),
-		Point3D(0.75f, -0.5f, 0.0f),
-		TextureCoordinate(0.0f, 0.0f)
-	);
-
-	stride = Triangle::coordinateComponentsPerVertex + TexturedTriangle::textureComponentsPerVertex;
-	VertexAttribute coordinateAttributeForTextureTriangle(0, Triangle::coordinateComponentsPerVertex, stride, 0);
-	VertexAttribute textureAttribute(1, TexturedTriangle::textureComponentsPerVertex, stride, Triangle::coordinateComponentsPerVertex);
-	ObjectComponent<TexturedTriangle> objComponentTexture;
-	objComponentTexture.init(
-		std::vector<VertexAttribute>{coordinateAttributeForTextureTriangle, textureAttribute},
-		3,
-		texTri.getComponentsCount()
-	);
-	objComponentTexture.activate();
-	objComponentTexture.addObject(texTri);
-	objComponentTexture.loadBuffer();
-
-
 	Rect rect(
-		Point3D(0.75, 0.75, 0.0f),
-		0.10, 0.10
+		Point3D(-0.0f, 0.0f, 0.0f),
+		0.5, 0.5
 	);
 	RectComponent rectComp;
 	rectComp.init(std::vector<VertexAttribute>{coordinateAttribute}, Rect::verticesPerRect, rect.getComponentsCount());
@@ -137,20 +76,6 @@ int main() {
 		if (keyboardInput.isKeyPressed(GLFW_KEY_ESCAPE)) {
 			window->close();
 		}
-
-		shaderProgram.use();
-		shaderProgram.setUniformF("offset", 0.5);
-		objComponent.activate();
-		objComponent.draw();
-
-		shaderProgram2.use();
-		objComponent2.activate();
-		objComponent2.draw();
-
-		textureShaders.use();
-		texture.bind(GL_TEXTURE0);
-		objComponentTexture.activate();
-		objComponentTexture.draw();
 
 		shaderProgram.use();
 		rectComp.activate();
