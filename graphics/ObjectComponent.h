@@ -16,7 +16,7 @@ template <typename T>
 class ObjectComponent
 {
 public:
-	void init(
+	virtual void init(
 		std::vector<VertexAttribute> attributes,
 		unsigned int verticesPerObject,
 		unsigned int componentsPerObject
@@ -33,12 +33,12 @@ public:
 		}
 	}
 
-	void activate() {
+	virtual void activate() {
 		this->vao.bind();
 		this->vbo.bind();
 	}
 
-	void loadBuffer() {
+	virtual void loadBuffer() {
 		unsigned int totalComponentsCount = componentsPerObject * objects.size();
 		float* buffer = new float[totalComponentsCount];
 
@@ -53,21 +53,16 @@ public:
 			delete[] components;
 		}
 
-		for (int i = 0; i < totalComponentsCount; i++) {
-			std::cout << buffer[i] << " ";
-		}
-		std::cout << std::endl;
-
 		vbo.fillBuffer(buffer, totalComponentsCount);
 		delete[] buffer;
 	}
 
-	void draw() {
+	virtual void draw() {
 		// GL_Triangles - hardcoded...fix
 		glDrawArrays(GL_TRIANGLES, 0, verticesPerObject * objects.size());
 	}
 
-	void deactivate() {
+	virtual void deactivate() {
 		this->vbo.unbind();
 	}
 
@@ -77,7 +72,7 @@ public:
 		return objPtr;
 	}
 
-	~ObjectComponent() {
+	virtual ~ObjectComponent() {
 		deactivate();
 	}
 private:

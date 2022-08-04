@@ -29,6 +29,7 @@
 #include "models/TexturedTriangle.h"
 
 #include "utils/TextureComponent.h"
+#include "graphics/RectComponent.h"
 
 const int width = 800;
 const int height = 600;
@@ -97,7 +98,7 @@ int main() {
 		Vertex(Point3D(0.5, 0, 0), Color(0.0f, 0.0f, 1.0f, 1.0f))
 	);
 
-	unsigned int stride = 7; // 3 for coordinates and 4 for color
+	unsigned int stride = Triangle::coordinateComponentsPerVertex + ColorTriangle::colorComponentsPerVertex;
 	VertexAttribute coordinateAttributeForColorTriangle(0, 3, stride, 0);
 	VertexAttribute colorAttribute(1, 4, stride, 3);
 	ObjectComponent<ColorTriangle> objComponent2;
@@ -107,11 +108,11 @@ int main() {
 	objComponent2.loadBuffer();
 
 	TexturedTriangle texTri(
-		Point3D(0.0f, 0.5f, 0.0f),
+		Point3D(0.0f, 0.75f, 0.0f),
 		TextureCoordinate(0.0f, 1.0f),
-		Point3D(-0.5f, -0.5f, 0.0f),
+		Point3D(-0.75f, -0.5f, 0.0f),
 		TextureCoordinate(1.0f, 1.0f),
-		Point3D(0.5f, -0.5f, 0.0f),
+		Point3D(0.75f, -0.5f, 0.0f),
 		TextureCoordinate(0.0f, 0.0f)
 	);
 
@@ -127,6 +128,17 @@ int main() {
 	objComponentTexture.activate();
 	objComponentTexture.addObject(texTri);
 	objComponentTexture.loadBuffer();
+
+
+	Rect rect(
+		Point3D(0.75, 0.75, 0.0f),
+		0.10, 0.10
+	);
+	RectComponent rectComp;
+	rectComp.init(std::vector<VertexAttribute>{coordinateAttribute}, Rect::verticesPerRect, rect.getComponentsCount());
+	rectComp.activate();
+	rectComp.addObject(rect);
+	rectComp.loadBuffer();
 
 	while (!window->shouldClose()) {
 		window->clear();
@@ -148,6 +160,10 @@ int main() {
 		texture.bind(GL_TEXTURE0);
 		objComponentTexture.activate();
 		objComponentTexture.draw();
+
+		shaderProgram.use();
+		rectComp.activate();
+		rectComp.draw();
 
 		window->swapBuffers();
 		graphics.pollEvents();

@@ -2,12 +2,13 @@
 
 #include "TypeDefs.h"
 #include "Object.h"
+#include "Triangle.h"
 
 struct Rect : public Object {
 	Rect(Point3D origin, float width, float height) : origin(origin), width(width), height(height) {}
 
-	float* toVertexArray(unsigned int& size) const {
-		float* arr = new float[12];
+	float* toVertexArray() const {
+		float* arr = new float[getComponentsCount()];
 
 		arr[0] = origin.x;
 		arr[1] = origin.y;
@@ -25,11 +26,16 @@ struct Rect : public Object {
 		arr[10] = origin.y + height;
 		arr[11] = origin.z;
 
-		size = 12;
 		return arr;
+	}
+
+	unsigned int getComponentsCount() const {
+		return verticesPerRect * Triangle::coordinateComponentsPerVertex;
 	}
 
 	Point3D origin;
 	float width;
 	float height;
+
+	static const unsigned int verticesPerRect = 4;
 };
