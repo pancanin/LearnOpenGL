@@ -9,14 +9,14 @@ void ShaderProgram::init()
 	shaderProgram = glCreateProgram();
 }
 
-void ShaderProgram::attachVertexShader(const char* shaderSourceCode)
+void ShaderProgram::attachVertexShader(const std::string& shaderName)
 {
-	attachShader(GL_VERTEX_SHADER, shaderSourceCode);
+	attachShader(GL_VERTEX_SHADER, shaderLoader.load(shaderName).data());
 }
 
-void ShaderProgram::attachFragmentShader(const char* shaderSourceCode)
+void ShaderProgram::attachFragmentShader(const std::string& shaderName)
 {
-	attachShader(GL_FRAGMENT_SHADER, shaderSourceCode);
+	attachShader(GL_FRAGMENT_SHADER, shaderLoader.load(shaderName).data());
 }
 
 void ShaderProgram::attachShader(unsigned int shaderType, const char* shaderSourceCode) {

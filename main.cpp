@@ -44,26 +44,19 @@ int main() {
 
 	graphics.loadFunctionDefinitions();
 
-	ShaderLoader loader;
-
-	std::string vertexShaderSource = loader.load("simple_vertex");
-	std::string fragmentShaderSource = loader.load("simple_fragment");
-
 	ShaderProgram shaderProgram;
 	shaderProgram.init();
 
-	shaderProgram.attachVertexShader(vertexShaderSource.data());
-	shaderProgram.attachFragmentShader(fragmentShaderSource.data());
+	shaderProgram.attachVertexShader("simple_vertex");
+	shaderProgram.attachFragmentShader("simple_fragment");
 	shaderProgram.link();
 	shaderProgram.use();
 
-	std::string colorVertexShader = loader.load("color_vertex");
-	std::string fragmentShaderSource2 = loader.load("fragment_2");
 	ShaderProgram shaderProgram2;
 	shaderProgram2.init();
 
-	shaderProgram2.attachVertexShader(colorVertexShader.data());
-	shaderProgram2.attachFragmentShader(fragmentShaderSource2.data());
+	shaderProgram2.attachVertexShader("color_vertex");
+	shaderProgram2.attachFragmentShader("fragment_2");
 	shaderProgram2.link();
 
 	TextureComponent texture;
@@ -71,12 +64,10 @@ int main() {
 	texture.load("assets/container.jpg");
 	texture.bind(GL_TEXTURE0);
 
-	std::string textureVertexShaderSource = loader.load("texture_vertex");
-	std::string textureFragmentShaderSource = loader.load("texture_fragment");
 	ShaderProgram textureShaders;
 	textureShaders.init();
-	textureShaders.attachVertexShader(textureVertexShaderSource.data());
-	textureShaders.attachFragmentShader(textureFragmentShaderSource.data());
+	textureShaders.attachVertexShader("texture_vertex");
+	textureShaders.attachFragmentShader("texture_fragment");
 	textureShaders.link();
 
 	KeyboardInput keyboardInput;

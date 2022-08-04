@@ -5,23 +5,26 @@
 
 #include "../libs/glm/glm.hpp"
 
+#include "../utils/ShaderLoader.h"
+
 /*
 * A shader program is a configuration of vertex, fragment and optionally geometry shader.
 * We can load the shaders into the program and link them.
-* Later when we need to use the shaders we call use().
+* Later when we need to use/activate the shaders we call use(). That way we can toggle between shader sets.
 */
 class ShaderProgram
 {
 public:
 	void init();
-	void attachVertexShader(const char* shaderSourceCode);
-	void attachFragmentShader(const char* shaderSourceCode);
+	void attachVertexShader(const std::string& shaderName);
+	void attachFragmentShader(const std::string& shaderName);
 	void link();
 	void use();
 	void setUniformMat4(const std::string& uniformVarName, const glm::mat4& value);
 	void setUniformVec4(const std::string& uniformVarName, const glm::vec4& value);
 	void setUniformF(const std::string& uniformVarName, float value);
 private:
+	ShaderLoader shaderLoader;
 	unsigned int shaderProgram;
 	std::unordered_map<unsigned int, unsigned int> shaderTypeToShaderId;
 
