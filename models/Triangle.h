@@ -25,7 +25,7 @@ struct Triangle : public Object {
 	}
 
 	virtual unsigned int getComponentsCount() const {
-		return 9;
+		return verticesPerTriangle * coordinateComponentsPerVertex;
 	}
 
 	Point3D p1;
@@ -33,4 +33,5 @@ struct Triangle : public Object {
 	Point3D p3;
 
 	static const unsigned int verticesPerTriangle = 3;
+	static const unsigned int coordinateComponentsPerVertex = 3;
 };

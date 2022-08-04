@@ -53,6 +53,11 @@ public:
 			delete[] components;
 		}
 
+		for (int i = 0; i < totalComponentsCount; i++) {
+			std::cout << buffer[i] << " ";
+		}
+		std::cout << std::endl;
+
 		vbo.fillBuffer(buffer, totalComponentsCount);
 		delete[] buffer;
 	}

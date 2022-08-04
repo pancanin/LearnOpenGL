@@ -3,7 +3,7 @@
 #include "TypeDefs.h"
 #include "Triangle.h"
 
-struct TexturedTriangle : Triangle
+struct TexturedTriangle : private Triangle
 {
 	TexturedTriangle(Point3D p1, TextureCoordinate t1,
 		Point3D p2, TextureCoordinate t2,

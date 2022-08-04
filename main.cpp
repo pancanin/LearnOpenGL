@@ -65,6 +65,11 @@ int main() {
 	shaderProgram2.attachFragmentShader(fragmentShaderSource2.data());
 	shaderProgram2.link();
 
+	TextureComponent texture;
+	texture.init();
+	texture.load("assets/container.jpg");
+	texture.bind(GL_TEXTURE0);
+
 	std::string textureVertexShaderSource = loader.load("texture_vertex");
 	std::string textureFragmentShaderSource = loader.load("texture_fragment");
 	ShaderProgram textureShaders;
@@ -72,11 +77,6 @@ int main() {
 	textureShaders.attachVertexShader(textureVertexShaderSource.data());
 	textureShaders.attachFragmentShader(textureFragmentShaderSource.data());
 	textureShaders.link();
-
-	TextureComponent texture;
-	texture.init();
-	texture.load("assets/container.jpg");
-	texture.bind(GL_TEXTURE0);
 
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
@@ -107,17 +107,17 @@ int main() {
 	objComponent2.loadBuffer();
 
 	TexturedTriangle texTri(
-		Point3D(-1.0f, 1.0f, 0.0f),
+		Point3D(0.0f, 0.5f, 0.0f),
 		TextureCoordinate(0.0f, 1.0f),
-		Point3D(0.0f, 1.0f, 0.0f),
-		TextureCoordinate(0.0f, 0.0f),
-		Point3D(0.0f, 0.0f, 0.0f),
-		TextureCoordinate(1.0f, 1.0f)
+		Point3D(-0.5f, -0.5f, 0.0f),
+		TextureCoordinate(1.0f, 1.0f),
+		Point3D(0.5f, -0.5f, 0.0f),
+		TextureCoordinate(0.0f, 0.0f)
 	);
 
-	stride = 6; // 3 for coordinates and 2 for texture
-	VertexAttribute coordinateAttributeForTextureTriangle(0, 3, stride, 0);
-	VertexAttribute textureAttribute(1, 2, stride, 3);
+	stride = Triangle::coordinateComponentsPerVertex + TexturedTriangle::textureComponentsPerVertex;
+	VertexAttribute coordinateAttributeForTextureTriangle(0, Triangle::coordinateComponentsPerVertex, stride, 0);
+	VertexAttribute textureAttribute(1, TexturedTriangle::textureComponentsPerVertex, stride, Triangle::coordinateComponentsPerVertex);
 	ObjectComponent<TexturedTriangle> objComponentTexture;
 	objComponentTexture.init(
 		std::vector<VertexAttribute>{coordinateAttributeForTextureTriangle, textureAttribute},
@@ -145,6 +145,7 @@ int main() {
 		objComponent2.draw();
 
 		textureShaders.use();
+		texture.bind(GL_TEXTURE0);
 		objComponentTexture.activate();
 		objComponentTexture.draw();
 
