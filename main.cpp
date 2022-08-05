@@ -63,8 +63,6 @@ int main() {
 	myFaceTexture.load("assets/face.png");
 	myFaceTexture.bind(GL_TEXTURE1);
 	shaderProgram.setInt("texture2", 1);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
@@ -79,12 +77,23 @@ int main() {
 	rectComp.addObject(rect);
 	rectComp.loadBuffer();
 
+	float blendStep = 0.0001;
+	float blend = 0.2;
+
 	while (!window->shouldClose()) {
 		window->clear();
 
 		if (keyboardInput.isKeyPressed(GLFW_KEY_ESCAPE)) {
 			window->close();
 		}
+		else if (keyboardInput.isKeyPressed(GLFW_KEY_UP)) {
+			blend += blendStep;
+		}
+		else if (keyboardInput.isKeyPressed(GLFW_KEY_DOWN)) {
+			blend -= blendStep;
+		}
+		std::cout << blend << std::endl;
+		shaderProgram.setUniformF("blend", blend);
 
 		shaderProgram.use();
 		rectComp.activate();
