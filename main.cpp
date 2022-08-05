@@ -77,22 +77,14 @@ int main() {
 	rectComp.addObject(rect);
 	rectComp.loadBuffer();
 
-	float blendStep = 0.0001;
-	float blend = 0.2;
-
 	while (!window->shouldClose()) {
 		window->clear();
 
 		if (keyboardInput.isKeyPressed(GLFW_KEY_ESCAPE)) {
 			window->close();
 		}
-		else if (keyboardInput.isKeyPressed(GLFW_KEY_UP)) {
-			blend += blendStep;
-		}
-		else if (keyboardInput.isKeyPressed(GLFW_KEY_DOWN)) {
-			blend -= blendStep;
-		}
-		std::cout << blend << std::endl;
+
+		float blend = (sin(glfwGetTime()) * 0.5) + 0.5f;
 		shaderProgram.setUniformF("blend", blend);
 
 		shaderProgram.use();
