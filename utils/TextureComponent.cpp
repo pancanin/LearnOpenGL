@@ -7,12 +7,12 @@
 void TextureComponent::init()
 {
 	glGenTextures(1, &id);
+	stbi_set_flip_vertically_on_load(true);
 }
 
 void TextureComponent::load(const std::string& file)
 {
 	data = stbi_load(file.c_str(), &width, &height, &nChannels, 0);
-
 	hasAlpha = file.find(".png") != std::string::npos;
 }
 
@@ -31,5 +31,6 @@ TextureComponent::~TextureComponent()
 {
 	if (data != nullptr) {
 		stbi_image_free(data);
+		data = nullptr;
 	}
 }

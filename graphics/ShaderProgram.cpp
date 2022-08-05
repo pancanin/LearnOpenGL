@@ -60,3 +60,8 @@ void ShaderProgram::setUniformF(const std::string& uniformVarName, float value)
 {
 	glUniform1f(findLocation(uniformVarName), value);
 }
+
+void ShaderProgram::setInt(const std::string& uniformVarName, unsigned int value)
+{
+	glUniform1i(findLocation(uniformVarName), value);
+}

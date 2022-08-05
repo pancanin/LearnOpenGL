@@ -50,11 +50,19 @@ int main() {
 	shaderProgram.attachVertexShader("texture_vertex");
 	shaderProgram.attachFragmentShader("texture_fragment");
 	shaderProgram.link();
+	shaderProgram.use();
 
 	TextureComponent texture;
 	texture.init();
 	texture.load("assets/container.jpg");
 	texture.bind(GL_TEXTURE0);
+	shaderProgram.setInt("texture1", 0);
+
+	TextureComponent myFaceTexture;
+	myFaceTexture.init();
+	myFaceTexture.load("assets/face.png");
+	myFaceTexture.bind(GL_TEXTURE1);
+	shaderProgram.setInt("texture2", 1);
 
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);

@@ -23,6 +23,7 @@ public:
 	void setUniformMat4(const std::string& uniformVarName, const glm::mat4& value);
 	void setUniformVec4(const std::string& uniformVarName, const glm::vec4& value);
 	void setUniformF(const std::string& uniformVarName, float value);
+	void setInt(const std::string& uniformVarName, unsigned int value);
 private:
 	ShaderLoader shaderLoader;
 	unsigned int shaderProgram;

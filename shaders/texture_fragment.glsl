@@ -4,9 +4,10 @@ out vec4 FragColor;
 in vec2 TextureCoords;
 in vec4 position;
 
-uniform sampler2D ourAutomaticallyAttachedTexture;
+uniform sampler2D texture1;
+uniform sampler2D texture2;
 
 void main()
 {
-    FragColor = texture(ourAutomaticallyAttachedTexture, TextureCoords) * (position + vec4(1.0, 1.0, 1.0, 1.0f));
+    FragColor = mix(texture(texture1, TextureCoords), texture(texture2, TextureCoords), 0.2);
 }
