@@ -8,11 +8,7 @@ class RectComponent : public ObjectComponent<Rect>
 public:
 	~RectComponent();
 
-	void init(
-		std::vector<VertexAttribute> attributes,
-		unsigned int verticesPerObject,
-		unsigned int componentsPerObject
-	) override;
+	void init();
 
 	void activate() override;
 

@@ -2,36 +2,24 @@
 
 #include "TypeDefs.h"
 #include "Object.h"
+#include "VertexAttribute.h"
 
 struct Triangle : public Object {
-	Triangle(Point3D p1, Point3D p2, Point3D p3) : p1(p1), p2(p2), p3(p3) {}
+	Triangle(Point3D p1, Point3D p2, Point3D p3);
 
-	virtual float* toVertexArray() const override {
-		float* arr = new float[getComponentsCount()];
+	virtual float* toVertexArray() const override;
 
-		arr[0] = p1.x;
-		arr[1] = p1.y;
-		arr[2] = p1.z;
+	static unsigned int getComponentsCount();
 
-		arr[3] = p2.x;
-		arr[4] = p2.y;
-		arr[5] = p2.z;
-
-		arr[6] = p3.x;
-		arr[7] = p3.y;
-		arr[8] = p3.z;
-
-		return arr;
-	}
-
-	virtual unsigned int getComponentsCount() const {
-		return verticesPerTriangle * coordinateComponentsPerVertex;
-	}
+	static std::vector<VertexAttribute> getAttributes();
 
 	Point3D p1;
 	Point3D p2;
 	Point3D p3;
 
 	static const unsigned int verticesPerTriangle = 3;
-	static const unsigned int coordinateComponentsPerVertex = 3;
+	
+protected:
+	static VertexAttribute coordinateAttr;
 };
+

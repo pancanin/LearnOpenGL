@@ -152,6 +152,8 @@
     <ClCompile Include="graphics\VertexBufferObject.cpp" />
     <ClCompile Include="input\KeyboardInput.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="models\Rect.cpp" />
+    <ClCompile Include="models\Triangle.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="ui\Window.cpp" />
     <ClCompile Include="utils\ShaderLoader.cpp" />

@@ -59,18 +59,12 @@ int main() {
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
 
-	int stride = Triangle::coordinateComponentsPerVertex + Rect::textureCoordsPerVertex;
-	VertexAttribute coordinateAttribute(0, Triangle::coordinateComponentsPerVertex, stride, 0);
-	VertexAttribute textureCoordinatesAttr(1, Rect::textureCoordsPerVertex, stride, Triangle::coordinateComponentsPerVertex);
 	Rect rect(
 		Point3D(-0.25f, 0.25f, 0.0f),
 		0.5, 0.5
 	);
 	RectComponent rectComp;
-	rectComp.init(
-		std::vector<VertexAttribute>{coordinateAttribute, textureCoordinatesAttr},
-		Rect::verticesPerRect, rect.getComponentsCount()
-	);
+	rectComp.init();
 	rectComp.activate();
 	rectComp.addObject(rect);
 	rectComp.loadBuffer();

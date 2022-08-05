@@ -1,11 +1,7 @@
 #include "RectComponent.h"
 
-void RectComponent::init(
-	std::vector<VertexAttribute> attributes,
-	unsigned int verticesPerObject,
-	unsigned int componentsPerObject
-) {
-	ObjectComponent<Rect>::init(attributes, verticesPerObject, componentsPerObject);
+void RectComponent::init() {
+	ObjectComponent<Rect>::init(Rect::getAttributes(), Rect::verticesPerRect, Rect::getComponentsCount());
 	elementBuffer.init(GL_ELEMENT_ARRAY_BUFFER);
 }
 
