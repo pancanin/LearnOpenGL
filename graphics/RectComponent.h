@@ -25,8 +25,8 @@ private:
 	VertexBufferObject elementBuffer;
 	static const unsigned int indicesCount = 6;
 	unsigned int indices[indicesCount] = {
-		0, 1, 3,
-		1, 2, 3
+		1, 2, 3,
+		0, 1, 3
 	};
 };
 

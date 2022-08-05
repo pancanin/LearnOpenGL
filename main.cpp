@@ -47,25 +47,30 @@ int main() {
 	ShaderProgram shaderProgram;
 	shaderProgram.init();
 
-	shaderProgram.attachVertexShader("simple_vertex");
-	shaderProgram.attachFragmentShader("simple_fragment");
+	shaderProgram.attachVertexShader("texture_vertex");
+	shaderProgram.attachFragmentShader("texture_fragment");
 	shaderProgram.link();
 
 	TextureComponent texture;
 	texture.init();
-	texture.load("assets/face.png");
+	texture.load("assets/container.jpg");
 	texture.bind(GL_TEXTURE0);
 
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
 
-	VertexAttribute coordinateAttribute(0, 3, 3, 0);
+	int stride = Triangle::coordinateComponentsPerVertex + Rect::textureCoordsPerVertex;
+	VertexAttribute coordinateAttribute(0, Triangle::coordinateComponentsPerVertex, stride, 0);
+	VertexAttribute textureCoordinatesAttr(1, Rect::textureCoordsPerVertex, stride, Triangle::coordinateComponentsPerVertex);
 	Rect rect(
-		Point3D(-0.0f, 0.0f, 0.0f),
+		Point3D(-0.25f, 0.25f, 0.0f),
 		0.5, 0.5
 	);
 	RectComponent rectComp;
-	rectComp.init(std::vector<VertexAttribute>{coordinateAttribute}, Rect::verticesPerRect, rect.getComponentsCount());
+	rectComp.init(
+		std::vector<VertexAttribute>{coordinateAttribute, textureCoordinatesAttr},
+		Rect::verticesPerRect, rect.getComponentsCount()
+	);
 	rectComp.activate();
 	rectComp.addObject(rect);
 	rectComp.loadBuffer();
