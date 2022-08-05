@@ -63,13 +63,15 @@ int main() {
 	myFaceTexture.load("assets/face.png");
 	myFaceTexture.bind(GL_TEXTURE1);
 	shaderProgram.setInt("texture2", 1);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	KeyboardInput keyboardInput;
 	keyboardInput.init(window);
 
 	Rect rect(
-		Point3D(-0.25f, 0.25f, 0.0f),
-		0.5, 0.5
+		Point3D(-0.75f, 0.75f, 0.0f),
+		1.5, 1.5
 	);
 	RectComponent rectComp;
 	rectComp.init();
