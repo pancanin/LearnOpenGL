@@ -18,7 +18,7 @@ protected:
 	virtual void onStop() = 0;
 	void loadTexture(int textureId, const std::string& pathToTexture) const;
 
-	std::shared_ptr<Rect> createRect(Point3D origin, unsigned int width, unsigned int height);
+	std::shared_ptr<Rect> createRect(Point3D origin, float width, float height);
 
 	ShaderProgram shaderProgram;
 	KeyboardInput keyboardInput;

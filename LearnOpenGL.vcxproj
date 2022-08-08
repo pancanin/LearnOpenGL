@@ -147,7 +147,6 @@
     <ClCompile Include="engine\Engine.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
-    <ClCompile Include="graphics\ObjectComponent.cpp" />
     <ClCompile Include="graphics\RectComponent.cpp" />
     <ClCompile Include="graphics\ShaderProgram.cpp" />
     <ClCompile Include="graphics\VertexArrayObject.cpp" />

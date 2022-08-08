@@ -45,9 +45,6 @@
     <ClCompile Include="graphics\VertexArrayObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\ObjectComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="utils\TextureComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

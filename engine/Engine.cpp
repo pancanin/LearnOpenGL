@@ -46,7 +46,7 @@ void Engine::loadTexture(int textureId, const std::string& pathToTexture) const
 	shaderProgram.setInt(textureVarPrefix + std::to_string(textureId), textureId);
 }
 
-std::shared_ptr<Rect> Engine::createRect(Point3D origin, unsigned int width, unsigned int height)
+std::shared_ptr<Rect> Engine::createRect(Point3D origin, float width, float height)
 {
 	rectComp.activate();
 	auto rect = rectComp.addObject(Rect(origin, width, height));
