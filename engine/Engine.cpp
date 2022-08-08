@@ -5,6 +5,7 @@
 void Engine::init(int width, int height, const std::string& label, const Color& clearScreenColor)
 {
 	graphics.init();
+	window = std::make_shared<Window>();
 	window->init(width, height, label, clearScreenColor);
 	window->makeActive();
 	graphics.loadFunctionDefinitions();
@@ -48,6 +49,8 @@ void Engine::loadTexture(int textureId, const std::string& pathToTexture) const
 std::shared_ptr<Rect> Engine::createRect(Point3D origin, unsigned int width, unsigned int height)
 {
 	rectComp.activate();
-	rectComp.addObject(Rect(origin, width, height));
+	auto rect = rectComp.addObject(Rect(origin, width, height));
 	rectComp.loadBuffer();
+
+	return rect;
 }

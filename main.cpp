@@ -31,69 +31,14 @@
 #include "utils/TextureComponent.h"
 #include "graphics/RectComponent.h"
 
+#include "arcanoid/Arcanoid.h"
+
 const int width = 800;
 const int height = 600;
 
 int main() {
-	Graphics graphics;
-	graphics.init();
-
-	std::shared_ptr<Window> window = std::make_shared<Window>();
-	window->init(width, height, "Hiii, openGL!");
-	window->makeActive();
-
-	graphics.loadFunctionDefinitions();
-
-	ShaderProgram shaderProgram;
-	shaderProgram.init();
-
-	shaderProgram.attachVertexShader("texture_vertex");
-	shaderProgram.attachFragmentShader("texture_fragment");
-	shaderProgram.link();
-	shaderProgram.use();
-
-	TextureComponent texture;
-	texture.init();
-	texture.load("assets/container.jpg");
-	texture.bind(GL_TEXTURE0);
-	shaderProgram.setInt("texture1", 0);
-
-	TextureComponent myFaceTexture;
-	myFaceTexture.init();
-	myFaceTexture.load("assets/face.png");
-	myFaceTexture.bind(GL_TEXTURE1);
-	shaderProgram.setInt("texture2", 1);
-
-	KeyboardInput keyboardInput;
-	keyboardInput.init(window);
-
-	Rect rect(
-		Point3D(-0.75f, 0.75f, 0.0f),
-		1.5, 1.5
-	);
-	RectComponent rectComp;
-	rectComp.init();
-	rectComp.activate();
-	rectComp.addObject(rect);
-	rectComp.loadBuffer();
-
-	while (!window->shouldClose()) {
-		window->clear();
-
-		if (keyboardInput.isKeyPressed(GLFW_KEY_ESCAPE)) {
-			window->close();
-		}
-
-		float blend = (sin(glfwGetTime()) * 0.5) + 0.5f;
-		shaderProgram.setUniformF("blend", blend);
-
-		shaderProgram.use();
-		rectComp.activate();
-		rectComp.draw();
-
-		window->swapBuffers();
-		graphics.pollEvents();
-	}
+	Arcanoid arcanoidGame;
+	arcanoidGame.start();
 
 	return 0;
 }
