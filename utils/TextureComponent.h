@@ -16,5 +16,6 @@ private:
 	unsigned int id;
 	unsigned char* data;
 	bool hasAlpha;
-};
 
+	void deinit();
+};

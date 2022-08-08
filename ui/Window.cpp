@@ -4,10 +4,11 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-bool Window::init(int width, int height, const std::string& label)
+bool Window::init(int width, int height, const std::string& label, const Color& clearScreenColor)
 {
 	this->width = width;
 	this->height = height;
+	this->clearScreenColor = clearScreenColor;
 
 	window = glfwCreateWindow(width, height, label.c_str(), NULL, NULL);
 	
@@ -28,7 +29,7 @@ void Window::makeActive() const
 
 void Window::clear() const
 {
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(clearScreenColor.r, clearScreenColor.g, clearScreenColor.b, clearScreenColor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 

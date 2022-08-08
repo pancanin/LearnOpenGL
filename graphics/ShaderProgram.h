@@ -20,16 +20,16 @@ public:
 	void attachFragmentShader(const std::string& shaderName);
 	void link();
 	void use();
-	void setUniformMat4(const std::string& uniformVarName, const glm::mat4& value);
-	void setUniformVec4(const std::string& uniformVarName, const glm::vec4& value);
-	void setUniformF(const std::string& uniformVarName, float value);
-	void setInt(const std::string& uniformVarName, unsigned int value);
+	void setUniformMat4(const std::string& uniformVarName, const glm::mat4& value) const;
+	void setUniformVec4(const std::string& uniformVarName, const glm::vec4& value) const;
+	void setUniformF(const std::string& uniformVarName, float value) const;
+	void setInt(const std::string& uniformVarName, unsigned int value) const;
 private:
 	ShaderLoader shaderLoader;
 	unsigned int shaderProgram;
 	std::unordered_map<unsigned int, unsigned int> shaderTypeToShaderId;
 
 	void attachShader(unsigned int shaderType, const char* shaderSourceCode);
-	int findLocation(const std::string& uniformVarName);
+	int findLocation(const std::string& uniformVarName) const;
 };
 

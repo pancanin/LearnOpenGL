@@ -3,6 +3,8 @@
 #include <string>
 #include <memory>
 
+#include "../models/TypeDefs.h"
+
 struct GLFWwindow;
 
 class Window
@@ -10,7 +12,7 @@ class Window
 public:
 	~Window();
 
-	bool init(int width, int height, const std::string& label);
+	bool init(int width, int height, const std::string& label, const Color& clearScreenColor = Color(0.2f, 0.3f, 0.3f, 1.0f));
 	void makeActive() const;
 	void clear() const;
 	void close() const;
@@ -23,6 +25,7 @@ public:
 	int getHeight() const { return height; }
 private:
 	GLFWwindow* window;
+	Color clearScreenColor;
 	int width;
 	int height;
 	std::string label;

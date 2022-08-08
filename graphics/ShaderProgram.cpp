@@ -6,6 +6,7 @@
 
 void ShaderProgram::init()
 {
+	shaderTypeToShaderId.clear();
 	shaderProgram = glCreateProgram();
 }
 
@@ -27,7 +28,7 @@ void ShaderProgram::attachShader(unsigned int shaderType, const char* shaderSour
 	glAttachShader(shaderProgram, shaderTypeToShaderId[shaderType]);
 }
 
-int ShaderProgram::findLocation(const std::string& uniformVarName)
+int ShaderProgram::findLocation(const std::string& uniformVarName) const
 {
 	return glGetUniformLocation(shaderProgram, uniformVarName.c_str());
 }
@@ -46,22 +47,22 @@ void ShaderProgram::use()
 	glUseProgram(shaderProgram);
 }
 
-void ShaderProgram::setUniformMat4(const std::string& uniformVarName, const glm::mat4& value)
+void ShaderProgram::setUniformMat4(const std::string& uniformVarName, const glm::mat4& value) const
 {
 	glUniformMatrix4fv(findLocation(uniformVarName), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void ShaderProgram::setUniformVec4(const std::string& uniformVarName, const glm::vec4& value)
+void ShaderProgram::setUniformVec4(const std::string& uniformVarName, const glm::vec4& value) const
 {
 	glUniform4f(findLocation(uniformVarName), value.x, value.y, value.z, value.a);
 }
 
-void ShaderProgram::setUniformF(const std::string& uniformVarName, float value)
+void ShaderProgram::setUniformF(const std::string& uniformVarName, float value) const
 {
 	glUniform1f(findLocation(uniformVarName), value);
 }
 
-void ShaderProgram::setInt(const std::string& uniformVarName, unsigned int value)
+void ShaderProgram::setInt(const std::string& uniformVarName, unsigned int value) const
 {
 	glUniform1i(findLocation(uniformVarName), value);
 }

@@ -23,14 +23,19 @@ void TextureComponent::bind(int activeTexture)
 	glBindTexture(GL_TEXTURE_2D, id);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
-	stbi_image_free(data);
-	data = nullptr;
+	
+	deinit();
 }
 
-TextureComponent::~TextureComponent()
+void TextureComponent::deinit()
 {
 	if (data != nullptr) {
 		stbi_image_free(data);
 		data = nullptr;
 	}
+}
+
+TextureComponent::~TextureComponent()
+{
+	deinit();
 }

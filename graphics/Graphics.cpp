@@ -5,7 +5,9 @@
 
 bool Graphics::init() const
 {
-	return glfwInit();
+	int initResult = glfwInit();
+	glfwSwapInterval(1); // V-Sync
+	return initResult;
 }
 
 bool Graphics::loadFunctionDefinitions() const
