@@ -1,12 +1,15 @@
 #include "Engine.h"
 
+#include "../libs/glm/glm.hpp"
+
 #include "../utils/TextureComponent.h"
+#include "../utils/MathUtils.h"
 
 void Engine::init(int width, int height, const std::string& label, const Color& clearScreenColor)
 {
 	graphics.init();
 	window = std::make_shared<Window>();
-	window->init(width, height, label, clearScreenColor);
+	window->init(width, height, label, glm::normalize(clearScreenColor));
 	window->makeActive();
 	graphics.loadFunctionDefinitions();
 	shaderProgram.init();
@@ -49,7 +52,13 @@ void Engine::loadTexture(int textureId, const std::string& pathToTexture) const
 std::shared_ptr<Rect> Engine::createRect(Point3D origin, float width, float height)
 {
 	rectComp.activate();
-	auto rect = rectComp.addObject(Rect(origin, width, height));
+	auto rect = rectComp.addObject(
+		Rect(
+			MathUtils::mapScreenToVertexCoordinates(origin, window->getWidth(), window->getHeight()),
+			width / window->getWidth(),
+			height / window->getHeight()
+		)
+	);
 	rectComp.loadBuffer();
 
 	return rect;

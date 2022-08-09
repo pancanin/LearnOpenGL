@@ -180,6 +180,7 @@
     <ClInclude Include="models\VertexAttribute.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ui\Window.h" />
+    <ClInclude Include="utils\MathUtils.h" />
     <ClInclude Include="utils\ShaderLoader.h" />
     <ClInclude Include="utils\TextureComponent.h" />
   </ItemGroup>

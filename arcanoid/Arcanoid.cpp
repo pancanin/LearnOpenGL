@@ -3,11 +3,11 @@
 #include "../models/TypeDefs.h"
 
 void Arcanoid::onStart() {
-	init(800, 600, "Arcanoid", Color(4.0/255, 44.0/255, 98.0/255, 1.0f));
+	init(screenWidth, screenHeight, title, screenClearColor);
 	shaderProgram.attachVertexShader("texture_vertex");
 	shaderProgram.attachFragmentShader("texture_fragment");
 
-	createRect(Point3D(0.0f, 0.0f, 0.0f), 0.1, 0.1);
+	createRect(Point3D(0.0f, 0.0f, 0.0f), 10, 10);
 }
 
 void Arcanoid::onUpdate() {

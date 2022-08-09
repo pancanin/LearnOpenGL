@@ -1,5 +1,7 @@
 #include "Rect.h"
 
+#include "../utils/MathUtils.h"
+
 Rect::Rect(Point3D origin, float width, float height) : origin(origin), width(width), height(height) {}
 
 float* Rect::toVertexArray() const {

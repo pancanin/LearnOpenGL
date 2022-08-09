@@ -7,7 +7,8 @@
 struct Rect : public Object {
 	Rect(Point3D origin, float width, float height);
 
-	float* toVertexArray() const;
+	float* toVertexArray() const override;
+
 	static unsigned int getComponentsCount();
 	static std::vector<VertexAttribute> getAttributes();
 
