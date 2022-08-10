@@ -60,9 +60,6 @@
     <ClCompile Include="arcanoid\Arcanoid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\objects\RectGameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="models\TexturedRect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

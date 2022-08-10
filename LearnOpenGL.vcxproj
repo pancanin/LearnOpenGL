@@ -147,7 +147,6 @@
     <ClCompile Include="attributes\RectAttributeStrategy.cpp" />
     <ClCompile Include="attributes\TexturedRectAttributeStrategy.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
-    <ClCompile Include="engine\objects\RectGameObject.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
     <ClCompile Include="graphics\ShaderProgram.cpp" />
