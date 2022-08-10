@@ -7,7 +7,7 @@ void Arcanoid::onStart() {
 	shaderProgram.attachVertexShader("texture_vertex");
 	shaderProgram.attachFragmentShader("texture_fragment");
 
-	createRect(Point3D(0.0f, 0.0f, 0.0f), 10, 10);
+	createRect(Point3D(0.0f, 0.0f, 0.0f), 100, 100, 0);
 }
 
 void Arcanoid::onUpdate() {

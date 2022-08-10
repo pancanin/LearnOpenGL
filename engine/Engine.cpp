@@ -19,6 +19,9 @@ void Engine::init(int width, int height, const std::string& label, const Color& 
 
 	rectComp.init(rectAttributeStrategy, rectSerialisationPtr);
 	rectComp.activate();
+
+	trectSerialisationPtr = std::make_shared<TexturedRectSerialisationStrategy>();
+	trectComp.init(trectAttributeStrategy, trectSerialisationPtr);
 }
 
 void Engine::start()
@@ -63,6 +66,22 @@ std::shared_ptr<Rect> Engine::createRect(Point3D origin, float width, float heig
 		)
 	);
 	rectComp.loadBuffer();
+
+	return rect;
+}
+
+std::shared_ptr<TexturedRect> Engine::createRect(Point3D origin, float width, float height, unsigned int textureId)
+{
+	trectComp.activate();
+	auto rect = trectComp.addObject(
+		TexturedRect(
+			MathUtils::mapScreenToVertexCoordinates(origin, window->getWidth(), window->getHeight()),
+			width / window->getWidth(),
+			height / window->getHeight(),
+			0
+		)
+	);
+	trectComp.loadBuffer();
 
 	return rect;
 }

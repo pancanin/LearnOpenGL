@@ -7,20 +7,41 @@
 #include "../attributes/AttributeStrategy.h"
 #include "../serialisation/SerialisationStrategy.h"
 
-class RectComponent : public ObjectComponent<Rect>
+template <typename RectType>
+class RectComponent : public ObjectComponent<RectType>
 {
 public:
-	~RectComponent();
+	void init(const AttributeStrategy& attributeStrategy, std::shared_ptr<SerialisationStrategy<RectType>> serialisationStragetyPtr) {
+		ObjectComponent<RectType>::init(
+			attributeStrategy.getAttributes(),
+			RectType::verticesPerRect,
+			serialisationStragetyPtr->componentsCountPerObject(),
+			serialisationStragetyPtr);
+		elementBuffer.init(GL_ELEMENT_ARRAY_BUFFER);
+	}
 
-	void init(const AttributeStrategy& attributeStrategy, std::shared_ptr<SerialisationStrategy<Rect>> serialisationStragetyPtr);
+	void activate() override {
+		ObjectComponent<RectType>::activate();
+		elementBuffer.bind();
+	}
 
-	void activate() override;
+	void loadBuffer() override {
+		ObjectComponent<RectType>::loadBuffer();
+		elementBuffer.fillBuffer(indices, indicesCount);
+	}
 
-	void loadBuffer() override;
-
-	void deactivate() override;
+	void deactivate() override {
+		ObjectComponent<RectType>::deactivate();
+		elementBuffer.unbind();
+	}
 	
-	void draw() override;
+	void draw() override {
+		glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, 0);
+	}
+
+	~RectComponent() {
+		deactivate();
+	}
 private:
 	VertexBufferObject elementBuffer;
 	static const unsigned int indicesCount = 6;

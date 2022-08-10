@@ -9,6 +9,8 @@
 #include "../graphics/RectComponent.h"
 #include "../attributes/RectAttributeStrategy.h"
 #include "../serialisation/RectSerialisationStrategy.h"
+#include "../attributes/TexturedRectAttributeStrategy.h"
+#include "../serialisation/TexturedRectSerialisationStrategy.h"
 
 class Engine {
 public:
@@ -21,6 +23,7 @@ protected:
 	void loadTexture(int textureId, const std::string& pathToTexture) const;
 
 	std::shared_ptr<Rect> createRect(Point3D origin, float width, float height);
+	std::shared_ptr<TexturedRect> createRect(Point3D origin, float width, float height, unsigned int textureId);
 
 	ShaderProgram shaderProgram;
 	KeyboardInput keyboardInput;
@@ -29,7 +32,11 @@ private:
 	Graphics graphics;
 	RectAttributeStrategy rectAttributeStrategy;
 	std::shared_ptr<RectSerialisationStrategy> rectSerialisationPtr;
-	RectComponent rectComp;
+	RectComponent<Rect> rectComp;
+
+	TexturedRectAttributeStrategy trectAttributeStrategy;
+	std::shared_ptr<TexturedRectSerialisationStrategy> trectSerialisationPtr;
+	RectComponent<TexturedRect> trectComp;
 
 	const std::string textureVarPrefix = "texture";
 };

@@ -150,7 +150,6 @@
     <ClCompile Include="engine\objects\RectGameObject.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
-    <ClCompile Include="graphics\RectComponent.cpp" />
     <ClCompile Include="graphics\ShaderProgram.cpp" />
     <ClCompile Include="graphics\VertexArrayObject.cpp" />
     <ClCompile Include="graphics\VertexBufferObject.cpp" />
