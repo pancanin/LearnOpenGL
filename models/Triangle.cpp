@@ -21,7 +21,7 @@ float* Triangle::toVertexArray() const {
 }
 
 unsigned int Triangle::getComponentsCount() {
-	return verticesPerTriangle * coordinateComponentsPerVertex;
+	return verticesPerTriangle;
 }
 
 std::vector<VertexAttribute> Triangle::getAttributes() {

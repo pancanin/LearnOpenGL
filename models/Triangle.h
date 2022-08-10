@@ -22,4 +22,3 @@ struct Triangle : public Object {
 protected:
 	static VertexAttribute coordinateAttr;
 };
-

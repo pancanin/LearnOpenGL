@@ -14,7 +14,10 @@ void Engine::init(int width, int height, const std::string& label, const Color& 
 	graphics.loadFunctionDefinitions();
 	shaderProgram.init();
 	keyboardInput.init(window);
-	rectComp.init();
+
+	rectSerialisationPtr = std::make_shared<RectSerialisationStrategy>();
+
+	rectComp.init(rectAttributeStrategy, rectSerialisationPtr);
 	rectComp.activate();
 }
 

@@ -1,7 +1,11 @@
 #include "RectComponent.h"
 
-void RectComponent::init() {
-	ObjectComponent<Rect>::init(Rect::getAttributes(), Rect::verticesPerRect, Rect::getComponentsCount());
+void RectComponent::init(const AttributeStrategy& attributeStrategy, std::shared_ptr<SerialisationStrategy<Rect>> serialisationStragetyPtr) {
+	ObjectComponent<Rect>::init(
+		attributeStrategy.getAttributes(),
+		Rect::verticesPerRect,
+		serialisationStragetyPtr->componentsCountPerObject(),
+		serialisationStragetyPtr);
 	elementBuffer.init(GL_ELEMENT_ARRAY_BUFFER);
 }
 

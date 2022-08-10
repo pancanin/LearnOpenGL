@@ -11,6 +11,7 @@
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
 #include "../models/VertexAttribute.h"
+#include "../serialisation/SerialisationStrategy.h"
 
 template <typename T>
 class ObjectComponent
@@ -19,10 +20,12 @@ public:
 	virtual void init(
 		std::vector<VertexAttribute> attributes,
 		unsigned int verticesPerObject,
-		unsigned int componentsPerObject
+		unsigned int componentsPerObject,
+		std::shared_ptr<SerialisationStrategy<T>> serialisationStragetyPtr
 		) {
 		this->verticesPerObject = verticesPerObject;
 		this->componentsPerObject = componentsPerObject;
+		this->serialisationStragetyPtr = serialisationStragetyPtr;
 		this->vbo.init(GL_ARRAY_BUFFER);
 		this->vao.init();
 		
@@ -46,7 +49,7 @@ public:
 
 		for (size_t idx = 0; idx < objects.size(); idx++) {
 			auto objPtr = objects[idx];
-			float* components = objPtr->toVertexArray();
+			float* components = serialisationStragetyPtr->serialise(*objPtr);
 
 			std::memcpy(buffer + offset, components, componentsPerObject * sizeof(float));
 			offset += componentsPerObject;
@@ -81,5 +84,5 @@ private:
 	VertexBufferObject vbo;
 	unsigned int verticesPerObject;
 	unsigned int componentsPerObject;
+	std::shared_ptr<SerialisationStrategy<T>> serialisationStragetyPtr;
 };
-

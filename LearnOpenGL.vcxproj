@@ -144,7 +144,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="arcanoid\Arcanoid.cpp" />
+    <ClCompile Include="attributes\RectAttributeStrategy.cpp" />
+    <ClCompile Include="attributes\TexturedRectAttributeStrategy.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
+    <ClCompile Include="engine\objects\RectGameObject.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
     <ClCompile Include="graphics\RectComponent.cpp" />
@@ -154,7 +157,10 @@
     <ClCompile Include="input\KeyboardInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="models\Rect.cpp" />
+    <ClCompile Include="models\TexturedRect.cpp" />
     <ClCompile Include="models\Triangle.cpp" />
+    <ClCompile Include="serialisation\RectSerialisationStrategy.cpp" />
+    <ClCompile Include="serialisation\TexturedRectSerialisationStrategy.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="ui\Window.cpp" />
     <ClCompile Include="utils\ShaderLoader.cpp" />
@@ -162,7 +168,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arcanoid\Arcanoid.h" />
+    <ClInclude Include="attributes\AttributeStrategy.h" />
+    <ClInclude Include="attributes\RectAttributeStrategy.h" />
+    <ClInclude Include="attributes\TexturedRectAttributeStrategy.h" />
     <ClInclude Include="engine\Engine.h" />
+    <ClInclude Include="engine\objects\GameObject.h" />
+    <ClInclude Include="engine\objects\RectGameObject.h" />
     <ClInclude Include="graphics\Graphics.h" />
     <ClInclude Include="graphics\ObjectComponent.h" />
     <ClInclude Include="graphics\RectComponent.h" />
@@ -173,11 +184,15 @@
     <ClInclude Include="models\ColorTriangle.h" />
     <ClInclude Include="models\Object.h" />
     <ClInclude Include="models\Rect.h" />
+    <ClInclude Include="models\TexturedRect.h" />
     <ClInclude Include="models\TexturedTriangle.h" />
     <ClInclude Include="models\Triangle.h" />
     <ClInclude Include="models\TypeDefs.h" />
     <ClInclude Include="models\Vertex.h" />
     <ClInclude Include="models\VertexAttribute.h" />
+    <ClInclude Include="serialisation\RectSerialisationStrategy.h" />
+    <ClInclude Include="serialisation\SerialisationStrategy.h" />
+    <ClInclude Include="serialisation\TexturedRectSerialisationStrategy.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ui\Window.h" />
     <ClInclude Include="utils\MathUtils.h" />

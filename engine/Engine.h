@@ -7,6 +7,8 @@
 #include "../graphics/ShaderProgram.h"
 #include "../input/KeyboardInput.h"
 #include "../graphics/RectComponent.h"
+#include "../attributes/RectAttributeStrategy.h"
+#include "../serialisation/RectSerialisationStrategy.h"
 
 class Engine {
 public:
@@ -25,6 +27,8 @@ protected:
 	std::shared_ptr<Window> window;
 private:
 	Graphics graphics;
+	RectAttributeStrategy rectAttributeStrategy;
+	std::shared_ptr<RectSerialisationStrategy> rectSerialisationPtr;
 	RectComponent rectComp;
 
 	const std::string textureVarPrefix = "texture";

@@ -63,6 +63,24 @@
     <ClCompile Include="arcanoid\Arcanoid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="engine\objects\RectGameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="models\TexturedRect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="attributes\RectAttributeStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="serialisation\RectSerialisationStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="serialisation\TexturedRectSerialisationStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="attributes\TexturedRectAttributeStrategy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -129,6 +147,33 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\MathUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\objects\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\objects\RectGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="models\TexturedRect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="attributes\AttributeStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="attributes\RectAttributeStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serialisation\RectSerialisationStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serialisation\SerialisationStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serialisation\TexturedRectSerialisationStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="attributes\TexturedRectAttributeStrategy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
