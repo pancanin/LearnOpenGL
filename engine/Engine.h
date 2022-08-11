@@ -29,15 +29,17 @@ protected:
 	ShaderProgram shaderProgram;
 	KeyboardInput keyboardInput;
 	std::shared_ptr<Window> window;
+	RectComponent<Rect> rectComp;
+	RectComponent<TexturedRect> trectComp;
 private:
 	Graphics graphics;
 	RectAttributeConfigurer rectAttributeConfigurer;
 	std::shared_ptr<RectBufferSerialiser> rectSerialisationPtr;
-	RectComponent<Rect> rectComp;
+	
 
 	TexturedRectAttributeConfigurer trectAttributeStrategy;
 	std::shared_ptr<TexturedRectBufferSerialiser> trectSerialisationPtr;
-	RectComponent<TexturedRect> trectComp;
+	
 	std::vector<std::shared_ptr<TextureComponent>> textures;
 
 	TextureComponent wallTexture;

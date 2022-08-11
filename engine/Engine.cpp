@@ -89,7 +89,6 @@ std::shared_ptr<TexturedRect> Engine::createRect(Point3D origin, float width, fl
 			textureId
 		)
 	);
-	trectComp.loadBuffer();
 
 	return rect;
 }
