@@ -1,6 +1,6 @@
-#include "TexturedRectSerialisationStrategy.h"
+#include "TexturedRectBufferSerialiser.h"
 
-float* TexturedRectSerialisationStrategy::serialise(const TexturedRect& o) const
+float* TexturedRectBufferSerialiser::serialise(const TexturedRect& o) const
 {
 	float* arr = new float[componentsCountPerObject()];
 
@@ -42,7 +42,7 @@ float* TexturedRectSerialisationStrategy::serialise(const TexturedRect& o) const
 	return arr;
 }
 
-unsigned int TexturedRectSerialisationStrategy::componentsCountPerObject() const
+unsigned int TexturedRectBufferSerialiser::componentsCountPerObject() const
 {
 	return 24; // TODO: Calculate this
 }

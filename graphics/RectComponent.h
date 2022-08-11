@@ -4,14 +4,14 @@
 
 #include "../models/Rect.h"
 #include "ObjectComponent.h"
-#include "../attributes/AttributeStrategy.h"
-#include "../serialisation/SerialisationStrategy.h"
+#include "../attributes/AttributeConfigurer.h"
+#include "../serialisation/BufferSerialiser.h"
 
 template <typename RectType>
 class RectComponent : public ObjectComponent<RectType>
 {
 public:
-	void init(const AttributeStrategy& attributeStrategy, std::shared_ptr<SerialisationStrategy<RectType>> serialisationStragetyPtr) {
+	void init(const AttributeConfigurer& attributeStrategy, std::shared_ptr<BufferSerialiser<RectType>> serialisationStragetyPtr) {
 		ObjectComponent<RectType>::init(
 			attributeStrategy.getAttributes(),
 			RectType::verticesPerRect,

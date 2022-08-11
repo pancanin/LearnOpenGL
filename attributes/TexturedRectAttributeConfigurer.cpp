@@ -1,6 +1,6 @@
-#include "TexturedRectAttributeStrategy.h"
+#include "TexturedRectAttributeConfigurer.h"
 
-std::vector<VertexAttribute> TexturedRectAttributeStrategy::getAttributes() const
+std::vector<VertexAttribute> TexturedRectAttributeConfigurer::getAttributes() const
 {
 	return std::vector<VertexAttribute> {
 		VertexAttribute(0, 3, 6, 0),

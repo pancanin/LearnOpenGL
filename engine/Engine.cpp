@@ -15,12 +15,12 @@ void Engine::init(int width, int height, const std::string& label, const Color& 
 	shaderProgram.init();
 	keyboardInput.init(window);
 
-	rectSerialisationPtr = std::make_shared<RectSerialisationStrategy>();
+	rectSerialisationPtr = std::make_shared<RectBufferSerialiser>();
 
-	rectComp.init(rectAttributeStrategy, rectSerialisationPtr);
+	rectComp.init(rectAttributeConfigurer, rectSerialisationPtr);
 	rectComp.activate();
 
-	trectSerialisationPtr = std::make_shared<TexturedRectSerialisationStrategy>();
+	trectSerialisationPtr = std::make_shared<TexturedRectBufferSerialiser>();
 	trectComp.init(trectAttributeStrategy, trectSerialisationPtr);
 }
 

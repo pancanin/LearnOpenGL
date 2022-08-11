@@ -7,10 +7,10 @@
 #include "../graphics/ShaderProgram.h"
 #include "../input/KeyboardInput.h"
 #include "../graphics/RectComponent.h"
-#include "../attributes/RectAttributeStrategy.h"
-#include "../serialisation/RectSerialisationStrategy.h"
-#include "../attributes/TexturedRectAttributeStrategy.h"
-#include "../serialisation/TexturedRectSerialisationStrategy.h"
+#include "../attributes/RectAttributeConfigurer.h"
+#include "../serialisation/RectBufferSerialiser.h"
+#include "../attributes/TexturedRectAttributeConfigurer.h"
+#include "../serialisation/TexturedRectBufferSerialiser.h"
 
 class Engine {
 public:
@@ -30,12 +30,12 @@ protected:
 	std::shared_ptr<Window> window;
 private:
 	Graphics graphics;
-	RectAttributeStrategy rectAttributeStrategy;
-	std::shared_ptr<RectSerialisationStrategy> rectSerialisationPtr;
+	RectAttributeConfigurer rectAttributeConfigurer;
+	std::shared_ptr<RectBufferSerialiser> rectSerialisationPtr;
 	RectComponent<Rect> rectComp;
 
-	TexturedRectAttributeStrategy trectAttributeStrategy;
-	std::shared_ptr<TexturedRectSerialisationStrategy> trectSerialisationPtr;
+	TexturedRectAttributeConfigurer trectAttributeStrategy;
+	std::shared_ptr<TexturedRectBufferSerialiser> trectSerialisationPtr;
 	RectComponent<TexturedRect> trectComp;
 
 	const std::string textureVarPrefix = "texture";

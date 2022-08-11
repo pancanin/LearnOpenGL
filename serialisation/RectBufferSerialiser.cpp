@@ -1,6 +1,6 @@
-#include "RectSerialisationStrategy.h"
+#include "RectBufferSerialiser.h"
 
-float* RectSerialisationStrategy::serialise(const Rect& o) const
+float* RectBufferSerialiser::serialise(const Rect& o) const
 {
 	float* arr = new float[componentsCountPerObject()];
 
@@ -35,7 +35,7 @@ float* RectSerialisationStrategy::serialise(const Rect& o) const
 	return arr;
 }
 
-unsigned int RectSerialisationStrategy::componentsCountPerObject() const
+unsigned int RectBufferSerialiser::componentsCountPerObject() const
 {
 	return 20;
 }

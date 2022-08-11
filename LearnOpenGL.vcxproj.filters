@@ -63,16 +63,16 @@
     <ClCompile Include="models\TexturedRect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="attributes\RectAttributeStrategy.cpp">
+    <ClCompile Include="attributes\RectAttributeConfigurer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="serialisation\RectSerialisationStrategy.cpp">
+    <ClCompile Include="serialisation\RectBufferSerialiser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="serialisation\TexturedRectSerialisationStrategy.cpp">
+    <ClCompile Include="serialisation\TexturedRectBufferSerialiser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="attributes\TexturedRectAttributeStrategy.cpp">
+    <ClCompile Include="attributes\TexturedRectAttributeConfigurer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,22 +152,22 @@
     <ClInclude Include="models\TexturedRect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="attributes\AttributeStrategy.h">
+    <ClInclude Include="attributes\AttributeConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="attributes\RectAttributeStrategy.h">
+    <ClInclude Include="attributes\RectAttributeConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="serialisation\RectSerialisationStrategy.h">
+    <ClInclude Include="serialisation\RectBufferSerialiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="serialisation\SerialisationStrategy.h">
+    <ClInclude Include="serialisation\BufferSerialiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="serialisation\TexturedRectSerialisationStrategy.h">
+    <ClInclude Include="serialisation\TexturedRectBufferSerialiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="attributes\TexturedRectAttributeStrategy.h">
+    <ClInclude Include="attributes\TexturedRectAttributeConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

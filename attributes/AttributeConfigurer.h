@@ -4,7 +4,7 @@
 
 #include "../models/VertexAttribute.h"
 
-class AttributeStrategy {
+class AttributeConfigurer {
 public:
 	virtual std::vector<VertexAttribute> getAttributes() const = 0;
 	
