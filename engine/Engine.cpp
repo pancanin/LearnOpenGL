@@ -37,6 +37,11 @@ void Engine::start()
 
 		onUpdate();
 
+		
+		for (auto texturePtr : textures) {
+			texturePtr->bind();
+		}
+
 		shaderProgram.use();
 		rectComp.activate();
 		rectComp.draw();
@@ -48,14 +53,14 @@ void Engine::start()
 	}
 }
 
-void Engine::loadTexture(int textureId, const std::string& pathToTexture) const
+void Engine::loadTexture(int textureId, const std::string& pathToTexture)
 {
-	TextureComponent texture;
-	texture.init();
-	texture.load(pathToTexture);
-	texture.bind(GL_TEXTURE0 + (textureId * 16));
-	std::string s = textureVarPrefix + std::to_string(textureId);
+	auto texture = std::make_shared<TextureComponent>();
+	texture->init(GL_TEXTURE0 + textureId);
+	texture->load(pathToTexture);
+	shaderProgram.use();
 	shaderProgram.setInt(textureVarPrefix + std::to_string(textureId), textureId);
+	textures.push_back(texture);
 }
 
 std::shared_ptr<Rect> Engine::createRect(Point3D origin, float width, float height)
@@ -81,7 +86,7 @@ std::shared_ptr<TexturedRect> Engine::createRect(Point3D origin, float width, fl
 			MathUtils::mapScreenToVertexCoordinates(origin, window->getWidth(), window->getHeight()),
 			(width * 2) / window->getWidth(),
 			(height * 2) / window->getHeight(),
-			0
+			textureId
 		)
 	);
 	trectComp.loadBuffer();

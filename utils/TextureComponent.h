@@ -6,9 +6,11 @@ class TextureComponent
 {
 public:
 	~TextureComponent();
-	void init();
+	void init(int textureUnit);
 	void load(const std::string& file);
-	void bind(int activeTexture);
+	void bind();
+
+	int textureUnit;
 private:
 	int width;
 	int height;

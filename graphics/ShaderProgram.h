@@ -28,6 +28,7 @@ private:
 	ShaderLoader shaderLoader;
 	unsigned int shaderProgram;
 	std::unordered_map<unsigned int, unsigned int> shaderTypeToShaderId;
+	int isSuccess;
 
 	void attachShader(unsigned int shaderType, const char* shaderSourceCode);
 	int findLocation(const std::string& uniformVarName) const;

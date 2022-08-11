@@ -11,6 +11,7 @@
 #include "../serialisation/RectBufferSerialiser.h"
 #include "../attributes/TexturedRectAttributeConfigurer.h"
 #include "../serialisation/TexturedRectBufferSerialiser.h"
+#include "../utils/TextureComponent.h"
 
 class Engine {
 public:
@@ -20,7 +21,7 @@ protected:
 	virtual void onStart() = 0;
 	virtual void onUpdate() = 0;
 	virtual void onStop() = 0;
-	void loadTexture(int textureId, const std::string& pathToTexture) const;
+	void loadTexture(int textureId, const std::string& pathToTexture);
 
 	std::shared_ptr<Rect> createRect(Point3D origin, float width, float height);
 	std::shared_ptr<TexturedRect> createRect(Point3D origin, float width, float height, unsigned int textureId);
@@ -37,6 +38,10 @@ private:
 	TexturedRectAttributeConfigurer trectAttributeStrategy;
 	std::shared_ptr<TexturedRectBufferSerialiser> trectSerialisationPtr;
 	RectComponent<TexturedRect> trectComp;
+	std::vector<std::shared_ptr<TextureComponent>> textures;
+
+	TextureComponent wallTexture;
+	TextureComponent containerTexture;
 
 	const std::string textureVarPrefix = "texture";
 };

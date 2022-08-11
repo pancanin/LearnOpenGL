@@ -1,5 +1,7 @@
 #include "ShaderProgram.h"
 
+#include <iostream>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "../libs/glm/gtc/type_ptr.hpp"
@@ -8,6 +10,7 @@ void ShaderProgram::init()
 {
 	shaderTypeToShaderId.clear();
 	shaderProgram = glCreateProgram();
+	this->isSuccess = 1;
 }
 
 void ShaderProgram::attachVertexShader(const std::string& shaderName)
@@ -25,6 +28,13 @@ void ShaderProgram::attachShader(unsigned int shaderType, const char* shaderSour
 
 	glShaderSource(shaderTypeToShaderId[shaderType], 1, &shaderSourceCode, NULL);
 	glCompileShader(shaderTypeToShaderId[shaderType]);
+	glGetShaderiv(shaderTypeToShaderId[shaderType], GL_COMPILE_STATUS, &isSuccess);
+
+	if (!isSuccess) {
+		char infoLog[512];
+		glGetShaderInfoLog(shaderTypeToShaderId[shaderType], 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+	}
 	glAttachShader(shaderProgram, shaderTypeToShaderId[shaderType]);
 }
 
@@ -64,5 +74,6 @@ void ShaderProgram::setUniformF(const std::string& uniformVarName, float value) 
 
 void ShaderProgram::setInt(const std::string& uniformVarName, unsigned int value) const
 {
+	int loc = findLocation(uniformVarName);
 	glUniform1i(findLocation(uniformVarName), value);
 }
