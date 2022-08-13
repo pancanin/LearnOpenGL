@@ -4,14 +4,20 @@
 
 #include "ui/Window.h"
 #include "graphics/ShaderProgram.h"
+#include "models/Triangle.h"
+#include "utils/MathUtils.h"
 
 #include <iostream>
 
 void processInput(GLFWwindow* window);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+
+bool isInside = false;
+Triangle triangle(Point3D(0.5f, 0.5f, 0.0f), Point3D(0.5f, -0.5f, 0.0f), Point3D(-0.5f, -0.5f, 0.0f));
 
 int main()
 {
@@ -31,6 +37,7 @@ int main()
 	Window window;
 	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL");
 	window.makeActive();
+	glfwSetCursorPosCallback(window.getRaw(), mouse_callback);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -55,7 +62,7 @@ int main()
 		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
 		 0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
 		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
+		//-0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
 	};
 	unsigned int indices[] = {
 			0, 1, 3, // first triangle
@@ -64,15 +71,15 @@ int main()
 	unsigned int VBO, VAO, EBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	//glGenBuffers(1, &EBO);
 
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
@@ -139,7 +146,7 @@ int main()
 	shaderProgram.setInt("texture1", 0);
 	shaderProgram.setInt("texture2", 1);
 
-
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	// render loop
 	// -----------
 	while (!window.shouldClose())
@@ -172,6 +179,16 @@ int main()
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+		float bouncyVar = sin(glfwGetTime());
+		glm::mat4 ult = glm::mat4(1.0f);
+		//ult = glm::translate(ult, glm::vec3(-0.5, 0.5, 0.0));
+		//ult = glm::scale(ult, glm::vec3(2.0 * bouncyVar, 2.0 * bouncyVar, 2.0f * bouncyVar));
+
+		shaderProgram.setUniformMat4("transform", ult);
+		shaderProgram.setInt("isMouseInsideTriangle", isInside);
+			
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		window.swapBuffers();
@@ -196,4 +213,11 @@ void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	float ndcX = (xpos - (SCR_WIDTH / 2)) / (SCR_WIDTH / 2);
+	float ndcY = -(ypos - (SCR_HEIGHT/ 2)) / (SCR_HEIGHT/ 2);
+
+	isInside = MathUtils::isPointInTriangle(triangle.p1, triangle.p2, triangle.p3, Point3D(ndcX, ndcY, 0.0f));
 }

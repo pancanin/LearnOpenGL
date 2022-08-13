@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
 #include <array>
 #include <algorithm>
 
@@ -94,7 +95,10 @@ namespace MathUtils {
 		float bpcArea = triangleArea(p, b, c);
 		float apcArea = triangleArea(p, c, a);
 
-		return abpArea + bpcArea + apcArea == outerTriangleArea;
+		float delta = 0.01;
+		bool res = (abpArea + bpcArea + apcArea) >= outerTriangleArea - delta && (abpArea + bpcArea + apcArea) <= outerTriangleArea + delta;
+		
+		return res;
 	}
 
 	inline bool isPointInRect(glm::vec3 diagonalPointA, glm::vec3 diagonalPointB, glm::vec3 point) {

@@ -198,6 +198,7 @@
     <ClInclude Include="utils\TextureComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="shaders\color_vertex.glsl" />
     <None Include="shaders\fragment_2.glsl" />
     <None Include="shaders\simple_fragment.glsl" />
