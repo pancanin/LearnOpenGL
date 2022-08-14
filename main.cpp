@@ -218,10 +218,11 @@ int main()
 
 		glm::mat4 view = glm::mat4(1.0f);
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		view = glm::translate(view, glm::vec3(1.0f, 1.0f, -10.0f));
+		
 
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(65.0f), 800.0f / 800.0f, 0.1f, 100.0f);
 
 		// get matrix's uniform location and set matrix
 		shaderProgram.use();
@@ -238,7 +239,7 @@ int main()
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
 			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			model = glm::rotate(model, i % 3 == 0 ? (float)glfwGetTime() : glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 			shaderProgram.setUniformMat4("model", model);
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
