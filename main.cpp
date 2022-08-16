@@ -195,6 +195,14 @@ int main()
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 right = glm::normalize(glm::cross(up, cameraDirection));
+	up = glm::normalize(glm::cross(cameraDirection, right));
+
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);  
 	// render loop
@@ -218,7 +226,11 @@ int main()
 
 		glm::mat4 view = glm::mat4(1.0f);
 		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::translate(view, glm::vec3(1.0f, 1.0f, -10.0f));
+
+		float time = (float)glfwGetTime();
+		cameraPos = glm::vec3(0.0f, 3 * sin(time), cos(time) * -3.0f);
+
+		view = glm::lookAt(cameraPos, cameraTarget, up);
 		
 
 		glm::mat4 projection;
