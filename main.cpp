@@ -8,6 +8,9 @@
 #include "utils/MathUtils.h"
 
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -15,9 +18,49 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+float lastX = 400, lastY = 300;
+glm::vec3 direction;
+bool firstMouse = true;
+float yaw, pitch;
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 cameraDir = glm::normalize(cameraPos - cameraTarget);
+glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDir));
+glm::vec3 cameraUp = glm::cross(cameraDir, cameraRight);
 
-bool isInside = false;
-Triangle triangle(Point3D(0.5f, 0.5f, 0.0f), Point3D(0.5f, -0.5f, 0.0f), Point3D(-0.5f, -0.5f, 0.0f));
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+
+float mouseSpeed = 1.0f;
+float maxVertical = 90.0f;
+float minVertical = -90.0f;
+float maxHori = 90.0f;
+float minHori = -90.0f;
+
+struct Bullet {
+	glm::vec3 pos;
+	glm::vec3 dir;
+};
+
+vector<Bullet> bullets;
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+		bullets.push_back({ cameraPos, cameraFront });
+	}
+}
+
+float fov = 45.0f;
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	fov -= (float)yoffset;
+	if (fov < 1.0f)
+		fov = 1.0f;
+	if (fov > 45.0f)
+		fov = 45.0f;
+}
 
 int main()
 {
@@ -38,6 +81,8 @@ int main()
 	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL");
 	window.makeActive();
 	glfwSetCursorPosCallback(window.getRaw(), mouse_callback);
+	glfwSetMouseButtonCallback(window.getRaw(), mouse_button_callback);
+	glfwSetScrollCallback(window.getRaw(), scroll_callback);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -194,14 +239,7 @@ int main()
 		glm::vec3(1.5f,  0.2f, -1.5f),
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
-
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 right = glm::normalize(glm::cross(up, cameraDirection));
-	up = glm::normalize(glm::cross(cameraDirection, right));
-
+	glfwSetInputMode(window.getRaw(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);  
@@ -225,16 +263,10 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
 		glm::mat4 view = glm::mat4(1.0f);
-		// note that we're translating the scene in the reverse direction of where we want to move
-
-		float time = (float)glfwGetTime();
-		cameraPos = glm::vec3(0.0f, 3 * sin(time), cos(time) * -3.0f);
-
-		view = glm::lookAt(cameraPos, cameraTarget, up);
-		
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(65.0f), 800.0f / 800.0f, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);
 
 		// get matrix's uniform location and set matrix
 		shaderProgram.use();
@@ -254,6 +286,15 @@ int main()
 			model = glm::rotate(model, i % 3 == 0 ? (float)glfwGetTime() : glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 			shaderProgram.setUniformMat4("model", model);
 
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+
+		for (int id = 0; id < bullets.size(); id++) {
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, bullets[id].pos);
+			model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+			bullets[id].pos += bullets[id].dir * 0.1f;
+			shaderProgram.setUniformMat4("model", model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
@@ -289,13 +330,54 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window)
 {
+	float cameraSpeed = 0.004;
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		cameraPos += cameraSpeed * cameraFront;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		cameraPos -= cameraSpeed * cameraFront;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+	}
+	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+	}
 }
 
-void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-	//float ndcX = (xpos - (SCR_WIDTH / 2)) / (SCR_WIDTH / 2);
-	//float ndcY = -(ypos - (SCR_HEIGHT/ 2)) / (SCR_HEIGHT/ 2);
 
-	//isInside = MathUtils::isPointInTriangle(triangle.p1, triangle.p2, triangle.p3, Point3D(ndcX, ndcY, 0.0f));
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.1f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(direction);
 }
