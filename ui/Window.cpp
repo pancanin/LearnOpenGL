@@ -58,6 +58,21 @@ GLFWwindow* Window::getRaw() const
 	return window;
 }
 
+void Window::registerCursorPositionCallback(void* callback)
+{
+	glfwSetCursorPosCallback(window, static_cast<GLFWcursorposfun>(callback));
+}
+
+void Window::registerMouseButtonCallback(void* callback)
+{
+	glfwSetMouseButtonCallback(window, static_cast<GLFWmousebuttonfun>(callback));
+}
+
+void Window::registerScrollCallback(void* callback)
+{
+	glfwSetScrollCallback(window, static_cast<GLFWscrollfun>(callback));
+}
+
 void Window::deinit() const
 {
 	if (window != nullptr) {

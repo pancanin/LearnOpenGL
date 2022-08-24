@@ -6,6 +6,8 @@
 #include "graphics/ShaderProgram.h"
 #include "models/Triangle.h"
 #include "utils/MathUtils.h"
+#include "graphics/Graphics.h"
+#include "utils/TextureComponent.h"
 
 #include <iostream>
 #include <string>
@@ -64,12 +66,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main()
 {
-	// glfw: initialize and configure
-	// ------------------------------
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	Graphics g;
+	g.init();
 
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -80,20 +78,18 @@ int main()
 	Window window;
 	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL");
 	window.makeActive();
-	glfwSetCursorPosCallback(window.getRaw(), mouse_callback);
-	glfwSetMouseButtonCallback(window.getRaw(), mouse_button_callback);
-	glfwSetScrollCallback(window.getRaw(), scroll_callback);
+	window.registerCursorPositionCallback(mouse_callback);
+	window.registerMouseButtonCallback(mouse_button_callback);
+	window.registerScrollCallback(scroll_callback);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (!g.loadFunctionDefinitions())
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
 
-	// build and compile our shader zprogram
-	// ------------------------------------
 	ShaderProgram shaderProgram;
 	shaderProgram.init();
 	shaderProgram.attachVertexShader("texture_vertex");
@@ -169,60 +165,19 @@ int main()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-
-	// load and create a texture 
-	// -------------------------
-	unsigned int texture1, texture2;
 	// texture 1
 	// ---------
-	glGenTextures(1, &texture1);
-	glBindTexture(GL_TEXTURE_2D, texture1);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// load image, create texture and generate mipmaps
-	int width, height, nrChannels;
-	stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-	unsigned char* data = stbi_load("assets/container.jpg", &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-	// texture 2
-	// ---------
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-	// set the texture wrapping parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// load image, create texture and generate mipmaps
-	data = stbi_load("assets/face.png", &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		// note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
+	TextureComponent texture1;
+	texture1.init(GL_TEXTURE0);
+	texture1.load("assets/container.jpg");
+
+	TextureComponent texture2;
+	texture2.init(GL_TEXTURE1);
+	texture2.load("assets/face.png");
 
 	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
 	// -------------------------------------------------------------------------------------------
+	// TODO: Create a texture manager class that will manage the sequence of texture units and variables for the shader.
 	shaderProgram.use();
 	shaderProgram.setInt("texture1", 0);
 	shaderProgram.setInt("texture2", 1);
@@ -257,10 +212,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// bind textures on corresponding texture units
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture1);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
+		texture1.bind();
+		texture2.bind();
 
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
@@ -298,20 +251,8 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
-		/*float bouncyVar = sin(glfwGetTime());
-		glm::mat4 ult = glm::mat4(1.0f);
-		ult = glm::translate(ult, glm::vec3(-0.5, 0.5, 0.0));
-		ult = glm::scale(ult, glm::vec3(2.0 * bouncyVar, 2.0 * bouncyVar, 2.0f * bouncyVar));
-
-		shaderProgram.setUniformMat4("transform", ult);
-		shaderProgram.setInt("isMouseInsideTriangle", isInside);
-			
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
-
-		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-		// -------------------------------------------------------------------------------
 		window.swapBuffers();
-		glfwPollEvents();
+		g.pollEvents();
 	}
 
 	// optional: de-allocate all resources once they've outlived their purpose:
