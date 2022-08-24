@@ -193,10 +193,7 @@ int main()
 		// -----
 		processInput(window.getRaw());
 
-		// render
-		// ------
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		window.clear();
 
 		// bind textures on corresponding texture units
 		texture1.bind();
@@ -269,8 +266,6 @@ void processInput(GLFWwindow* window)
 		cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
 	}
 }
-
-
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 	if (firstMouse)
