@@ -187,13 +187,18 @@ int main()
 
 		vao.bind();
 		// create transformations
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.2f));
+		glm::mat4 lightModel = glm::mat4(1.0f);
+		float radius = 50.0f;
+		float time = (float)glfwGetTime();
+		auto lightPos = glm::vec3(radius * cos(time), 0.0f, radius * sin(time));
+		lightModel = glm::scale(lightModel, glm::vec3(0.2f));
+		lightModel = glm::translate(lightModel, lightPos);
+
 		// Drawing the light source
 
 		auto lightColor = glm::vec3(1.0f);
 
-		lightSourceShaderProgram.setUniformMat4("model", model);
+		lightSourceShaderProgram.setUniformMat4("model", lightModel);
 		lightSourceShaderProgram.setUniformVec3("lightColor", lightColor);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -203,15 +208,16 @@ int main()
 		shinedUponShaderProgram.setUniformMat4("view", view);
 		shinedUponShaderProgram.setUniformMat4("projection", projection);
 		
-		model = glm::translate(model, glm::vec3(5.0f, -4.0f, 0.0f));
+		glm::mat4 objectModel = glm::mat4(1.0f);
+		objectModel = glm::translate(objectModel, glm::vec3(5.0f, -2.0f, 0.0f));
 		
 		
 		shinedUponShaderProgram.setUniformVec3("objectColor", glm::vec3(0.77f, 0.33f, 0.03f));
 		shinedUponShaderProgram.setUniformVec3("lightColor", lightColor);
-		shinedUponShaderProgram.setUniformVec3("lightPos", glm::vec3(0.0f));
+		shinedUponShaderProgram.setUniformVec3("lightPos", lightPos);
 		shinedUponShaderProgram.setUniformVec3("viewerPos", cameraPos);
-		model = glm::scale(model, glm::vec3(5.0f));
-		shinedUponShaderProgram.setUniformMat4("model", model);
+		objectModel = glm::scale(objectModel, glm::vec3(5.0f));
+		shinedUponShaderProgram.setUniformMat4("model", objectModel);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		window.swapBuffers();
