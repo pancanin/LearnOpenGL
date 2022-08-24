@@ -8,6 +8,8 @@
 #include "utils/MathUtils.h"
 #include "graphics/Graphics.h"
 #include "utils/TextureComponent.h"
+#include "graphics/VertexArrayObject.h"
+#include "graphics/VertexBufferObject.h"
 
 #include <iostream>
 #include <string>
@@ -81,6 +83,7 @@ int main()
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
 	window.registerScrollCallback(scroll_callback);
+	window.disableCursor();
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -141,32 +144,17 @@ int main()
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
-	unsigned int indices[] = {
-			0, 1, 3, // first triangle
-			1, 2, 3  // second triangle
-	};
-	unsigned int VBO, VAO, EBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &EBO);
+	VertexBufferObject vbo;
+	vbo.init(GL_ARRAY_BUFFER);
+	vbo.bind();
+	vbo.fillBuffer(vertices, sizeof(vertices));
 
-	glBindVertexArray(VAO);
+	VertexArrayObject vao;
+	vao.init();
+	vao.bind();
+	vao.addAttribute(VertexAttribute{ 0, 3, 5, 0 });
+	vao.addAttribute(VertexAttribute{ 1, 2, 5, 3 });
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// texture coord attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	// texture 1
-	// ---------
 	TextureComponent texture1;
 	texture1.init(GL_TEXTURE0);
 	texture1.load("assets/container.jpg");
@@ -194,7 +182,6 @@ int main()
 		glm::vec3(1.5f,  0.2f, -1.5f),
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
-	glfwSetInputMode(window.getRaw(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);  
@@ -227,7 +214,7 @@ int main()
 		shaderProgram.setUniformMat4("view", view);
 		shaderProgram.setUniformMat4("projection", projection);
 
-		glBindVertexArray(VAO);
+		vao.bind();
 		// create transformations
 		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		//transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
@@ -254,12 +241,6 @@ int main()
 		window.swapBuffers();
 		g.pollEvents();
 	}
-
-	// optional: de-allocate all resources once they've outlived their purpose:
-	// ------------------------------------------------------------------------
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------

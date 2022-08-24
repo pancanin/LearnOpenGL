@@ -48,6 +48,11 @@ void Window::swapBuffers() const
 	glfwSwapBuffers(window);
 }
 
+void Window::disableCursor() const
+{
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);

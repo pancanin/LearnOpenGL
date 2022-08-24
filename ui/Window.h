@@ -18,6 +18,7 @@ public:
 	void close() const;
 	bool shouldClose() const;
 	void swapBuffers() const;
+	void disableCursor() const;
 	GLFWwindow* getRaw() const;
 	void deinit() const;
 
