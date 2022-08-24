@@ -83,7 +83,7 @@ int main()
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
 	window.registerScrollCallback(scroll_callback);
-	window.disableCursor();
+	//window.disableCursor();
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------

@@ -4,15 +4,20 @@ layout (location = 1) in vec3 aNormal;
 
 out vec3 Normal;
 out vec3 FragWorldPos;
+out vec3 lightPosO;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform vec3 objectColor;
+uniform vec3 lightColor;
+uniform vec3 lightPos;
+uniform vec3 viewerPos;
 
 void main()
 {
 	gl_Position = projection * view * model * vec4(aPos, 1.0);
-	FragWorldPos = vec3(model * vec4(aPos, 1.0));
-	//Normal = mat3(transpose(inverse(model)) * aNormal;
-	Normal = aNormal;
+  FragWorldPos = vec3(view * model * vec4(aPos, 1.0));
+  Normal = mat3(transpose(inverse(view * model))) * aNormal;
+  lightPosO = vec3(view * vec4(lightPos, 1.0)); // Transform world-space light position to view-space light position
 }
