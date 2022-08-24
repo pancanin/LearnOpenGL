@@ -41,18 +41,9 @@ float minVertical = -90.0f;
 float maxHori = 90.0f;
 float minHori = -90.0f;
 
-struct Bullet {
-	glm::vec3 pos;
-	glm::vec3 dir;
-};
-
-vector<Bullet> bullets;
-
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-		bullets.push_back({ cameraPos, cameraFront });
-	}
+	
 }
 
 float fov = 45.0f;
@@ -70,10 +61,6 @@ int main()
 {
 	Graphics g;
 	g.init();
-
-#ifdef __APPLE__
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
 
 	// glfw window creation
 	// --------------------
