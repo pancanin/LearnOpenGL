@@ -24,6 +24,7 @@ public:
 	void use();
 	void setUniformMat4(const std::string& uniformVarName, const glm::mat4& value) const;
 	void setUniformVec4(const std::string& uniformVarName, const glm::vec4& value) const;
+	void setUniformVec3(const std::string& uniformVarName, const glm::vec3& value) const;
 	void setUniformF(const std::string& uniformVarName, float value) const;
 	void setInt(const std::string& uniformVarName, unsigned int value) const;
 private:

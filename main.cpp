@@ -78,7 +78,7 @@ int main()
 	// glfw window creation
 	// --------------------
 	Window window;
-	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL");
+	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.0f, 0.0f, 0.0f, 1.0f));
 	window.makeActive();
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
@@ -93,11 +93,17 @@ int main()
 		return -1;
 	}
 
-	ShaderProgram shaderProgram;
-	shaderProgram.init();
-	shaderProgram.attachVertexShader("texture_vertex");
-	shaderProgram.attachFragmentShader("texture_fragment");
-	shaderProgram.link();
+	ShaderProgram lightSourceShaderProgram;
+	lightSourceShaderProgram.init();
+	lightSourceShaderProgram.attachVertexShader("texture_vertex");
+	lightSourceShaderProgram.attachFragmentShader("light_fragment");
+	lightSourceShaderProgram.link();
+
+	ShaderProgram shinedUponShaderProgram;
+	shinedUponShaderProgram.init();
+	shinedUponShaderProgram.attachVertexShader("texture_vertex");
+	shinedUponShaderProgram.attachFragmentShader("shined_upon");
+	shinedUponShaderProgram.link();
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -155,21 +161,6 @@ int main()
 	vao.addAttribute(VertexAttribute{ 0, 3, 5, 0 });
 	vao.addAttribute(VertexAttribute{ 1, 2, 5, 3 });
 
-	TextureComponent texture1;
-	texture1.init(GL_TEXTURE0);
-	texture1.load("assets/container.jpg");
-
-	TextureComponent texture2;
-	texture2.init(GL_TEXTURE1);
-	texture2.load("assets/face.png");
-
-	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-	// -------------------------------------------------------------------------------------------
-	// TODO: Create a texture manager class that will manage the sequence of texture units and variables for the shader.
-	shaderProgram.use();
-	shaderProgram.setInt("texture1", 0);
-	shaderProgram.setInt("texture2", 1);
-
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f,  0.0f,  0.0f),
 		glm::vec3(2.0f,  5.0f, -15.0f),
@@ -195,10 +186,6 @@ int main()
 
 		window.clear();
 
-		// bind textures on corresponding texture units
-		texture1.bind();
-		texture2.bind();
-
 		glm::mat4 view = glm::mat4(1.0f);
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
@@ -206,34 +193,35 @@ int main()
 		projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);
 
 		// get matrix's uniform location and set matrix
-		shaderProgram.use();
+		lightSourceShaderProgram.use();
 
-		shaderProgram.setUniformMat4("view", view);
-		shaderProgram.setUniformMat4("projection", projection);
+		lightSourceShaderProgram.setUniformMat4("view", view);
+		lightSourceShaderProgram.setUniformMat4("projection", projection);
 
 		vao.bind();
 		// create transformations
-		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		//transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, i % 3 == 0 ? (float)glfwGetTime() : glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			shaderProgram.setUniformMat4("model", model);
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.2f));
+		// Drawing the light source
 
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
+		auto lightColor = glm::vec3(0.3f);
 
-		for (int id = 0; id < bullets.size(); id++) {
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, bullets[id].pos);
-			model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-			bullets[id].pos += bullets[id].dir * 0.1f;
-			shaderProgram.setUniformMat4("model", model);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
+		lightSourceShaderProgram.setUniformMat4("model", model);
+		lightSourceShaderProgram.setUniformVec3("lightColor", lightColor);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		// Drawing the object that we will shine upon.
+		shinedUponShaderProgram.use();
+		shinedUponShaderProgram.setUniformMat4("view", view);
+		shinedUponShaderProgram.setUniformMat4("projection", projection);
+		
+		model = glm::translate(model, glm::vec3(5.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(5.0f));
+		shinedUponShaderProgram.setUniformMat4("model", model);
+		shinedUponShaderProgram.setUniformVec3("objectColor", glm::vec3(0.77f, 0.33f, 0.03f));
+		shinedUponShaderProgram.setUniformVec3("lightColor", lightColor);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		window.swapBuffers();
 		g.pollEvents();

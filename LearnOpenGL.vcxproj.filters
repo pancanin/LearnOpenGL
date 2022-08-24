@@ -179,5 +179,7 @@
     <None Include="shaders\texture_fragment.glsl" />
     <None Include="shaders\texture_vertex.glsl" />
     <None Include="README.md" />
+    <None Include="shaders\light_fragment.glsl" />
+    <None Include="shaders\shined_upon.glsl" />
   </ItemGroup>
 </Project>

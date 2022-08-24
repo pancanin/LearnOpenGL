@@ -66,6 +66,11 @@ void ShaderProgram::setUniformVec4(const std::string& uniformVarName, const glm:
 	glUniform4f(findLocation(uniformVarName), value.x, value.y, value.z, value.a);
 }
 
+void ShaderProgram::setUniformVec3(const std::string& uniformVarName, const glm::vec3& value) const
+{
+	glUniform3f(findLocation(uniformVarName), value.x, value.y, value.z);
+}
+
 void ShaderProgram::setUniformF(const std::string& uniformVarName, float value) const
 {
 	glUniform1f(findLocation(uniformVarName), value);
