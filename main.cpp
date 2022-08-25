@@ -29,17 +29,6 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	
 }
 
-float fov = 45.0f;
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-	fov -= (float)yoffset;
-	if (fov < 1.0f)
-		fov = 1.0f;
-	if (fov > 45.0f)
-		fov = 45.0f;
-}
-
 FPSCamera cam;
 
 int main()
@@ -55,7 +44,6 @@ int main()
 	window.makeActive();
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
-	window.registerScrollCallback(scroll_callback);
 	window.disableCursor();
 
 	// glad: load all OpenGL function pointers

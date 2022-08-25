@@ -13,6 +13,7 @@
 #include "../models/VertexAttribute.h"
 #include "../serialisation/BufferSerialiser.h"
 
+/* Sets up buffers for shapes/objects */
 template <typename T>
 class ObjectComponent
 {

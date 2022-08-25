@@ -26,13 +26,13 @@ void FPSCamera::moveBackward()
 
 void FPSCamera::moveLeft()
 {
-	cameraPosition -= cameraSpeed * glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f)));
+	cameraPosition -= cameraSpeed * glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f));
 	calculateView();
 }
 
 void FPSCamera::moveRight()
 {
-	cameraPosition += cameraSpeed * glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f)));
+	cameraPosition += cameraSpeed * glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f));
 	calculateView();
 }
 
@@ -61,11 +61,11 @@ void FPSCamera::onMouseMove(double xpos, double ypos)
 	if (pitch < -89.0f)
 		pitch = -89.0f;
 
-	cameraFront = glm::normalize(glm::vec3(
+	cameraFront = glm::vec3(
 		cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
 		sin(glm::radians(pitch)),
 		sin(glm::radians(yaw)) * cos(glm::radians(pitch))
-	));
+	);
 	
 	calculateView();
 }
