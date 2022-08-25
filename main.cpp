@@ -10,6 +10,7 @@
 #include "utils/TextureComponent.h"
 #include "graphics/VertexArrayObject.h"
 #include "graphics/VertexBufferObject.h"
+#include "engine/FPSCamera.h"
 
 #include <iostream>
 #include <string>
@@ -22,24 +23,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-float lastX = 400, lastY = 300;
-glm::vec3 direction;
-bool firstMouse = true;
-float yaw, pitch;
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-glm::vec3 cameraDir = glm::normalize(cameraPos - cameraTarget);
-glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDir));
-glm::vec3 cameraUp = glm::cross(cameraDir, cameraRight);
-
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-
-float mouseSpeed = 1.0f;
-float maxVertical = 90.0f;
-float minVertical = -90.0f;
-float maxHori = 90.0f;
-float minHori = -90.0f;
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
@@ -57,11 +40,14 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 		fov = 45.0f;
 }
 
+FPSCamera cam;
+
 int main()
 {
 	Graphics g;
 	g.init();
-
+	
+	cam.init(glm::radians(45.0f), SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f), SCR_WIDTH, SCR_HEIGHT);
 	// glfw window creation
 	// --------------------
 	Window window;
@@ -70,7 +56,7 @@ int main()
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
 	window.registerScrollCallback(scroll_callback);
-	//window.disableCursor();
+	window.disableCursor();
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -149,28 +135,19 @@ int main()
 	vao.addAttribute(VertexAttribute{ 1, 3, 6, 3 });
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glEnable(GL_DEPTH_TEST);  
+	glEnable(GL_DEPTH_TEST);
 	// render loop
 	// -----------
 	while (!window.shouldClose())
 	{
-		// input
-		// -----
 		processInput(window.getRaw());
 
 		window.clear();
 
-		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);
-
-		// get matrix's uniform location and set matrix
 		lightSourceShaderProgram.use();
 
-		lightSourceShaderProgram.setUniformMat4("view", view);
-		lightSourceShaderProgram.setUniformMat4("projection", projection);
+		lightSourceShaderProgram.setUniformMat4("view", cam.getView());
+		lightSourceShaderProgram.setUniformMat4("projection", cam.getProjection());
 
 		vao.bind();
 		// create transformations
@@ -192,8 +169,8 @@ int main()
 
 		// Drawing the object that we will shine upon.
 		shinedUponShaderProgram.use();
-		shinedUponShaderProgram.setUniformMat4("view", view);
-		shinedUponShaderProgram.setUniformMat4("projection", projection);
+		shinedUponShaderProgram.setUniformMat4("view", cam.getView());
+		shinedUponShaderProgram.setUniformMat4("projection", cam.getProjection());
 		
 		glm::mat4 objectModel = glm::mat4(1.0f);
 		objectModel = glm::translate(objectModel, glm::vec3(5.0f, -2.0f, 0.0f));
@@ -202,7 +179,7 @@ int main()
 		shinedUponShaderProgram.setUniformVec3("objectColor", glm::vec3(0.77f, 0.33f, 0.03f));
 		shinedUponShaderProgram.setUniformVec3("lightColor", lightColor);
 		shinedUponShaderProgram.setUniformVec3("lightPos", lightPos);
-		shinedUponShaderProgram.setUniformVec3("viewerPos", cameraPos);
+		shinedUponShaderProgram.setUniformVec3("viewerPos", Point3D(0.0f, 0.0f, -3.0f));
 		objectModel = glm::scale(objectModel, glm::vec3(5.0f));
 		shinedUponShaderProgram.setUniformMat4("model", objectModel);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -211,9 +188,6 @@ int main()
 		g.pollEvents();
 	}
 
-	// glfw: terminate, clearing all previously allocated GLFW resources.
-	// ------------------------------------------------------------------
-	glfwTerminate();
 	return 0;
 }
 
@@ -221,52 +195,22 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window)
 {
-	float cameraSpeed = 0.004;
-
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		cameraPos += cameraSpeed * cameraFront;
+		cam.moveForward();
 	}
 	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		cameraPos -= cameraSpeed * cameraFront;
+		cam.moveBackward();
 	}
 	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		cameraPos -= cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+		cam.moveLeft();
 	}
 	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		cameraPos += cameraSpeed * glm::normalize(glm::cross(cameraFront, cameraUp));
+		cam.moveRight();
 	}
 }
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-	if (firstMouse)
-	{
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
-	}
-
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;
-	lastX = xpos;
-	lastY = ypos;
-
-	float sensitivity = 0.1f;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	yaw += xoffset;
-	pitch += yoffset;
-
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(direction);
+	cam.onMouseMove(xpos, ypos);
 }

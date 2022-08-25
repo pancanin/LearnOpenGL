@@ -146,7 +146,9 @@
     <ClCompile Include="arcanoid\Arcanoid.cpp" />
     <ClCompile Include="attributes\RectAttributeConfigurer.cpp" />
     <ClCompile Include="attributes\TexturedRectAttributeConfigurer.cpp" />
+    <ClCompile Include="engine\Camera.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
+    <ClCompile Include="engine\FPSCamera.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
     <ClCompile Include="graphics\ShaderProgram.cpp" />
@@ -169,7 +171,9 @@
     <ClInclude Include="attributes\AttributeConfigurer.h" />
     <ClInclude Include="attributes\RectAttributeConfigurer.h" />
     <ClInclude Include="attributes\TexturedRectAttributeConfigurer.h" />
+    <ClInclude Include="engine\Camera.h" />
     <ClInclude Include="engine\Engine.h" />
+    <ClInclude Include="engine\FPSCamera.h" />
     <ClInclude Include="engine\objects\GameObject.h" />
     <ClInclude Include="engine\objects\RectGameObject.h" />
     <ClInclude Include="graphics\Graphics.h" />
