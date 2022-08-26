@@ -11,6 +11,8 @@
 #include "graphics/VertexArrayObject.h"
 #include "graphics/VertexBufferObject.h"
 #include "engine/FPSCamera.h"
+#include "graphics/BufferConfigurer.h"
+#include "serialisation/TriangleBufferSerialiser.h"
 
 #include <iostream>
 #include <string>
@@ -40,7 +42,7 @@ int main()
 	// glfw window creation
 	// --------------------
 	Window window;
-	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.0f, 0.0f, 0.0f, 1.0f));
+	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.30f, 0.40f, 0.0f, 1.0f));
 	window.makeActive();
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
@@ -122,6 +124,13 @@ int main()
 	vao.addAttribute(VertexAttribute{ 0, 3, 6, 0 });
 	vao.addAttribute(VertexAttribute{ 1, 3, 6, 3 });
 
+	auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
+	std::vector<VertexAttribute> triangleAtris = { VertexAttribute{0, 3, 3, 0} };
+	BufferConfigurer bufferConfig;
+	bufferConfig.init(triangleAtris, serialiserPtr);
+	bufferConfig.activate();
+	bufferConfig.loadBuffer();
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
 	// render loop
@@ -171,6 +180,11 @@ int main()
 		objectModel = glm::scale(objectModel, glm::vec3(5.0f));
 		shinedUponShaderProgram.setUniformMat4("model", objectModel);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		objectModel = glm::translate(objectModel, glm::vec3(-5.0f, -2.0f, 0.0f));
+		shinedUponShaderProgram.setUniformMat4("model", objectModel);
+		bufferConfig.activate();
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		window.swapBuffers();
 		g.pollEvents();

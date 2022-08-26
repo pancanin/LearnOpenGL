@@ -17,11 +17,11 @@ void Engine::init(int width, int height, const std::string& label, const Color& 
 
 	rectSerialisationPtr = std::make_shared<RectBufferSerialiser>();
 
-	rectComp.init(rectAttributeConfigurer, rectSerialisationPtr);
-	rectComp.activate();
+	//rectComp.init(rectAttributeConfigurer, rectSerialisationPtr);
+	//rectComp.activate();
 
 	trectSerialisationPtr = std::make_shared<TexturedRectBufferSerialiser>();
-	trectComp.init(trectAttributeStrategy, trectSerialisationPtr);
+	//trectComp.init(trectAttributeStrategy, trectSerialisationPtr);
 }
 
 void Engine::start()
@@ -31,9 +31,9 @@ void Engine::start()
 	while (!window->shouldClose()) {
 		window->clear();
 
-		if (keyboardInput.isKeyPressed(GLFW_KEY_ESCAPE)) {
+		/*if (keyboardInput.isKeyPressed(GLFW_KEY_ESCAPE)) {
 			window->close();
-		}
+		}*/
 
 		onUpdate();
 
@@ -43,10 +43,10 @@ void Engine::start()
 		}
 
 		shaderProgram.use();
-		rectComp.activate();
-		rectComp.draw();
-		trectComp.activate();
-		trectComp.draw();
+		//rectComp.activate();
+		//rectComp.draw();
+		//trectComp.activate();
+		//trectComp.draw();
 
 		window->swapBuffers();
 		graphics.pollEvents();
@@ -56,39 +56,39 @@ void Engine::start()
 void Engine::loadTexture(int textureId, const std::string& pathToTexture)
 {
 	auto texture = std::make_shared<TextureComponent>();
-	texture->init(GL_TEXTURE0 + textureId);
+	//texture->init(GL_TEXTURE0 + textureId);
 	texture->load(pathToTexture);
 	shaderProgram.use();
 	shaderProgram.setInt(textureVarPrefix + std::to_string(textureId), textureId);
 	textures.push_back(texture);
 }
 
-std::shared_ptr<Rect> Engine::createRect(Point3D origin, float width, float height)
-{
-	rectComp.activate();
-	auto rect = rectComp.addObject(
-		Rect(
-			MathUtils::mapScreenToVertexCoordinates(origin, window->getWidth(), window->getHeight()),
-			(width * 2) / window->getWidth(),
-			(height * 2) / window->getHeight()
-		)
-	);
-	rectComp.loadBuffer();
+//std::shared_ptr<Rect> Engine::createRect(Point3D origin, float width, float height)
+//{
+//	rectComp.activate();
+//	auto rect = rectComp.addObject(
+//		Rect(
+//			MathUtils::mapScreenToVertexCoordinates(origin, window->getWidth(), window->getHeight()),
+//			(width * 2) / window->getWidth(),
+//			(height * 2) / window->getHeight()
+//		)
+//	);
+//	rectComp.loadBuffer();
+//
+//	return rect;
+//}
 
-	return rect;
-}
-
-std::shared_ptr<TexturedRect> Engine::createRect(Point3D origin, float width, float height, unsigned int textureId)
-{
-	trectComp.activate();
-	auto rect = trectComp.addObject(
-		TexturedRect(
-			MathUtils::mapScreenToVertexCoordinates(origin, window->getWidth(), window->getHeight()),
-			(width * 2) / window->getWidth(),
-			(height * 2) / window->getHeight(),
-			textureId
-		)
-	);
-
-	return rect;
-}
+//std::shared_ptr<TexturedRect> Engine::createRect(Point3D origin, float width, float height, unsigned int textureId)
+//{
+//	trectComp.activate();
+//	auto rect = trectComp.addObject(
+//		TexturedRect(
+//			MathUtils::mapScreenToVertexCoordinates(origin, window->getWidth(), window->getHeight()),
+//			(width * 2) / window->getWidth(),
+//			(height * 2) / window->getHeight(),
+//			textureId
+//		)
+//	);
+//
+//	return rect;
+//}

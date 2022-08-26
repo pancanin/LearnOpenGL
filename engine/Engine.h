@@ -6,7 +6,6 @@
 #include "../models/TypeDefs.h"
 #include "../graphics/ShaderProgram.h"
 #include "../input/KeyboardInput.h"
-#include "../graphics/RectComponent.h"
 #include "../attributes/RectAttributeConfigurer.h"
 #include "../serialisation/RectBufferSerialiser.h"
 #include "../attributes/TexturedRectAttributeConfigurer.h"
@@ -23,14 +22,14 @@ protected:
 	virtual void onStop() = 0;
 	void loadTexture(int textureId, const std::string& pathToTexture);
 
-	std::shared_ptr<Rect> createRect(Point3D origin, float width, float height);
-	std::shared_ptr<TexturedRect> createRect(Point3D origin, float width, float height, unsigned int textureId);
+	//std::shared_ptr<Rect> createRect(Point3D origin, float width, float height);
+	//std::shared_ptr<TexturedRect> createRect(Point3D origin, float width, float height, unsigned int textureId);
 
 	ShaderProgram shaderProgram;
 	KeyboardInput keyboardInput;
 	std::shared_ptr<Window> window;
-	RectComponent<Rect> rectComp;
-	RectComponent<TexturedRect> trectComp;
+	//RectComponent<Rect> rectComp;
+	//RectComponent<TexturedRect> trectComp;
 private:
 	Graphics graphics;
 	RectAttributeConfigurer rectAttributeConfigurer;

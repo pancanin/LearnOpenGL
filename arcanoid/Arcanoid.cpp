@@ -9,9 +9,9 @@ void Arcanoid::onStart() {
 	shaderProgram.link();
 	loadTexture(1, "assets/wall.jpg");
 	loadTexture(2, "assets/container.jpg");
-	createRect(Point3D(200.0f, 150.0f, 0.0f), 400, 300, 1);
-	createRect(Point3D(100.0f, 100.0f, 0.0f), 50, 50, 2);
-	trectComp.loadBuffer();
+	//createRect(Point3D(200.0f, 150.0f, 0.0f), 400, 300, 1);
+	//createRect(Point3D(100.0f, 100.0f, 0.0f), 50, 50, 2);
+	//trectComp.loadBuffer();
 }
 
 void Arcanoid::onUpdate() {

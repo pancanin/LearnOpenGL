@@ -81,6 +81,12 @@
     <ClCompile Include="engine\FPSCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="serialisation\TriangleBufferSerialiser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\BufferConfigurer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -119,7 +125,7 @@
     <ClInclude Include="models\Rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\ObjectComponent.h">
+    <ClInclude Include="graphics\BufferConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="models\VertexAttribute.h">
@@ -135,9 +141,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="models\TexturedTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\RectComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\Engine.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\FPSCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serialisation\TriangleBufferSerialiser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

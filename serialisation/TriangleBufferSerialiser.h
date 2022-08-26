@@ -1,9 +1,12 @@
 #pragma once
-
 #include "BufferSerialiser.h"
 
-class TexturedRectBufferSerialiser : public BufferSerialiser {
+class TriangleBufferSerialiser :
+    public BufferSerialiser
+{
 public:
 	float* serialise() const;
 	unsigned int size() const;
+private:
+	unsigned int floatsPerTriangle = 9;
 };

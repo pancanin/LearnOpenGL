@@ -1,10 +1,9 @@
 #pragma once
 
 #include "BufferSerialiser.h"
-#include "../models/Rect.h"
 
-class RectBufferSerialiser : public BufferSerialiser<Rect> {
+class RectBufferSerialiser : public BufferSerialiser {
 public:
-	float* serialise(const Rect& o) const override;
-	unsigned int componentsCountPerObject() const override;
+	float* serialise() const override;
+	unsigned int size() const override;
 };

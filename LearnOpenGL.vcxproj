@@ -151,6 +151,7 @@
     <ClCompile Include="engine\FPSCamera.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="graphics\Graphics.cpp" />
+    <ClCompile Include="graphics\BufferConfigurer.cpp" />
     <ClCompile Include="graphics\ShaderProgram.cpp" />
     <ClCompile Include="graphics\VertexArrayObject.cpp" />
     <ClCompile Include="graphics\VertexBufferObject.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="models\Triangle.cpp" />
     <ClCompile Include="serialisation\RectBufferSerialiser.cpp" />
     <ClCompile Include="serialisation\TexturedRectBufferSerialiser.cpp" />
+    <ClCompile Include="serialisation\TriangleBufferSerialiser.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="ui\Window.cpp" />
     <ClCompile Include="utils\ShaderLoader.cpp" />
@@ -177,8 +179,7 @@
     <ClInclude Include="engine\objects\GameObject.h" />
     <ClInclude Include="engine\objects\RectGameObject.h" />
     <ClInclude Include="graphics\Graphics.h" />
-    <ClInclude Include="graphics\ObjectComponent.h" />
-    <ClInclude Include="graphics\RectComponent.h" />
+    <ClInclude Include="graphics\BufferConfigurer.h" />
     <ClInclude Include="graphics\ShaderProgram.h" />
     <ClInclude Include="graphics\VertexArrayObject.h" />
     <ClInclude Include="graphics\VertexBufferObject.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="serialisation\RectBufferSerialiser.h" />
     <ClInclude Include="serialisation\BufferSerialiser.h" />
     <ClInclude Include="serialisation\TexturedRectBufferSerialiser.h" />
+    <ClInclude Include="serialisation\TriangleBufferSerialiser.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ui\Window.h" />
     <ClInclude Include="utils\MathUtils.h" />
