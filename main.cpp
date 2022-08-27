@@ -42,7 +42,7 @@ int main()
 	// glfw window creation
 	// --------------------
 	Window window;
-	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.30f, 0.40f, 0.0f, 1.0f));
+	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.0f, 0.0f, 0.0f, 1.0f));
 	window.makeActive();
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
@@ -181,8 +181,18 @@ int main()
 		shinedUponShaderProgram.setUniformMat4("model", objectModel);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		objectModel = glm::translate(objectModel, glm::vec3(-5.0f, -2.0f, 0.0f));
+		// TODO: Create a class that deals with a collection of objects and can configure the shader so that it works well.
+		objectModel = glm::translate(objectModel, glm::vec3(-2.0f, -2.0f, 0.0f));
+
 		shinedUponShaderProgram.setUniformMat4("model", objectModel);
+		shinedUponShaderProgram.setUniformVec3("material.ambient", Point3D(1.0f, 0.5f, 0.31f));
+		shinedUponShaderProgram.setUniformVec3("material.diffuse", Point3D(1.0f, 0.5f, 0.31f));
+		shinedUponShaderProgram.setUniformVec3("material.specular", Point3D(0.5f, 0.5f, 0.5f));
+		shinedUponShaderProgram.setUniformF("material.shininess", 32.0f);
+
+		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.2f, 0.2f, 0.2f));
+		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.5f, 0.5f, 0.5f)); // darken diffuse light a bit
+		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(1.0f, 1.0f, 1.0f));
 		bufferConfig.activate();
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
