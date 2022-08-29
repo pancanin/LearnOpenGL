@@ -22,6 +22,7 @@ void TextureComponent::load(const std::string& file)
 	hasAlpha = file.find(".png") != std::string::npos;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
+	deinit();
 }
 
 void TextureComponent::bind()

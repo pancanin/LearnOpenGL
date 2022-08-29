@@ -7,9 +7,9 @@
 #include "../graphics/ShaderProgram.h"
 #include "../input/KeyboardInput.h"
 #include "../attributes/RectAttributeConfigurer.h"
-#include "../serialisation/RectBufferSerialiser.h"
+#include "../models/serialisation/RectBufferSerialiser.h"
 #include "../attributes/TexturedRectAttributeConfigurer.h"
-#include "../serialisation/TexturedRectBufferSerialiser.h"
+#include "../models/serialisation/TexturedRectBufferSerialiser.h"
 #include "../utils/TextureComponent.h"
 
 class Engine {

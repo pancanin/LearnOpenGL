@@ -11,7 +11,7 @@
 #include "VertexArrayObject.h"
 #include "VertexBufferObject.h"
 #include "../models/VertexAttribute.h"
-#include "../serialisation/BufferSerialiser.h"
+#include "../models/serialisation/BufferSerialiser.h"
 
 /* Sets up buffers for shapes/objects */
 class BufferConfigurer

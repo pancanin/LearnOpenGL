@@ -66,12 +66,6 @@
     <ClCompile Include="attributes\RectAttributeConfigurer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="serialisation\RectBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="serialisation\TexturedRectBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="attributes\TexturedRectAttributeConfigurer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,10 +75,16 @@
     <ClCompile Include="engine\FPSCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="serialisation\TriangleBufferSerialiser.cpp">
+    <ClCompile Include="graphics\BufferConfigurer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\BufferConfigurer.cpp">
+    <ClCompile Include="models\serialisation\RectBufferSerialiser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="models\serialisation\TriangleBufferSerialiser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\object-components\TriangleComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,15 +167,6 @@
     <ClInclude Include="attributes\RectAttributeConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="serialisation\RectBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="serialisation\BufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="serialisation\TexturedRectBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="attributes\TexturedRectAttributeConfigurer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -185,7 +176,16 @@
     <ClInclude Include="engine\FPSCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="serialisation\TriangleBufferSerialiser.h">
+    <ClInclude Include="models\serialisation\BufferSerialiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="models\serialisation\RectBufferSerialiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="models\serialisation\TriangleBufferSerialiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\object-components\TriangleComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

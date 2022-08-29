@@ -12,7 +12,7 @@
 #include "graphics/VertexBufferObject.h"
 #include "engine/FPSCamera.h"
 #include "graphics/BufferConfigurer.h"
-#include "serialisation/TriangleBufferSerialiser.h"
+#include "models/serialisation/TriangleBufferSerialiser.h"
 
 #include <iostream>
 #include <string>
