@@ -9,7 +9,6 @@
 #include "../attributes/RectAttributeConfigurer.h"
 #include "../models/serialisation/RectBufferSerialiser.h"
 #include "../attributes/TexturedRectAttributeConfigurer.h"
-#include "../models/serialisation/TexturedRectBufferSerialiser.h"
 #include "../utils/TextureComponent.h"
 
 class Engine {
@@ -37,7 +36,6 @@ private:
 	
 
 	TexturedRectAttributeConfigurer trectAttributeStrategy;
-	std::shared_ptr<TexturedRectBufferSerialiser> trectSerialisationPtr;
 	
 	std::vector<std::shared_ptr<TextureComponent>> textures;
 

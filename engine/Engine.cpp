@@ -16,12 +16,6 @@ void Engine::init(int width, int height, const std::string& label, const Color& 
 	keyboardInput.init(window);
 
 	rectSerialisationPtr = std::make_shared<RectBufferSerialiser>();
-
-	//rectComp.init(rectAttributeConfigurer, rectSerialisationPtr);
-	//rectComp.activate();
-
-	trectSerialisationPtr = std::make_shared<TexturedRectBufferSerialiser>();
-	//trectComp.init(trectAttributeStrategy, trectSerialisationPtr);
 }
 
 void Engine::start()
