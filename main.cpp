@@ -72,6 +72,14 @@ int main()
 	container.init(GL_TEXTURE0);
 	container.load("assets/container2.png");
 
+	TextureComponent containerSpecularMap;
+	containerSpecularMap.init(GL_TEXTURE1);
+	containerSpecularMap.load("assets/cointainer2specularmap.png");
+
+	TextureComponent emmissionMapMatrix;
+	emmissionMapMatrix.init(GL_TEXTURE2);
+	emmissionMapMatrix.load("assets/matrix-emittance-map.jpg");
+
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
 	float vertices[] = {
@@ -173,6 +181,9 @@ int main()
 		// Drawing the object that we will shine upon.
 		shinedUponShaderProgram.use();
 		container.bind(); // Binding the texture
+		containerSpecularMap.bind();
+		emmissionMapMatrix.bind();
+		
 		shinedUponShaderProgram.setUniformMat4("view", cam.getView());
 		shinedUponShaderProgram.setUniformMat4("projection", cam.getProjection());
 		
@@ -193,7 +204,9 @@ int main()
 
 		// Material is cyan plastic
 		shinedUponShaderProgram.setUniformMat4("model", objectModel);
-		shinedUponShaderProgram.setUniformVec3("material.specular", Point3D(0.5, 0.5, 0.5));
+		shinedUponShaderProgram.setInt("material.diffuse", 0);
+		shinedUponShaderProgram.setInt("material.specular", 1);
+		shinedUponShaderProgram.setInt("material.emissive", 2);
 		shinedUponShaderProgram.setUniformF("material.shininess", 64.0f);
 
 		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.2f, 0.2f, 0.2f));
