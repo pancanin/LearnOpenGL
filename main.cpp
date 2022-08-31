@@ -175,7 +175,7 @@ int main()
 
 		lightSourceShaderProgram.setUniformMat4("model", lightModel);
 		lightSourceShaderProgram.setUniformVec3("lightColor", lightColor);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 		// Drawing the object that we will shine upon.
@@ -187,33 +187,47 @@ int main()
 		shinedUponShaderProgram.setUniformMat4("view", cam.getView());
 		shinedUponShaderProgram.setUniformMat4("projection", cam.getProjection());
 		
-		glm::mat4 objectModel = glm::mat4(1.0f);
-		objectModel = glm::translate(objectModel, glm::vec3(5.0f, -2.0f, 0.0f));
-		
-		
+		glm::vec3 cubePositions[] = {
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),
+		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),
+		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -1.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f)
+		};
+
 		shinedUponShaderProgram.setUniformVec3("objectColor", glm::vec3(0.77f, 0.33f, 0.03f));
 		shinedUponShaderProgram.setUniformVec3("lightColor", lightColor);
 		shinedUponShaderProgram.setUniformVec3("lightPos", lightPos);
 		shinedUponShaderProgram.setUniformVec3("viewerPos", Point3D(0.0f, 0.0f, -3.0f));
-		objectModel = glm::scale(objectModel, glm::vec3(5.0f));
-		shinedUponShaderProgram.setUniformMat4("model", objectModel);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		// TODO: Create a class that deals with a collection of objects and can configure the shader so that it works well.
-		objectModel = glm::translate(objectModel, glm::vec3(-2.0f, -2.0f, 0.0f));
-
-		// Material is cyan plastic
-		shinedUponShaderProgram.setUniformMat4("model", objectModel);
 		shinedUponShaderProgram.setInt("material.diffuse", 0);
 		shinedUponShaderProgram.setInt("material.specular", 1);
 		shinedUponShaderProgram.setInt("material.emissive", 2);
 		shinedUponShaderProgram.setUniformF("material.shininess", 64.0f);
+		
+		for (unsigned int i = 0; i < 10; i++)
+		{
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, cubePositions[i]);
+			float angle = 20.0f * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
+			shinedUponShaderProgram.setUniformMat4("model", model);
+
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 
 		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.2f, 0.2f, 0.2f));
-		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.5f, 0.5f, 0.5f)); // darken diffuse light a bit
+		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.7f, 0.7f, 0.7f)); // darken diffuse light a bit
 		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(1.0f, 1.0f, 1.0f));
+		shinedUponShaderProgram.setUniformVec3("light.direction", Point3D(0.0f, -1.0f, 0.0f));
 		bufferConfig.activate();
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		//glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		window.swapBuffers();
 		g.pollEvents();

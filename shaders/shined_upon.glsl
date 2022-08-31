@@ -13,7 +13,7 @@ uniform Material material;
 
 struct Light {
     //vec3 position;
-		vec3 direction // For directional light we do not compute the light ray from the relative position between object and light
+		vec3 direction; // For directional light we do not compute the light ray from the relative position between object and light
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
@@ -34,7 +34,7 @@ void main()
 {
 vec3 diffuseMap = vec3(texture(material.diffuse, outTexCoords));
   vec3 ambient = diffuseMap * light.ambient;
-	vec3 lightDir = normalize(lightPosO);
+	vec3 lightDir = normalize(-light.direction);
 	float dotP = max(dot(normalize(Normal), lightDir), 0.0f);
 	
 	vec3 diffuse = dotP * diffuseMap * light.diffuse;
@@ -46,5 +46,5 @@ vec3 diffuseMap = vec3(texture(material.diffuse, outTexCoords));
 	vec3 specularAngleDiff = pow(max(dot(viewVector, reflectDir), 0.0f), material.shininess) * specular * light.specular;
 
 	vec3 emissive = texture(material.emissive, outTexCoords).rgb;
-  FragColor = vec4(emissive + (ambient + diffuse + specularAngleDiff), 1.0f);
+  FragColor = vec4((ambient + diffuse + specularAngleDiff), 1.0f);
 }
