@@ -25,6 +25,11 @@ const Point3D& Camera::getPosition() const
 	return cameraPosition;
 }
 
+const Vector3D& Camera::getFront() const
+{
+	return cameraFront;
+}
+
 glm::vec3 Camera::calculateUp(const Point3D& cameraTarget) const
 {
 	auto cameraDirection = glm::normalize(cameraPosition - cameraTarget);

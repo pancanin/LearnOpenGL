@@ -17,6 +17,7 @@ public:
 	const Matrix4& getProjection() const;
 	const Matrix4& getView() const;
 	const Point3D& getPosition() const;
+	const Vector3D& getFront() const;
 protected:
 	Matrix4 projectionMatrix = Matrix4(1.0f);
 	Matrix4 viewMatrix = Matrix4(1.0f);

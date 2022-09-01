@@ -175,7 +175,7 @@ int main()
 
 		lightSourceShaderProgram.setUniformMat4("model", lightModel);
 		lightSourceShaderProgram.setUniformVec3("lightColor", lightColor);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 		// Drawing the object that we will shine upon.
@@ -225,8 +225,9 @@ int main()
 		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.4f));
 		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.7f)); // darken diffuse light a bit
 		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(0.5f));
-		shinedUponShaderProgram.setUniformVec3("light.direction", Point3D(0.0f, -1.0f, 0.0f));
-		shinedUponShaderProgram.setUniformVec3("light.position", lightPos);
+		shinedUponShaderProgram.setUniformVec3("light.direction", cam.getFront() + cam.getPosition());
+		shinedUponShaderProgram.setUniformVec3("light.position", cam.getPosition());
+		shinedUponShaderProgram.setUniformF("light.cutoffAngle", glm::radians(15.0f));
 
 		shinedUponShaderProgram.setUniformF("light.constant", 1.0f);
 		shinedUponShaderProgram.setUniformF("light.linear", 0.09f);
