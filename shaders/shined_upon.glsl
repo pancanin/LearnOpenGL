@@ -12,11 +12,16 @@ struct Material {
 uniform Material material;
 
 struct Light {
-    //vec3 position;
+    vec3 position; // Used for point light
 		vec3 direction; // For directional light we do not compute the light ray from the relative position between object and light
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+		// Attenuation factors
+		float constant;
+		float linear;
+		float quadratic;
 };
 
 uniform Light light;
@@ -32,19 +37,25 @@ uniform vec3 viewerPos;
 
 void main()
 {
-vec3 diffuseMap = vec3(texture(material.diffuse, outTexCoords));
+	float d = length(FragWorldPos - light.position);
+	float attenuation = 1.0 / (light.constant + light.linear * d + light.quadratic * d * d);
+
+	vec3 diffuseMap = vec3(texture(material.diffuse, outTexCoords));
   vec3 ambient = diffuseMap * light.ambient;
-	vec3 lightDir = normalize(-light.direction);
+
+	vec3 lightDir = normalize(FragWorldPos - light.position );
 	float dotP = max(dot(normalize(Normal), lightDir), 0.0f);
-	
 	vec3 diffuse = dotP * diffuseMap * light.diffuse;
 
-	vec3 viewVector = normalize(-FragWorldPos);
+	vec3 viewVector = normalize(viewerPos - FragWorldPos);
 	vec3 reflectDir = reflect(-lightDir, normalize(Normal));
 
-	vec3 specular = vec3(1.0f) - texture(material.specular, outTexCoords).rgb;
+	vec3 specular = texture(material.specular, outTexCoords).rgb;
 	vec3 specularAngleDiff = pow(max(dot(viewVector, reflectDir), 0.0f), material.shininess) * specular * light.specular;
 
-	vec3 emissive = texture(material.emissive, outTexCoords).rgb;
+	ambient *= attenuation;
+	diffuse *= attenuation;
+	specular *= attenuation;
+
   FragColor = vec4((ambient + diffuse + specularAngleDiff), 1.0f);
 }

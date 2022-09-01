@@ -163,7 +163,7 @@ int main()
 		vao.bind();
 		// create transformations
 		glm::mat4 lightModel = glm::mat4(1.0f);
-		float radius = 50.0f;
+		float radius = 5.0f;
 		float time = (float)glfwGetTime();
 		auto lightPos = glm::vec3(radius * cos(time), 0.0f, radius * sin(time));
 		lightModel = glm::scale(lightModel, glm::vec3(0.2f));
@@ -175,7 +175,7 @@ int main()
 
 		lightSourceShaderProgram.setUniformMat4("model", lightModel);
 		lightSourceShaderProgram.setUniformVec3("lightColor", lightColor);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 		// Drawing the object that we will shine upon.
@@ -203,7 +203,7 @@ int main()
 		shinedUponShaderProgram.setUniformVec3("objectColor", glm::vec3(0.77f, 0.33f, 0.03f));
 		shinedUponShaderProgram.setUniformVec3("lightColor", lightColor);
 		shinedUponShaderProgram.setUniformVec3("lightPos", lightPos);
-		shinedUponShaderProgram.setUniformVec3("viewerPos", Point3D(0.0f, 0.0f, -3.0f));
+		shinedUponShaderProgram.setUniformVec3("viewerPos", cam.getPosition());
 		shinedUponShaderProgram.setInt("material.diffuse", 0);
 		shinedUponShaderProgram.setInt("material.specular", 1);
 		shinedUponShaderProgram.setInt("material.emissive", 2);
@@ -222,13 +222,16 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
-		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.2f, 0.2f, 0.2f));
-		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.7f, 0.7f, 0.7f)); // darken diffuse light a bit
-		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(1.0f, 1.0f, 1.0f));
+		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.4f));
+		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.7f)); // darken diffuse light a bit
+		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(0.5f));
 		shinedUponShaderProgram.setUniformVec3("light.direction", Point3D(0.0f, -1.0f, 0.0f));
-		bufferConfig.activate();
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
+		shinedUponShaderProgram.setUniformVec3("light.position", lightPos);
 
+		shinedUponShaderProgram.setUniformF("light.constant", 1.0f);
+		shinedUponShaderProgram.setUniformF("light.linear", 0.09f);
+		shinedUponShaderProgram.setUniformF("light.quadratic", 0.032f);
+		
 		window.swapBuffers();
 		g.pollEvents();
 	}
