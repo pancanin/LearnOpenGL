@@ -42,7 +42,7 @@ int main()
 	// glfw window creation
 	// --------------------
 	Window window;
-	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.0f, 0.0f, 0.0f, 1.0f));
+	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
@@ -224,15 +224,17 @@ int main()
 
 		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.4f));
 		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.7f)); // darken diffuse light a bit
-		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(0.5f));
-		shinedUponShaderProgram.setUniformVec3("light.direction", cam.getFront() + cam.getPosition());
+		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(0.9f));
+
+		shinedUponShaderProgram.setUniformVec3("light.direction", cam.getFront());
 		shinedUponShaderProgram.setUniformVec3("light.position", cam.getPosition());
-		shinedUponShaderProgram.setUniformF("light.cutoffAngle", glm::radians(15.0f));
+		shinedUponShaderProgram.setUniformF("light.cutOff", glm::cos(glm::radians(15.5f)));
 
 		shinedUponShaderProgram.setUniformF("light.constant", 1.0f);
 		shinedUponShaderProgram.setUniformF("light.linear", 0.09f);
 		shinedUponShaderProgram.setUniformF("light.quadratic", 0.032f);
 		
+		//TODO: Optimise includes - only include what is needed.
 		window.swapBuffers();
 		g.pollEvents();
 	}

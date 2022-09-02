@@ -26,13 +26,13 @@ void FPSCamera::moveBackward()
 
 void FPSCamera::moveLeft()
 {
-	cameraPosition -= cameraSpeed * glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f));
+	cameraPosition -= cameraSpeed * glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f)));
 	calculateView();
 }
 
 void FPSCamera::moveRight()
 {
-	cameraPosition += cameraSpeed * glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f));
+	cameraPosition += cameraSpeed * glm::normalize(glm::cross(cameraFront, glm::vec3(0.0f, 1.0f, 0.0f)));
 	calculateView();
 }
 
