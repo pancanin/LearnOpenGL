@@ -222,6 +222,9 @@ int main()
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
+		// TODO: For multiple lights you have to follow the next tutorial: Probably we have to keep track of several lights as array and 
+		// apply the light per each fragment based on all the lights.
+
 		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.4f));
 		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.7f)); // darken diffuse light a bit
 		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(0.9f));
