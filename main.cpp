@@ -42,7 +42,7 @@ int main()
 	// glfw window creation
 	// --------------------
 	Window window;
-	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.2f, 0.2f, 0.2f, 1.0f));
+	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.01f, 0.01f, 0.01f, 1.0f));
 	window.makeActive();
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
@@ -232,6 +232,7 @@ int main()
 		shinedUponShaderProgram.setUniformVec3("light.direction", cam.getFront());
 		shinedUponShaderProgram.setUniformVec3("light.position", cam.getPosition());
 		shinedUponShaderProgram.setUniformF("light.cutOff", glm::cos(glm::radians(15.5f)));
+		shinedUponShaderProgram.setUniformF("light.outerCutOff", glm::cos(glm::radians(17.5f)));
 
 		shinedUponShaderProgram.setUniformF("light.constant", 1.0f);
 		shinedUponShaderProgram.setUniformF("light.linear", 0.09f);
