@@ -31,6 +31,22 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	
 }
 
+struct PointLight {
+	glm::vec3 position;
+	glm::vec3 color;
+
+	float constant;
+	float linear;
+	float quadratic;
+
+	glm::vec3 ambient;
+	glm::vec3 diffuse;
+	glm::vec3 specular;
+};
+
+PointLight ulichniLampi[4];
+
+
 FPSCamera cam;
 
 int main()
@@ -79,6 +95,11 @@ int main()
 	TextureComponent emmissionMapMatrix;
 	emmissionMapMatrix.init(GL_TEXTURE2);
 	emmissionMapMatrix.load("assets/matrix-emittance-map.jpg");
+
+
+	ulichniLampi[0] = PointLight{ glm::vec3(0.0f, -5.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
+	ulichniLampi[1] = PointLight{ glm::vec3(-5.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
+	ulichniLampi[2] = PointLight{ glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 1.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -161,22 +182,6 @@ int main()
 		lightSourceShaderProgram.setUniformMat4("projection", cam.getProjection());
 
 		vao.bind();
-		// create transformations
-		glm::mat4 lightModel = glm::mat4(1.0f);
-		float radius = 5.0f;
-		float time = (float)glfwGetTime();
-		auto lightPos = glm::vec3(radius * cos(time), 0.0f, radius * sin(time));
-		lightModel = glm::scale(lightModel, glm::vec3(0.2f));
-		lightModel = glm::translate(lightModel, lightPos);
-
-		// Drawing the light source
-
-		auto lightColor = glm::vec3(1.0f);
-
-		lightSourceShaderProgram.setUniformMat4("model", lightModel);
-		lightSourceShaderProgram.setUniformVec3("lightColor", lightColor);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
-
 
 		// Drawing the object that we will shine upon.
 		shinedUponShaderProgram.use();
@@ -201,8 +206,6 @@ int main()
 		};
 
 		shinedUponShaderProgram.setUniformVec3("objectColor", glm::vec3(0.77f, 0.33f, 0.03f));
-		shinedUponShaderProgram.setUniformVec3("lightColor", lightColor);
-		shinedUponShaderProgram.setUniformVec3("lightPos", lightPos);
 		shinedUponShaderProgram.setUniformVec3("viewerPos", cam.getPosition());
 		shinedUponShaderProgram.setInt("material.diffuse", 0);
 		shinedUponShaderProgram.setInt("material.specular", 1);
@@ -226,11 +229,37 @@ int main()
 		// apply the light per each fragment based on all the lights.
 
 		shinedUponShaderProgram.setUniformVec3("theSun.ambient", Point3D(0.1f));
-		shinedUponShaderProgram.setUniformVec3("theSun.diffuse", Point3D(0.7f)); // darken diffuse light a bit
+		shinedUponShaderProgram.setUniformVec3("theSun.diffuse", Point3D(0.5f)); // darken diffuse light a bit
 		shinedUponShaderProgram.setUniformVec3("theSun.specular", Point3D(0.9f));
 
 		shinedUponShaderProgram.setUniformVec3("theSun.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		shinedUponShaderProgram.setUniformVec3("theSun.color", glm::vec3(1.0f, 1.0f, 1.0f));
+
+		for (int i = 0; i < 3; i++) {
+			shinedUponShaderProgram.use();
+			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].position", ulichniLampi[i].position);
+			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].color", ulichniLampi[i].color);
+			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].ambient", ulichniLampi[i].ambient);
+			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].diffuse", ulichniLampi[i].diffuse);
+			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].specular", ulichniLampi[i].specular);
+			shinedUponShaderProgram.setUniformF("ulichniLampi[" + std::to_string(i) + "].constant", ulichniLampi[i].constant);
+			shinedUponShaderProgram.setUniformF("ulichniLampi[" + std::to_string(i) + "].linear", ulichniLampi[i].linear);
+			shinedUponShaderProgram.setUniformF("ulichniLampi[" + std::to_string(i) + "].quadratic", ulichniLampi[i].quadratic);
+
+			lightSourceShaderProgram.use();
+
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, ulichniLampi[i].position);
+			model = glm::scale(model, glm::vec3(0.2));
+			
+
+			lightSourceShaderProgram.setUniformMat4("model", model);
+			lightSourceShaderProgram.setUniformVec3("lightColor", ulichniLampi[i].color);
+
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
+		
+
 		
 		//TODO: Optimise includes - only include what is needed.
 		window.swapBuffers();
