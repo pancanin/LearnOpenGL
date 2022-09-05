@@ -264,8 +264,18 @@ int main()
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
-		
 
+		shinedUponShaderProgram.use();
+		shinedUponShaderProgram.setUniformVec3("fenerche.direction", cam.getFront());
+		shinedUponShaderProgram.setUniformVec3("fenerche.position", cam.getPosition());
+		shinedUponShaderProgram.setUniformVec3("fenerche.color", glm::vec3(1.0f));
+		shinedUponShaderProgram.setUniformVec3("fenerche.ambient", glm::vec3(0.001f));
+		shinedUponShaderProgram.setUniformVec3("fenerche.diffuse", glm::vec3(0.8f));
+		shinedUponShaderProgram.setUniformVec3("fenerche.specular", glm::vec3(1.0f));
+		shinedUponShaderProgram.setUniformF("fenerche.cutOff", glm::cos(glm::radians(15.0f)));
+		shinedUponShaderProgram.setUniformF("fenerche.constant", 1.0f);
+		shinedUponShaderProgram.setUniformF("fenerche.linear", 0.09f);
+		shinedUponShaderProgram.setUniformF("fenerche.quadratic", 0.032f);
 		
 		//TODO: Optimise includes - only include what is needed.
 		window.swapBuffers();

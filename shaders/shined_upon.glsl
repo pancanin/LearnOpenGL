@@ -30,7 +30,7 @@ struct PointLight {
 
 struct SpotLight {
 	vec3 direction;
-
+	vec3 position;
 	vec3 color;
 
 	float cutOff;
@@ -59,8 +59,9 @@ uniform PointLight ulichniLampi[PL_COUNT];
 
 uniform SpotLight fenerche;
 
-vec3 CalcDirLight(DirLight light, vec3 normal);  
+vec3 CalcDirLight(DirLight light, vec3 normal);
 vec3 CalcPointLight(PointLight light, vec3 normal);
+vec3 CalcSpotLight(SpotLight light, vec3 normal);
 
 void main()
 {
@@ -69,6 +70,8 @@ void main()
 		for (int i = 0; i < 3; i++) {
 			result += CalcPointLight(ulichniLampi[i], Normal);
 		}
+
+		result += CalcSpotLight(fenerche, Normal);
 
     FragColor = vec4(result, 1.0);
 } 
@@ -103,4 +106,16 @@ vec3 CalcPointLight(PointLight light, vec3 normal) {
 	float atte = 1 / (light.constant + d * light.linear + d * d * light.quadratic);
 
 	return (ambient + diffuse + specular) * atte;
+}
+
+vec3 CalcSpotLight(SpotLight light, vec3 normal) {
+	vec3 viewpoint = normalize(FragPos - light.position);
+	float theta = dot(light.direction, viewpoint);
+
+	if (theta > light.cutOff) {
+		PointLight p = PointLight( light.position, light.color, light.constant, light.linear, light.quadratic, light.ambient, light.diffuse, light.specular );
+		return CalcPointLight(p, Normal);
+	} else {
+		return vec3(0.0f);
+	}
 }
