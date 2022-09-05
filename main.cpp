@@ -225,18 +225,12 @@ int main()
 		// TODO: For multiple lights you have to follow the next tutorial: Probably we have to keep track of several lights as array and 
 		// apply the light per each fragment based on all the lights.
 
-		shinedUponShaderProgram.setUniformVec3("light.ambient", Point3D(0.4f));
-		shinedUponShaderProgram.setUniformVec3("light.diffuse", Point3D(0.7f)); // darken diffuse light a bit
-		shinedUponShaderProgram.setUniformVec3("light.specular", Point3D(0.9f));
+		shinedUponShaderProgram.setUniformVec3("theSun.ambient", Point3D(0.1f));
+		shinedUponShaderProgram.setUniformVec3("theSun.diffuse", Point3D(0.7f)); // darken diffuse light a bit
+		shinedUponShaderProgram.setUniformVec3("theSun.specular", Point3D(0.9f));
 
-		shinedUponShaderProgram.setUniformVec3("light.direction", cam.getFront());
-		shinedUponShaderProgram.setUniformVec3("light.position", cam.getPosition());
-		shinedUponShaderProgram.setUniformF("light.cutOff", glm::cos(glm::radians(15.5f)));
-		shinedUponShaderProgram.setUniformF("light.outerCutOff", glm::cos(glm::radians(17.5f)));
-
-		shinedUponShaderProgram.setUniformF("light.constant", 1.0f);
-		shinedUponShaderProgram.setUniformF("light.linear", 0.09f);
-		shinedUponShaderProgram.setUniformF("light.quadratic", 0.032f);
+		shinedUponShaderProgram.setUniformVec3("theSun.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+		shinedUponShaderProgram.setUniformVec3("theSun.color", glm::vec3(1.0f, 1.0f, 1.0f));
 		
 		//TODO: Optimise includes - only include what is needed.
 		window.swapBuffers();
