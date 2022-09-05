@@ -97,9 +97,9 @@ int main()
 	emmissionMapMatrix.load("assets/matrix-emittance-map.jpg");
 
 
-	ulichniLampi[0] = PointLight{ glm::vec3(0.0f, -5.0f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
-	ulichniLampi[1] = PointLight{ glm::vec3(-5.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
-	ulichniLampi[2] = PointLight{ glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(0.0f, 0.0f, 1.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
+	ulichniLampi[0] = PointLight{ glm::vec3(0.0f, -5.0f, 0.0f), glm::vec3(1.0f, 0.5f, 0.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
+	ulichniLampi[1] = PointLight{ glm::vec3(-5.0f, 0.0f, 0.0f), glm::vec3(0.5f, 0.0f, 0.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
+	ulichniLampi[2] = PointLight{ glm::vec3(0.0f, 0.0f, -5.0f), glm::vec3(1.0f, 0.0f, 0.0f), 1.0f, 0.09f, 0.032f, glm::vec3(0.01f), glm::vec3(0.7), glm::vec3(0.9f) };
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -235,10 +235,16 @@ int main()
 		shinedUponShaderProgram.setUniformVec3("theSun.direction", glm::vec3(0.0f, -1.0f, 0.0f));
 		shinedUponShaderProgram.setUniformVec3("theSun.color", glm::vec3(1.0f, 1.0f, 1.0f));
 
+		float time = (float)glfwGetTime();
+		float sinTime = sin(time * 4);
+
+		bool lightsOn = sinTime >= 0;
+
 		for (int i = 0; i < 3; i++) {
+			glm::vec3 lColor = lightsOn ? ulichniLampi[i].color : glm::vec3(0.0f);
 			shinedUponShaderProgram.use();
 			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].position", ulichniLampi[i].position);
-			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].color", ulichniLampi[i].color);
+			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].color", lColor);
 			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].ambient", ulichniLampi[i].ambient);
 			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].diffuse", ulichniLampi[i].diffuse);
 			shinedUponShaderProgram.setUniformVec3("ulichniLampi[" + std::to_string(i) + "].specular", ulichniLampi[i].specular);
@@ -254,7 +260,7 @@ int main()
 			
 
 			lightSourceShaderProgram.setUniformMat4("model", model);
-			lightSourceShaderProgram.setUniformVec3("lightColor", ulichniLampi[i].color);
+			lightSourceShaderProgram.setUniformVec3("lightColor", lColor);
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
