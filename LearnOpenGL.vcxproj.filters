@@ -24,67 +24,22 @@
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ui\Window.cpp">
+    <ClCompile Include="examples\arcanoid\Arcanoid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\Graphics.cpp">
+    <ClCompile Include="src\engine\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input\KeyboardInput.cpp">
+    <ClCompile Include="src\engine\ui\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\VertexBufferObject.cpp">
+    <ClCompile Include="src\engine\models\Rect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utils\ShaderLoader.cpp">
+    <ClCompile Include="src\engine\models\TexturedRect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics\ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\VertexArrayObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utils\TextureComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="models\Rect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="models\Triangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="arcanoid\Arcanoid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="models\TexturedRect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="attributes\RectAttributeConfigurer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="attributes\TexturedRectAttributeConfigurer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\FPSCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics\BufferConfigurer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="models\serialisation\RectBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="models\serialisation\TriangleBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="engine\object-components\TriangleComponent.cpp">
+    <ClCompile Include="src\engine\models\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,119 +47,54 @@
     <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ui\Window.h">
+    <ClInclude Include="examples\arcanoid\Arcanoid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\Graphics.h">
+    <ClInclude Include="src\engine\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input\KeyboardInput.h">
+    <ClInclude Include="src\engine\ui\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="models\Triangle.h">
+    <ClInclude Include="src\engine\models\ColorTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="models\TypeDefs.h">
+    <ClInclude Include="src\engine\models\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="models\Object.h">
+    <ClInclude Include="src\engine\models\Rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexBufferObject.h">
+    <ClInclude Include="src\engine\models\TexturedRect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils\ShaderLoader.h">
+    <ClInclude Include="src\engine\models\TexturedTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\ShaderProgram.h">
+    <ClInclude Include="src\engine\models\Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\VertexArrayObject.h">
+    <ClInclude Include="src\engine\models\TypeDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="models\Rect.h">
+    <ClInclude Include="src\engine\models\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics\BufferConfigurer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\VertexAttribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\ColorTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils\TextureComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\TexturedTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\Engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="arcanoid\Arcanoid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils\MathUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\objects\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\objects\RectGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\TexturedRect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="attributes\AttributeConfigurer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="attributes\RectAttributeConfigurer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="attributes\TexturedRectAttributeConfigurer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\FPSCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\serialisation\BufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\serialisation\RectBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="models\serialisation\TriangleBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\object-components\TriangleComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graphics\Model.h">
+    <ClInclude Include="src\engine\models\VertexAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\simple_vertex.glsl" />
-    <None Include="shaders\simple_fragment.glsl" />
-    <None Include="shaders\fragment_2.glsl" />
-    <None Include="shaders\color_vertex.glsl" />
-    <None Include="shaders\texture_fragment.glsl" />
-    <None Include="shaders\texture_vertex.glsl" />
     <None Include="README.md" />
-    <None Include="shaders\light_fragment.glsl" />
-    <None Include="shaders\shined_upon.glsl" />
-    <None Include="shaders\model_fragment.glsl" />
+    <None Include="src\engine\shaders\color_vertex.glsl" />
+    <None Include="src\engine\shaders\fragment_2.glsl" />
+    <None Include="src\engine\shaders\light_fragment.glsl" />
+    <None Include="src\engine\shaders\model_fragment.glsl" />
+    <None Include="src\engine\shaders\shined_upon.glsl" />
+    <None Include="src\engine\shaders\simple_fragment.glsl" />
+    <None Include="src\engine\shaders\simple_vertex.glsl" />
+    <None Include="src\engine\shaders\texture_fragment.glsl" />
+    <None Include="src\engine\shaders\texture_vertex.glsl" />
+    <None Include="src\engine\shaders\default_vertex.glsl" />
   </ItemGroup>
 </Project>
