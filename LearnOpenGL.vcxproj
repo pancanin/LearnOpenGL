@@ -123,7 +123,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -181,6 +181,8 @@
     <ClInclude Include="engine\objects\RectGameObject.h" />
     <ClInclude Include="graphics\Graphics.h" />
     <ClInclude Include="graphics\BufferConfigurer.h" />
+    <ClInclude Include="graphics\Mesh.h" />
+    <ClInclude Include="graphics\Model.h" />
     <ClInclude Include="graphics\ShaderProgram.h" />
     <ClInclude Include="graphics\VertexArrayObject.h" />
     <ClInclude Include="graphics\VertexBufferObject.h" />
@@ -208,6 +210,7 @@
     <None Include="shaders\color_vertex.glsl" />
     <None Include="shaders\fragment_2.glsl" />
     <None Include="shaders\light_fragment.glsl" />
+    <None Include="shaders\model_fragment.glsl" />
     <None Include="shaders\shined_upon.glsl" />
     <None Include="shaders\simple_fragment.glsl" />
     <None Include="shaders\simple_vertex.glsl" />

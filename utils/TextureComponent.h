@@ -11,11 +11,12 @@ public:
 	void bind();
 
 	int textureUnit;
+	unsigned int id;
 private:
 	int width;
 	int height;
 	int nChannels;
-	unsigned int id;
+	
 	unsigned char* data;
 	bool hasAlpha;
 

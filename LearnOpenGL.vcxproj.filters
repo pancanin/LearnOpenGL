@@ -188,6 +188,12 @@
     <ClInclude Include="engine\object-components\TriangleComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\simple_vertex.glsl" />
@@ -199,5 +205,6 @@
     <None Include="README.md" />
     <None Include="shaders\light_fragment.glsl" />
     <None Include="shaders\shined_upon.glsl" />
+    <None Include="shaders\model_fragment.glsl" />
   </ItemGroup>
 </Project>

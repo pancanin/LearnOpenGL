@@ -13,6 +13,7 @@
 #include "engine/FPSCamera.h"
 #include "graphics/BufferConfigurer.h"
 #include "models/serialisation/TriangleBufferSerialiser.h"
+#include "graphics/Model.h"
 
 #include <iostream>
 #include <string>
@@ -58,7 +59,7 @@ int main()
 	// glfw window creation
 	// --------------------
 	Window window;
-	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.01f, 0.01f, 0.01f, 1.0f));
+	window.init(SCR_WIDTH, SCR_HEIGHT, "Learning Open GL", Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
 	window.registerCursorPositionCallback(mouse_callback);
 	window.registerMouseButtonCallback(mouse_button_callback);
@@ -166,8 +167,21 @@ int main()
 	bufferConfig.activate();
 	bufferConfig.loadBuffer();
 
+	ShaderProgram modelShader;
+	modelShader.init();
+	modelShader.attachVertexShader("texture_vertex");
+	modelShader.attachFragmentShader("model_fragment");
+	modelShader.link();
+
+	Model backpack("assets/backpack/backpack.obj");
+
+
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// render loop
 	// -----------
 	while (!window.shouldClose())
@@ -184,11 +198,12 @@ int main()
 		vao.bind();
 
 		// Drawing the object that we will shine upon.
-		shinedUponShaderProgram.use();
+		
 		container.bind(); // Binding the texture
 		containerSpecularMap.bind();
 		emmissionMapMatrix.bind();
 		
+		shinedUponShaderProgram.use();
 		shinedUponShaderProgram.setUniformMat4("view", cam.getView());
 		shinedUponShaderProgram.setUniformMat4("projection", cam.getProjection());
 		
@@ -276,6 +291,14 @@ int main()
 		shinedUponShaderProgram.setUniformF("fenerche.constant", 1.0f);
 		shinedUponShaderProgram.setUniformF("fenerche.linear", 0.09f);
 		shinedUponShaderProgram.setUniformF("fenerche.quadratic", 0.032f);
+
+		modelShader.use();
+		auto model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(-2.0f, 0.0f, 0.0f));
+		modelShader.setUniformMat4("model", model);
+		modelShader.setUniformMat4("view", cam.getView());
+		modelShader.setUniformMat4("projection", cam.getProjection());
+		backpack.Draw(modelShader);
 		
 		//TODO: Optimise includes - only include what is needed.
 		window.swapBuffers();

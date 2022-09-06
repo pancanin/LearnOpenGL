@@ -18,9 +18,10 @@ void TextureComponent::init(int textureUnit)
 
 void TextureComponent::load(const std::string& file)
 {
-	data = stbi_load(file.c_str(), &width, &height, &nChannels, 0);
 	hasAlpha = file.find(".png") != std::string::npos;
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
+	data = stbi_load(file.c_str(), &width, &height, &nChannels, hasAlpha ? STBI_rgb_alpha : 0);
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, hasAlpha ? GL_RGBA : GL_RGB, width, height, 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	deinit();
 }
