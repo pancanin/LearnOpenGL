@@ -1,5 +1,7 @@
 # Learning OpenGL(GLFW)
 
+Disclamer: Folder structure is messed up - things need moving around, please do not judge harshly :)
+
 ## Point inside Triangle
 
 ![Demonstration of Point inside a Triangle test](https://github.com/pancanin/LearnOpenGL/blob/master/scshts/PointInTriangle.gif?raw=true)

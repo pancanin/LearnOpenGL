@@ -155,6 +155,7 @@
     <ClCompile Include="src\engine\models\TexturedRect.cpp" />
     <ClCompile Include="src\engine\models\Triangle.cpp" />
     <ClCompile Include="src\engine\shaders\ShaderLoader.cpp" />
+    <ClCompile Include="src\engine\storage\BagOfObjects.cpp" />
     <ClCompile Include="src\engine\ui\Window.cpp" />
     <ClCompile Include="src\opengl\buffers\BufferConfigurer.cpp" />
     <ClCompile Include="src\opengl\shader\ShaderProgram.cpp" />
@@ -170,6 +171,8 @@
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\engine\input\KeyboardInput.h" />
     <ClInclude Include="src\engine\models\ColorTriangle.h" />
+    <ClInclude Include="src\engine\models\Object.h" />
+    <ClInclude Include="src\engine\models\ObjectType.h" />
     <ClInclude Include="src\engine\models\Rect.h" />
     <ClInclude Include="src\engine\models\serialisation\TriangleBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\TexturedRect.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="src\engine\models\Triangle.h" />
     <ClInclude Include="src\engine\models\TypeDefs.h" />
     <ClInclude Include="src\engine\shaders\ShaderLoader.h" />
+    <ClInclude Include="src\engine\storage\BagOfObjects.h" />
     <ClInclude Include="src\engine\ui\Window.h" />
     <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
     <ClInclude Include="src\opengl\models\Vertex.h" />

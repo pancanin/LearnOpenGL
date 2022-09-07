@@ -15,6 +15,8 @@
 #include "src/opengl/vao/VertexArrayObject.h"
 #include "src/opengl/texture/TextureComponent.h"
 #include "src/opengl/models/Vertex.h"
+#include "src/engine/storage/BagOfObjects.h"
+#include "src/engine/models/Object.h"
 
 #include <iostream>
 #include <string>
@@ -104,17 +106,6 @@ int main()
 		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 	};
-	/*VertexBufferObject vbo;
-	vbo.init(GL_ARRAY_BUFFER);
-	vbo.bind();
-	vbo.fillBuffer(vertices, sizeof(vertices));
-
-	VertexArrayObject vao;
-	vao.init();
-	vao.bind();
-	vao.addAttribute(VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 });
-	vao.addAttribute(VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) });
-	vao.addAttribute(VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) });*/
 
 	auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
 	std::vector<VertexAttribute> triangleAtris = {
@@ -140,6 +131,19 @@ int main()
 	texture.bind();
 	defaultShader.setInt("texture1", 0);
 
+
+	// Create triangle the new way.
+	BagOfObjects bag;
+	bag.init();
+
+	Object triangle;
+	triangle.position = glm::vec3(1.0f);
+	triangle.rotation = glm::vec3(0.0f);
+	triangle.velocity = glm::vec3(0.0f);
+	triangle.type = ObjectType::TRIANGLE;
+
+	bag.add(triangle);
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -157,11 +161,15 @@ int main()
 		bufferConfig.activate();
 
 		auto model = glm::mat4(1.0f);
+		defaultShader.use();
 		defaultShader.setUniformMat4("model", model);
 		defaultShader.setUniformMat4("projection", cam.getProjection());
 		defaultShader.setUniformMat4("view", cam.getView());
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+
+		bag.draw(cam);
 		
 		window.swapBuffers();
 		g.pollEvents();
