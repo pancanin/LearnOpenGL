@@ -1,9 +1,7 @@
 #pragma once
 
 #include "TypeDefs.h"
-#include "Object.h"
-
-struct Rect : public Object {
+struct Rect {
 	Rect(Point3D origin, float width, float height);
 
 	Point3D origin;

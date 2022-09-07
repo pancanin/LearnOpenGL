@@ -143,34 +143,53 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="examples\arcanoid\Arcanoid.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\engine\camera\Camera.cpp" />
+    <ClCompile Include="src\engine\camera\FPSCamera.cpp" />
+    <ClCompile Include="src\engine\core\Graphics.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
+    <ClCompile Include="src\engine\input\KeyboardInput.cpp" />
     <ClCompile Include="src\engine\models\Rect.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\TriangleBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\TexturedRect.cpp" />
     <ClCompile Include="src\engine\models\Triangle.cpp" />
+    <ClCompile Include="src\engine\shaders\ShaderLoader.cpp" />
     <ClCompile Include="src\engine\ui\Window.cpp" />
+    <ClCompile Include="src\opengl\buffers\BufferConfigurer.cpp" />
+    <ClCompile Include="src\opengl\shader\ShaderProgram.cpp" />
+    <ClCompile Include="src\opengl\texture\TextureComponent.cpp" />
+    <ClCompile Include="src\opengl\vao\VertexArrayObject.cpp" />
+    <ClCompile Include="src\opengl\vbo\VertexBufferObject.cpp" />
     <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="examples\arcanoid\Arcanoid.h" />
+    <ClInclude Include="src\engine\camera\Camera.h" />
+    <ClInclude Include="src\engine\camera\FPSCamera.h" />
+    <ClInclude Include="src\engine\core\Graphics.h" />
     <ClInclude Include="src\engine\Engine.h" />
+    <ClInclude Include="src\engine\input\KeyboardInput.h" />
     <ClInclude Include="src\engine\models\ColorTriangle.h" />
-    <ClInclude Include="src\engine\models\Object.h" />
     <ClInclude Include="src\engine\models\Rect.h" />
+    <ClInclude Include="src\engine\models\serialisation\TriangleBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\TexturedRect.h" />
     <ClInclude Include="src\engine\models\TexturedTriangle.h" />
     <ClInclude Include="src\engine\models\Triangle.h" />
     <ClInclude Include="src\engine\models\TypeDefs.h" />
     <ClInclude Include="src\engine\models\Vertex.h" />
-    <ClInclude Include="src\engine\models\VertexAttribute.h" />
+    <ClInclude Include="src\engine\shaders\ShaderLoader.h" />
     <ClInclude Include="src\engine\ui\Window.h" />
+    <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
+    <ClInclude Include="src\opengl\shader\ShaderProgram.h" />
+    <ClInclude Include="src\opengl\texture\TextureComponent.h" />
+    <ClInclude Include="src\opengl\vao\VertexArrayObject.h" />
+    <ClInclude Include="src\opengl\vbo\VertexBufferObject.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
     <None Include="src\engine\shaders\color_vertex.glsl" />
+    <None Include="src\engine\shaders\default_fragment.glsl" />
     <None Include="src\engine\shaders\default_vertex.glsl" />
     <None Include="src\engine\shaders\fragment_2.glsl" />
     <None Include="src\engine\shaders\light_fragment.glsl" />

@@ -1,15 +1,11 @@
 #include <memory>
 #include <string>
 
-#include "../graphics/Graphics.h"
-#include "../ui/Window.h"
-#include "../models/TypeDefs.h"
-#include "../graphics/ShaderProgram.h"
-#include "../input/KeyboardInput.h"
-#include "../attributes/RectAttributeConfigurer.h"
-#include "../models/serialisation/RectBufferSerialiser.h"
-#include "../attributes/TexturedRectAttributeConfigurer.h"
-#include "../utils/TextureComponent.h"
+#include "./core/Graphics.h"
+#include "./ui/Window.h"
+#include "./models/TypeDefs.h"
+#include "../opengl/shader/ShaderProgram.h"
+#include "./input/KeyboardInput.h"
 
 class Engine {
 public:
@@ -31,16 +27,16 @@ protected:
 	//RectComponent<TexturedRect> trectComp;
 private:
 	Graphics graphics;
-	RectAttributeConfigurer rectAttributeConfigurer;
-	std::shared_ptr<RectBufferSerialiser> rectSerialisationPtr;
+	/*RectAttributeConfigurer rectAttributeConfigurer;
+	std::shared_ptr<RectBufferSerialiser> rectSerialisationPtr;*/
 	
 
-	TexturedRectAttributeConfigurer trectAttributeStrategy;
+	/*TexturedRectAttributeConfigurer trectAttributeStrategy;
 	
 	std::vector<std::shared_ptr<TextureComponent>> textures;
 
 	TextureComponent wallTexture;
-	TextureComponent containerTexture;
+	TextureComponent containerTexture;*/
 
 	const std::string textureVarPrefix = "texture";
 };

@@ -1,9 +1,8 @@
 #include "Engine.h"
 
-#include "../libs/glm/glm.hpp"
+#include "../../libs/glm/glm.hpp"
 
-#include "../utils/TextureComponent.h"
-#include "../utils/MathUtils.h"
+#include "../opengl/texture/TextureComponent.h"
 
 void Engine::init(int width, int height, const std::string& label, const Color& clearScreenColor)
 {
@@ -15,7 +14,7 @@ void Engine::init(int width, int height, const std::string& label, const Color& 
 	shaderProgram.init();
 	keyboardInput.init(window);
 
-	rectSerialisationPtr = std::make_shared<RectBufferSerialiser>();
+	//rectSerialisationPtr = std::make_shared<RectBufferSerialiser>();
 }
 
 void Engine::start()
@@ -32,9 +31,9 @@ void Engine::start()
 		onUpdate();
 
 		
-		for (auto texturePtr : textures) {
+		/*for (auto texturePtr : textures) {
 			texturePtr->bind();
-		}
+		}*/
 
 		shaderProgram.use();
 		//rectComp.activate();
@@ -49,12 +48,12 @@ void Engine::start()
 
 void Engine::loadTexture(int textureId, const std::string& pathToTexture)
 {
-	auto texture = std::make_shared<TextureComponent>();
+	//auto texture = std::make_shared<TextureComponent>();
 	//texture->init(GL_TEXTURE0 + textureId);
-	texture->load(pathToTexture);
+	/*texture->load(pathToTexture);
 	shaderProgram.use();
-	shaderProgram.setInt(textureVarPrefix + std::to_string(textureId), textureId);
-	textures.push_back(texture);
+	shaderProgram.setInt(textureVarPrefix + std::to_string(textureId), textureId);*/
+	//textures.push_back(texture);
 }
 
 //std::shared_ptr<Rect> Engine::createRect(Point3D origin, float width, float height)

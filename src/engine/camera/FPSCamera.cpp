@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../libs/glm/gtc/matrix_transform.hpp"
+#include "../../../libs/glm/gtc/matrix_transform.hpp"
 
 void FPSCamera::init(float fieldOfViewRadians, float aspectRatio, float nearPlane, float farPlane, const Point3D& cameraPosition, const Point3D& cameraTarget, float screenWidth, float screenHeight)
 {

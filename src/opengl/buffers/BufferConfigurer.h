@@ -8,10 +8,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "VertexArrayObject.h"
-#include "VertexBufferObject.h"
+#include "../../opengl/vbo/VertexBufferObject.h"
+#include "../../opengl/vao/VertexArrayObject.h"
 #include "../models/VertexAttribute.h"
-#include "../models/serialisation/BufferSerialiser.h"
+#include "../../engine/models/serialisation/BufferSerialiser.h"
 
 /* Sets up buffers for shapes/objects */
 class BufferConfigurer

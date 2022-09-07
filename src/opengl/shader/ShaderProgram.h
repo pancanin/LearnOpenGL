@@ -3,11 +3,11 @@
 #include <string>
 #include <unordered_map>
 
-#include "../libs/glm/glm.hpp"
-#include "../libs/glm/gtc/matrix_transform.hpp"
-#include "../libs/glm/gtc/type_ptr.hpp"
+#include "../../../libs//glm/glm.hpp"
+#include "../../../libs/glm/gtc/matrix_transform.hpp"
+#include "../../../libs/glm/gtc/type_ptr.hpp"
 
-#include "../utils/ShaderLoader.h"
+#include "../../engine/shaders/ShaderLoader.h"
 
 /*
 * A shader program is a configuration of vertex, fragment and optionally geometry shader.

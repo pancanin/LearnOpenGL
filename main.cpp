@@ -8,11 +8,12 @@
 #include "src/opengl/shader/ShaderProgram.h"
 #include "src/engine/core/Graphics.h"
 #include "src/engine/camera/FPSCamera.h"
-#include "src/engine/buffer/BufferConfigurer.h"
+#include "src/opengl/buffers/BufferConfigurer.h"
 #include "src/engine/models/serialisation/TriangleBufferSerialiser.h"
 
 #include "src/opengl/vbo/VertexBufferObject.h"
 #include "src/opengl/vao/VertexArrayObject.h"
+#include "src/opengl/texture/TextureComponent.h"
 
 #include <iostream>
 #include <string>
@@ -55,12 +56,6 @@ int main()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
-
-	ShaderProgram lightSourceShaderProgram;
-	lightSourceShaderProgram.init();
-	lightSourceShaderProgram.attachVertexShader("texture_vertex");
-	lightSourceShaderProgram.attachFragmentShader("light_fragment");
-	lightSourceShaderProgram.link();
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -120,14 +115,26 @@ int main()
 	vao.addAttribute(VertexAttribute{ 1, 3, 8, 3 });
 	vao.addAttribute(VertexAttribute{ 2, 2, 8, 6 });
 
-	/*auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
+	auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
 	std::vector<VertexAttribute> triangleAtris = { VertexAttribute{0, 3, 3, 0} };
 	BufferConfigurer bufferConfig;
 	bufferConfig.init(triangleAtris, serialiserPtr);
 	bufferConfig.activate();
-	bufferConfig.loadBuffer();*/
+	bufferConfig.loadBuffer();
 
+	ShaderProgram defaultShader;
+	defaultShader.init();
+	defaultShader.attachVertexShader("default_vertex");
+	defaultShader.attachFragmentShader("default_fragment");
+	defaultShader.link();
+	defaultShader.use();
 
+	// The texture is not drawn because we do not have any texture coordinates in the attributes of a triangle.
+	TextureComponent texture;
+	texture.init(GL_TEXTURE0);
+	texture.load("assets/container.jpg");
+	texture.bind();
+	defaultShader.setInt("texture1", 0);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
@@ -142,40 +149,10 @@ int main()
 
 		window.clear();
 
-		lightSourceShaderProgram.use();
-
-		lightSourceShaderProgram.setUniformMat4("view", cam.getView());
-		lightSourceShaderProgram.setUniformMat4("projection", cam.getProjection());
-
-		vao.bind();
+		texture.bind();
+		bufferConfig.activate();
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 		
-		glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
-		};
-		
-		for (unsigned int i = 0; i < 10; i++)
-		{
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
-			shinedUponShaderProgram.setUniformMat4("model", model);
-
-
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
-		
-		//TODO: Optimise includes - only include what is needed.
 		window.swapBuffers();
 		g.pollEvents();
 	}
