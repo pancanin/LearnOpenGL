@@ -14,6 +14,7 @@
 #include "src/opengl/vbo/VertexBufferObject.h"
 #include "src/opengl/vao/VertexArrayObject.h"
 #include "src/opengl/texture/TextureComponent.h"
+#include "src/opengl/models/Vertex.h"
 
 #include <iostream>
 #include <string>
@@ -103,7 +104,7 @@ int main()
 		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 	};
-	VertexBufferObject vbo;
+	/*VertexBufferObject vbo;
 	vbo.init(GL_ARRAY_BUFFER);
 	vbo.bind();
 	vbo.fillBuffer(vertices, sizeof(vertices));
@@ -111,12 +112,16 @@ int main()
 	VertexArrayObject vao;
 	vao.init();
 	vao.bind();
-	vao.addAttribute(VertexAttribute{ 0, 3, 8, 0 });
-	vao.addAttribute(VertexAttribute{ 1, 3, 8, 3 });
-	vao.addAttribute(VertexAttribute{ 2, 2, 8, 6 });
+	vao.addAttribute(VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 });
+	vao.addAttribute(VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) });
+	vao.addAttribute(VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) });*/
 
 	auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
-	std::vector<VertexAttribute> triangleAtris = { VertexAttribute{0, 3, 3, 0} };
+	std::vector<VertexAttribute> triangleAtris = {
+		VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 },
+		VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) / sizeof(float) },
+		VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) / sizeof(float) }
+	};
 	BufferConfigurer bufferConfig;
 	bufferConfig.init(triangleAtris, serialiserPtr);
 	bufferConfig.activate();
@@ -124,12 +129,11 @@ int main()
 
 	ShaderProgram defaultShader;
 	defaultShader.init();
-	defaultShader.attachVertexShader("default_vertex");
-	defaultShader.attachFragmentShader("default_fragment");
+	defaultShader.attachVertexShader("src/engine/shaders/default_vertex");
+	defaultShader.attachFragmentShader("src/engine/shaders/default_fragment");
 	defaultShader.link();
 	defaultShader.use();
 
-	// The texture is not drawn because we do not have any texture coordinates in the attributes of a triangle.
 	TextureComponent texture;
 	texture.init(GL_TEXTURE0);
 	texture.load("assets/container.jpg");
@@ -151,6 +155,12 @@ int main()
 
 		texture.bind();
 		bufferConfig.activate();
+
+		auto model = glm::mat4(1.0f);
+		defaultShader.setUniformMat4("model", model);
+		defaultShader.setUniformMat4("projection", cam.getProjection());
+		defaultShader.setUniformMat4("view", cam.getView());
+
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		
 		window.swapBuffers();

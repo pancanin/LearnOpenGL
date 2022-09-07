@@ -3,10 +3,10 @@
 #include <fstream>
 #include <iostream>
 
-std::string ShaderLoader::load(const std::string& shaderName)
+std::string ShaderLoader::load(const std::string& shaderPath)
 {
 	std::string shaderSource;
-	std::ifstream readingStream(shaderFolder + shaderName + ".glsl");
+	std::ifstream readingStream(shaderPath + ".glsl");
 
 	if (!readingStream.is_open()) {
 		return "";

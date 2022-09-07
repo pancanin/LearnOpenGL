@@ -101,9 +101,6 @@
     <ClInclude Include="src\engine\models\TypeDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\models\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\engine\shaders\ShaderLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -135,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\opengl\texture\TextureComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\models\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

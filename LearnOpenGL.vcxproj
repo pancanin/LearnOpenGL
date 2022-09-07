@@ -176,10 +176,10 @@
     <ClInclude Include="src\engine\models\TexturedTriangle.h" />
     <ClInclude Include="src\engine\models\Triangle.h" />
     <ClInclude Include="src\engine\models\TypeDefs.h" />
-    <ClInclude Include="src\engine\models\Vertex.h" />
     <ClInclude Include="src\engine\shaders\ShaderLoader.h" />
     <ClInclude Include="src\engine\ui\Window.h" />
     <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
+    <ClInclude Include="src\opengl\models\Vertex.h" />
     <ClInclude Include="src\opengl\shader\ShaderProgram.h" />
     <ClInclude Include="src\opengl\texture\TextureComponent.h" />
     <ClInclude Include="src\opengl\vao\VertexArrayObject.h" />

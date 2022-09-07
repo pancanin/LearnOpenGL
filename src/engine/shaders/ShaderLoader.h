@@ -5,7 +5,5 @@
 class ShaderLoader
 {
 public:
-	std::string load(const std::string& shaderName);
-private:
-	std::string shaderFolder = "shaders/";
+	std::string load(const std::string& shaderPath);
 };

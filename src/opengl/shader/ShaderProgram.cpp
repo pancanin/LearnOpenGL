@@ -12,9 +12,9 @@ void ShaderProgram::init()
 	this->isSuccess = 1;
 }
 
-void ShaderProgram::attachVertexShader(const std::string& shaderName)
+void ShaderProgram::attachVertexShader(const std::string& shaderPath)
 {
-	attachShader(GL_VERTEX_SHADER, shaderLoader.load(shaderName).data());
+	attachShader(GL_VERTEX_SHADER, shaderLoader.load(shaderPath).data());
 }
 
 void ShaderProgram::attachFragmentShader(const std::string& shaderName)
@@ -45,6 +45,15 @@ int ShaderProgram::findLocation(const std::string& uniformVarName) const
 void ShaderProgram::link()
 {
 	glLinkProgram(shaderProgram);
+
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &isSuccess);
+
+	if (!isSuccess)
+	{
+		char infoLog[512];
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+	}
 
 	for (auto const& pair : shaderTypeToShaderId) {
 		glDeleteShader(pair.second);
