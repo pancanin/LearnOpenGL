@@ -10,6 +10,7 @@
 
 #include "../../opengl/vbo/VertexBufferObject.h"
 #include "../../opengl/vao/VertexArrayObject.h"
+#include "../../opengl/ebo/ElementBufferObject.h"
 #include "../models/VertexAttribute.h"
 #include "../../engine/models/serialisation/BufferSerialiser.h"
 
@@ -32,5 +33,6 @@ public:
 private:
 	VertexArrayObject vao;
 	VertexBufferObject vbo;
+	ElementBufferObject ebo;
 	std::shared_ptr<BufferSerialiser> serialisation;
 };

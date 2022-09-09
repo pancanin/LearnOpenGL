@@ -158,6 +158,7 @@
     <ClCompile Include="src\engine\storage\BagOfObjects.cpp" />
     <ClCompile Include="src\engine\ui\Window.cpp" />
     <ClCompile Include="src\opengl\buffers\BufferConfigurer.cpp" />
+    <ClCompile Include="src\opengl\ebo\ElementBufferObject.cpp" />
     <ClCompile Include="src\opengl\shader\ShaderProgram.cpp" />
     <ClCompile Include="src\opengl\texture\TextureComponent.cpp" />
     <ClCompile Include="src\opengl\vao\VertexArrayObject.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="src\engine\storage\BagOfObjects.h" />
     <ClInclude Include="src\engine\ui\Window.h" />
     <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
+    <ClInclude Include="src\opengl\ebo\ElementBufferObject.h" />
     <ClInclude Include="src\opengl\models\Vertex.h" />
     <ClInclude Include="src\opengl\shader\ShaderProgram.h" />
     <ClInclude Include="src\opengl\texture\TextureComponent.h" />

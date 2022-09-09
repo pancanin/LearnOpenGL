@@ -11,6 +11,12 @@ class TriangleBufferSerialiser :
 public:
 	float* serialise() const;
 	unsigned int size() const;
+	unsigned int vertexCount() const;
+	unsigned int* indices() const;
+
+	/* For a triangle, the vertex count matches the indices count. */
+	unsigned int indicesCount() const;
 private:
-	const unsigned int floatsPerTriangle = (sizeof(Vertex) / sizeof(float)) * 3;
+	const unsigned int verticesPerTriangle = 3;
+	const unsigned int floatsPerTriangle = (sizeof(Vertex) / sizeof(float)) * verticesPerTriangle;
 };

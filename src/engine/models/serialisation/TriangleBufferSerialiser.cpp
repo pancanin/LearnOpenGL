@@ -14,3 +14,18 @@ unsigned int TriangleBufferSerialiser::size() const
 {
     return floatsPerTriangle;
 }
+
+unsigned int TriangleBufferSerialiser::vertexCount() const
+{
+	return verticesPerTriangle;
+}
+
+unsigned int* TriangleBufferSerialiser::indices() const
+{
+	return new unsigned int[]{ 0, 1, 2 };
+}
+
+unsigned int TriangleBufferSerialiser::indicesCount() const
+{
+	return verticesPerTriangle;
+}

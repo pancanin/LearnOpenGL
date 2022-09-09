@@ -7,6 +7,7 @@ void BufferConfigurer::init(
 	this->serialisation = serialisation;
 	this->vbo.init(GL_ARRAY_BUFFER);
 	this->vao.init();
+	this->ebo.init();
 
 	activate();
 
@@ -18,16 +19,21 @@ void BufferConfigurer::init(
 void BufferConfigurer::activate() {
 	this->vao.bind();
 	this->vbo.bind();
+	this->ebo.bind();
 }
 
 void BufferConfigurer::loadBuffer() {
 	float* buffer = serialisation->serialise();
 	vbo.fillBuffer(buffer, serialisation->size());
 	delete[] buffer;
+
+	unsigned int* indices = serialisation->indices();
+	ebo.fillBuffer(indices, serialisation->indicesCount());
+	delete[] indices;
 }
 
 void BufferConfigurer::deactivate() {
-	this->vbo.unbind();
+	this->vbo.unbind(); // TODO: Unbind rest of the buffer objects.
 }
 
 BufferConfigurer::~BufferConfigurer() {

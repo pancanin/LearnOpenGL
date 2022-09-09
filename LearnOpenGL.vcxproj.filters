@@ -75,6 +75,9 @@
     <ClCompile Include="src\engine\storage\BagOfObjects.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\opengl\ebo\ElementBufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\storage\BagOfObjects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\ebo\ElementBufferObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

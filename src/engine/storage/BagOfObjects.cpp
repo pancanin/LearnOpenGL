@@ -16,7 +16,7 @@ void BagOfObjects::init()
 	shader.link();
 	shader.use();
 
-	std::vector<VertexAttribute> triangleAtris = {
+	std::vector<VertexAttribute> attributes = {
 		VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 },
 		VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) / sizeof(float) },
 		VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) / sizeof(float) }
@@ -24,7 +24,7 @@ void BagOfObjects::init()
 
 	auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
 	
-	triangleBufferConfig.init(triangleAtris, serialiserPtr);
+	triangleBufferConfig.init(attributes, serialiserPtr);
 	triangleBufferConfig.activate();
 	triangleBufferConfig.loadBuffer();
 }
@@ -60,6 +60,6 @@ void BagOfObjects::draw(const Camera& cam)
 		shader.setUniformMat4("model", model);
 		shader.setUniformMat4("projection", cam.getProjection());
 		shader.setUniformMat4("view", cam.getView());
-		glDrawArrays(GL_TRIANGLES, 0, 3); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
 	}
 }
