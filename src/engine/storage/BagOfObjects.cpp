@@ -6,7 +6,6 @@
 #include "BagOfObjects.h"
 #include "../camera/Camera.h"
 #include "../../opengl/models/Vertex.h"
-#include "../models/serialisation/TriangleBufferSerialiser.h"
 
 void BagOfObjects::init()
 {
@@ -22,9 +21,9 @@ void BagOfObjects::init()
 		VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) / sizeof(float) }
 	};
 
-	auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
+	triangleSerialiserPtr = std::make_shared<TriangleBufferSerialiser>();
 	
-	triangleBufferConfig.init(attributes, serialiserPtr);
+	triangleBufferConfig.init(attributes, triangleSerialiserPtr);
 	triangleBufferConfig.activate();
 	triangleBufferConfig.loadBuffer();
 }
@@ -60,6 +59,6 @@ void BagOfObjects::draw(const Camera& cam)
 		shader.setUniformMat4("model", model);
 		shader.setUniformMat4("projection", cam.getProjection());
 		shader.setUniformMat4("view", cam.getView());
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
+		glDrawElements(GL_TRIANGLES, triangleSerialiserPtr->indicesCount(), GL_UNSIGNED_INT, 0); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
 	}
 }
