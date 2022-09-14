@@ -8,4 +8,5 @@ struct Object {
 	glm::vec3 rotation;
 	glm::vec3 velocity;
 	ObjectType type;
+	unsigned int textureUnit;
 };

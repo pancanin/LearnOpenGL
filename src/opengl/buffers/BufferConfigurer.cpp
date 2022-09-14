@@ -28,7 +28,7 @@ void BufferConfigurer::loadBuffer() {
 	delete[] buffer;
 
 	unsigned int* indices = serialisation->indices();
-	ebo.fillBuffer(indices, serialisation->indicesCount());
+	ebo.fillBuffer(indices, serialisation->indicesCount() * sizeof(unsigned int));
 	delete[] indices;
 }
 

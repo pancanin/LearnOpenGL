@@ -9,6 +9,8 @@ void FPSCamera::init(float fieldOfViewRadians, float aspectRatio, float nearPlan
 	Camera::init(fieldOfViewRadians, aspectRatio, nearPlane, farPlane, cameraPosition, cameraTarget);
 	this->lastX = screenWidth / 2;
 	this->lastY = screenHeight / 2;
+	this->pitch = 1.0f;
+	this->yaw = 89.0f;
 	this->cameraTarget = cameraTarget;
 }
 

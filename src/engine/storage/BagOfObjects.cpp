@@ -40,15 +40,12 @@ void BagOfObjects::add(const Object& o)
 
 void BagOfObjects::draw(const Camera& cam)
 {
-	// Maybe this draw method will be on the object itself, because triangles are drawn differently...but we can also draw triangles with element buffer objects... :)
-	// Calculate vertice count and call opengl draw
-
 	shader.use(); // TODO: Remove this after testing
 	triangleBufferConfig.activate();
 	
 	for (unsigned int idx = 0; idx < size; idx++) {
 		const Object& current = objs[idx];
-		triangleBufferConfig.activate();
+		triangleBufferConfig.activate(); // this will be based on object type.
 
 		auto model = glm::mat4(1.0f);
 
@@ -59,6 +56,7 @@ void BagOfObjects::draw(const Camera& cam)
 		shader.setUniformMat4("model", model);
 		shader.setUniformMat4("projection", cam.getProjection());
 		shader.setUniformMat4("view", cam.getView());
+		shader.setInt("dtexture", current.textureUnit);
 		glDrawElements(GL_TRIANGLES, triangleSerialiserPtr->indicesCount(), GL_UNSIGNED_INT, 0); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
 	}
 }
