@@ -150,11 +150,11 @@ int main()
 	bag.add(triangle);
 
 	Object triangle2;
-	triangle2.position = glm::vec3(0.0f, 0.1f, 0.0f);
+	triangle2.position = glm::vec3(0.0f, 0.1f, 0.1f);
 	triangle2.rotation = glm::vec3(1.0f);
 	triangle2.velocity = glm::vec3(0.0f);
 	triangle2.type = ObjectType::TRIANGLE;
-	triangle2.textureUnit = 0;
+	triangle2.textureUnit = 1;
 
 	bag.add(triangle2);
 
@@ -171,17 +171,8 @@ int main()
 
 		window.clear();
 
-		/*texture.bind();
-		bufferConfig.activate();
-
-		auto model = glm::mat4(1.0f);
-		defaultShader.use();
-		defaultShader.setUniformMat4("model", model);
-		defaultShader.setUniformMat4("projection", cam.getProjection());
-		defaultShader.setUniformMat4("view", cam.getView());
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);*/
-
+		texture.bind();
+		texture2.bind();
 
 		bag.draw(cam);
 		
