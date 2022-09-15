@@ -1,5 +1,6 @@
 #pragma once
 
 enum class ObjectType {
-	TRIANGLE
+	TRIANGLE,
+	RECT
 };

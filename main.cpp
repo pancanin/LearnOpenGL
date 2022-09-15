@@ -107,17 +107,6 @@ int main()
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
 	};
 
-	auto serialiserPtr = std::make_shared<TriangleBufferSerialiser>();
-	std::vector<VertexAttribute> triangleAtris = {
-		VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 },
-		VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) / sizeof(float) },
-		VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) / sizeof(float) }
-	};
-	BufferConfigurer bufferConfig;
-	bufferConfig.init(triangleAtris, serialiserPtr);
-	bufferConfig.activate();
-	bufferConfig.loadBuffer();
-
 	ShaderProgram defaultShader;
 	defaultShader.init();
 	defaultShader.attachVertexShader("src/engine/shaders/default_vertex");
@@ -157,6 +146,15 @@ int main()
 	triangle2.textureUnit = 1;
 
 	bag.add(triangle2);
+
+	Object rect1;
+	rect1.position = glm::vec3(1.0f, 0.2f, 0.0f);
+	rect1.rotation = glm::vec3(1.0f);
+	rect1.velocity = glm::vec3(0.0f);
+	rect1.type = ObjectType::RECT;
+	rect1.textureUnit = 0;
+
+	bag.add(rect1);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);

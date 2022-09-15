@@ -2,14 +2,31 @@
 
 float* RectBufferSerialiser::serialise() const
 {
-	float* arr = new float[size()];
-
-	// TODO: Add valid array buffer
-
-	return arr;
+	// Setting the normals to (0.0f) as we won't use them for now.
+	return new float[floatsPerRect] {
+		-0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+		0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+		0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+	};
 }
 
 unsigned int RectBufferSerialiser::size() const
 {
-	return 20;
+	return floatsPerRect;
+}
+
+unsigned int RectBufferSerialiser::vertexCount() const
+{
+	return verticesPerRect;
+}
+
+unsigned int* RectBufferSerialiser::indices() const
+{
+	return new unsigned int[] {0,1,3,3,2,1};
+}
+
+unsigned int RectBufferSerialiser::indicesCount() const
+{
+	return numberOfIndices;
 }

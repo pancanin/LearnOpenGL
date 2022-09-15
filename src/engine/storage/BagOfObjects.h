@@ -5,6 +5,7 @@
 #include "../models/Object.h"
 #include "../../opengl/buffers/BufferConfigurer.h"
 #include "../models/serialisation/TriangleBufferSerialiser.h"
+#include "../models/serialisation/RectBufferSerialiser.h"
 
 class Camera;
 
@@ -24,5 +25,7 @@ private:
 	unsigned int size = 0;
 	ShaderProgram shader; // We will use one shader for all our purposes, but in a real game engine this would be passed from the client. Another option is to have a shader per object.
 	BufferConfigurer triangleBufferConfig;
+	BufferConfigurer rectBufferConfig;
 	std::shared_ptr<TriangleBufferSerialiser> triangleSerialiserPtr;
+	std::shared_ptr<RectBufferSerialiser> rectSerialiserPtr;
 };

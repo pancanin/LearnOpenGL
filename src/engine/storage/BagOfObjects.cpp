@@ -26,6 +26,12 @@ void BagOfObjects::init()
 	triangleBufferConfig.init(attributes, triangleSerialiserPtr);
 	triangleBufferConfig.activate();
 	triangleBufferConfig.loadBuffer();
+
+	rectSerialiserPtr = std::make_shared<RectBufferSerialiser>();
+
+	rectBufferConfig.init(attributes, rectSerialiserPtr);
+	rectBufferConfig.activate();
+	rectBufferConfig.loadBuffer();
 }
 
 void BagOfObjects::add(const Object& o)
@@ -41,11 +47,24 @@ void BagOfObjects::add(const Object& o)
 void BagOfObjects::draw(const Camera& cam)
 {
 	shader.use(); // TODO: Remove this after testing
-	triangleBufferConfig.activate();
 	
 	for (unsigned int idx = 0; idx < size; idx++) {
 		const Object& current = objs[idx];
-		triangleBufferConfig.activate(); // this will be based on object type.
+
+		std::shared_ptr<BufferSerialiser> bufferSerPtr;
+
+		switch (current.type) {
+		case ObjectType::TRIANGLE:
+			triangleBufferConfig.activate();
+			bufferSerPtr = triangleSerialiserPtr;
+			break;
+		case ObjectType::RECT:
+			rectBufferConfig.activate();
+			bufferSerPtr = rectSerialiserPtr;
+			break;
+		default:
+			std::cout << "Invalid object type" << std::endl; break;
+		}
 
 		auto model = glm::mat4(1.0f);
 
@@ -57,6 +76,7 @@ void BagOfObjects::draw(const Camera& cam)
 		shader.setUniformMat4("projection", cam.getProjection());
 		shader.setUniformMat4("view", cam.getView());
 		shader.setInt("dtexture", current.textureUnit);
-		glDrawElements(GL_TRIANGLES, triangleSerialiserPtr->indicesCount(), GL_UNSIGNED_INT, 0); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
+
+		glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
 	}
 }
