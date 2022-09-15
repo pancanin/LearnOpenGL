@@ -151,6 +151,7 @@
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\engine\input\KeyboardInput.cpp" />
     <ClCompile Include="src\engine\models\Rect.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\CubeBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\RectBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\TriangleBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\TexturedRect.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="src\engine\models\Object.h" />
     <ClInclude Include="src\engine\models\ObjectType.h" />
     <ClInclude Include="src\engine\models\Rect.h" />
+    <ClInclude Include="src\engine\models\serialisation\CubeBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\RectBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\TriangleBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\TexturedRect.h" />

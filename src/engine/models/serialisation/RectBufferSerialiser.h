@@ -10,8 +10,6 @@ public:
 	unsigned int size() const;
 	unsigned int vertexCount() const;
 	unsigned int* indices() const;
-
-	/* For a triangle, the vertex count matches the indices count. */
 	unsigned int indicesCount() const;
 private:
 	const unsigned int verticesPerRect = 4;
