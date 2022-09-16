@@ -24,6 +24,11 @@ void BufferSwitch::init()
 	cubeBufferConfigurer.init(attributes, cubeSerialiserPtr);
 	cubeBufferConfigurer.activate();
 	cubeBufferConfigurer.loadBuffer();
+
+	lineSerialiserPtr = std::make_shared<LineBufferSerialiser>();
+	lineBufferConfigurer.init(attributes, lineSerialiserPtr);
+	lineBufferConfigurer.activate();
+	lineBufferConfigurer.loadBuffer();
 }
 
 std::shared_ptr<BufferSerialiser> BufferSwitch::switchBuffer(ObjectType type)
@@ -38,6 +43,9 @@ std::shared_ptr<BufferSerialiser> BufferSwitch::switchBuffer(ObjectType type)
 	case ObjectType::CUBE:
 		cubeBufferConfigurer.activate();
 		return cubeSerialiserPtr;
+	case ObjectType::LINE:
+		lineBufferConfigurer.activate();
+		return lineSerialiserPtr;
 	}
 
 	return nullptr;

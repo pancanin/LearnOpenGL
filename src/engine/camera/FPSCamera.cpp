@@ -63,11 +63,11 @@ void FPSCamera::onMouseMove(double xpos, double ypos)
 	if (pitch < -89.0f)
 		pitch = -89.0f;
 
-	cameraFront = glm::vec3(
+	cameraFront = glm::normalize(glm::vec3(
 		cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
 		sin(glm::radians(pitch)),
 		sin(glm::radians(yaw)) * cos(glm::radians(pitch))
-	);
+	));
 	
 	calculateView();
 }

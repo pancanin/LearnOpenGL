@@ -30,7 +30,7 @@ public:
 	void deactivate();
 
 	~BufferConfigurer();
-private:
+protected:
 	VertexArrayObject vao;
 	VertexBufferObject vbo;
 	ElementBufferObject ebo;

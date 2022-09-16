@@ -89,7 +89,7 @@ int main()
 	triangle.type = ObjectType::TRIANGLE;
 	triangle.textureUnit = 0;
 
-	bag.add(triangle);
+	//bag.add(triangle);
 
 	Object triangle2;
 	triangle2.position = glm::vec3(0.0f, 0.1f, 0.1f);
@@ -98,7 +98,7 @@ int main()
 	triangle2.type = ObjectType::TRIANGLE;
 	triangle2.textureUnit = 1;
 
-	Object& line = bag.add(triangle2);
+	//bag.add(triangle2);
 
 	Object floor;
 	floor.position = glm::vec3(1.0f, 0.2f, 0.0f);
@@ -107,7 +107,7 @@ int main()
 	floor.type = ObjectType::RECT;
 	floor.textureUnit = 0;
 
-	bag.add(floor);
+	//bag.add(floor);
 
 	Object cube1;
 	cube1.position = glm::vec3(-1.0f, -0.2f, 0.0f);
@@ -117,6 +117,16 @@ int main()
 	cube1.textureUnit = 1;
 
 	bag.add(cube1);
+
+	Object line;
+	line.position = glm::vec3(0.2f, -0.5f, 0.0f);
+	line.rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
+	line.rotationAngle = 87.0f;
+	line.velocity = glm::vec3(0.0f);
+	line.type = ObjectType::LINE;
+	line.textureUnit = 1;
+
+	Object& l = bag.add(line);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
@@ -134,6 +144,7 @@ int main()
 		texture.bind();
 		texture2.bind();
 
+		l.position = cam.getPosition() + (cam.getFront() * 0.2f);
 		bag.draw(cam);
 		
 		window.swapBuffers();

@@ -26,6 +26,12 @@ Object& BagOfObjects::add(const Object& o)
 	if (size + 1 < CAPACITY) {
 		return objs[size++] = o;
 	}
+	else {
+		std::cout << "Cannot add more objects - bag is full. Warning! UB!" << std::endl;
+		Object o;
+		return o; // TODO: use a vector and ask client for capacity size, so that UB is justified - client promised to use just 100 objects
+		// but used 101, for example.
+	}
 }
 
 void BagOfObjects::draw(const Camera& cam)
@@ -46,6 +52,11 @@ void BagOfObjects::draw(const Camera& cam)
 		shader.setUniformMat4("view", cam.getView());
 		shader.setInt("dtexture", current.textureUnit);
 
-		glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0); 
+		if (current.type == ObjectType::LINE) {
+			glDrawElements(GL_LINES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
+		}
+		else {
+			glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
+		}
 	}
 }

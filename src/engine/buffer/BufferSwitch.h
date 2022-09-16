@@ -8,6 +8,7 @@
 #include "../models/serialisation/TriangleBufferSerialiser.h"
 #include "../models/serialisation/RectBufferSerialiser.h"
 #include "../models/serialisation/CubeBufferSerialiser.h"
+#include "../models/serialisation/LineBufferSerialiser.h"
 
 
 class BufferSwitch {
@@ -19,7 +20,9 @@ private:
 	BufferConfigurer triangleBufferConfig;
 	BufferConfigurer rectBufferConfig;
 	BufferConfigurer cubeBufferConfigurer;
+	BufferConfigurer lineBufferConfigurer;
 	std::shared_ptr<TriangleBufferSerialiser> triangleSerialiserPtr;
 	std::shared_ptr<RectBufferSerialiser> rectSerialiserPtr;
 	std::shared_ptr<CubeBufferSerialiser> cubeSerialiserPtr;
+	std::shared_ptr<LineBufferSerialiser> lineSerialiserPtr;
 };
