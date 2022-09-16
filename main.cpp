@@ -156,6 +156,15 @@ int main()
 
 	bag.add(rect1);
 
+	Object cube1;
+	cube1.position = glm::vec3(-1.0f, -0.2f, 0.0f);
+	cube1.rotation = glm::vec3(1.0f);
+	cube1.velocity = glm::vec3(0.0f);
+	cube1.type = ObjectType::CUBE;
+	cube1.textureUnit = 1;
+
+	bag.add(cube1);
+
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);

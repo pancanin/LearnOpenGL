@@ -16,7 +16,7 @@ public:
 
 	unsigned int indicesCount() const;
 private:
-	const unsigned int verticesPerCube = 3;
+	const unsigned int verticesPerCube = 8;
 	const unsigned int floatsPerCube = (sizeof(Vertex) / sizeof(float)) * verticesPerCube;
-	const unsigned int numberOfIndices = 6;
+	const unsigned int numberOfIndices = 36;
 };

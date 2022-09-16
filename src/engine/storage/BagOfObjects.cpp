@@ -32,6 +32,11 @@ void BagOfObjects::init()
 	rectBufferConfig.init(attributes, rectSerialiserPtr);
 	rectBufferConfig.activate();
 	rectBufferConfig.loadBuffer();
+
+	cubeSerialiserPtr = std::make_shared<CubeBufferSerialiser>();
+	cubeBufferConfigurer.init(attributes, cubeSerialiserPtr);
+	cubeBufferConfigurer.activate();
+	cubeBufferConfigurer.loadBuffer();
 }
 
 void BagOfObjects::add(const Object& o)
@@ -61,6 +66,10 @@ void BagOfObjects::draw(const Camera& cam)
 		case ObjectType::RECT:
 			rectBufferConfig.activate();
 			bufferSerPtr = rectSerialiserPtr;
+			break;
+		case ObjectType::CUBE:
+			cubeBufferConfigurer.activate();
+			bufferSerPtr = cubeSerialiserPtr;
 			break;
 		default:
 			std::cout << "Invalid object type" << std::endl; break;
