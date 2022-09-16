@@ -19,7 +19,7 @@ class Camera;
 class BagOfObjects {
 public:
 	void init();
-	void add(const Object& o);
+	Object& add(const Object& o);
 	void draw(const Camera& cam); // TODO: Revisit const-correctness on every class
 private:
 	const static unsigned int CAPACITY = 100; // The size could come as template argument, so it is known at compile time, but I am not that versed in templates and they are pain to debug and visual studio does not highlight code when using templates.

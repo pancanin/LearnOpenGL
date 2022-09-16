@@ -1,4 +1,5 @@
 #include <iostream>
+#include <assert.h>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -18,13 +19,12 @@ void BagOfObjects::init()
 	bufferSwitch.init();
 }
 
-void BagOfObjects::add(const Object& o)
+Object& BagOfObjects::add(const Object& o)
 {
+	assert(size + 1 < CAPACITY, "Cannot add more objects - bag is full.");
+
 	if (size + 1 < CAPACITY) {
-		objs[size++] = o;
-	}
-	else {
-		std::cout << "Cannot add more objects - bag is full." << std::endl;
+		return objs[size++] = o;
 	}
 }
 
@@ -34,20 +34,18 @@ void BagOfObjects::draw(const Camera& cam)
 	
 	for (unsigned int idx = 0; idx < size; idx++) {
 		const Object& current = objs[idx];
-
 		std::shared_ptr<BufferSerialiser> bufferSerPtr = bufferSwitch.switchBuffer(current.type);
-
 		auto model = glm::mat4(1.0f);
 
 		// We are doing movement in the draw method...It would be good to have a separate method which we call to update the position of the object.
 		model = glm::translate(model, current.position + current.velocity);
-		model = glm::rotate(model, glm::radians(0.0f), current.rotationAxis); // TODO: Explore rotation with quaternions. For now we will not rotate, but a rotation angle should be set in the object.
+		model = glm::rotate(model, glm::radians(current.rotationAngle), current.rotationAxis); // TODO: Explore rotation with quaternions. For now we will not rotate, but a rotation angle should be set in the object.
 
 		shader.setUniformMat4("model", model);
 		shader.setUniformMat4("projection", cam.getProjection());
 		shader.setUniformMat4("view", cam.getView());
 		shader.setInt("dtexture", current.textureUnit);
 
-		glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0); // TODO: This should be taken from a map of <ObjectType, VerticeCount>
+		glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0); 
 	}
 }

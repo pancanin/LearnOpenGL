@@ -98,7 +98,7 @@ int main()
 	triangle2.type = ObjectType::TRIANGLE;
 	triangle2.textureUnit = 1;
 
-	bag.add(triangle2);
+	Object& line = bag.add(triangle2);
 
 	Object floor;
 	floor.position = glm::vec3(1.0f, 0.2f, 0.0f);
