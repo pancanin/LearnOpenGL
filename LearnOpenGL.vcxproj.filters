@@ -84,6 +84,9 @@
     <ClCompile Include="src\engine\models\serialisation\CubeBufferSerialiser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\buffer\BufferSwitch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\models\serialisation\CubeBufferSerialiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\buffer\BufferSwitch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

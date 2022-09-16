@@ -15,28 +15,7 @@ void BagOfObjects::init()
 	shader.link();
 	shader.use();
 
-	std::vector<VertexAttribute> attributes = {
-		VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 },
-		VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) / sizeof(float) },
-		VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) / sizeof(float) }
-	};
-
-	triangleSerialiserPtr = std::make_shared<TriangleBufferSerialiser>();
-	
-	triangleBufferConfig.init(attributes, triangleSerialiserPtr);
-	triangleBufferConfig.activate();
-	triangleBufferConfig.loadBuffer();
-
-	rectSerialiserPtr = std::make_shared<RectBufferSerialiser>();
-
-	rectBufferConfig.init(attributes, rectSerialiserPtr);
-	rectBufferConfig.activate();
-	rectBufferConfig.loadBuffer();
-
-	cubeSerialiserPtr = std::make_shared<CubeBufferSerialiser>();
-	cubeBufferConfigurer.init(attributes, cubeSerialiserPtr);
-	cubeBufferConfigurer.activate();
-	cubeBufferConfigurer.loadBuffer();
+	bufferSwitch.init();
 }
 
 void BagOfObjects::add(const Object& o)
@@ -56,30 +35,13 @@ void BagOfObjects::draw(const Camera& cam)
 	for (unsigned int idx = 0; idx < size; idx++) {
 		const Object& current = objs[idx];
 
-		std::shared_ptr<BufferSerialiser> bufferSerPtr;
-
-		switch (current.type) {
-		case ObjectType::TRIANGLE:
-			triangleBufferConfig.activate();
-			bufferSerPtr = triangleSerialiserPtr;
-			break;
-		case ObjectType::RECT:
-			rectBufferConfig.activate();
-			bufferSerPtr = rectSerialiserPtr;
-			break;
-		case ObjectType::CUBE:
-			cubeBufferConfigurer.activate();
-			bufferSerPtr = cubeSerialiserPtr;
-			break;
-		default:
-			std::cout << "Invalid object type" << std::endl; break;
-		}
+		std::shared_ptr<BufferSerialiser> bufferSerPtr = bufferSwitch.switchBuffer(current.type);
 
 		auto model = glm::mat4(1.0f);
 
 		// We are doing movement in the draw method...It would be good to have a separate method which we call to update the position of the object.
 		model = glm::translate(model, current.position + current.velocity);
-		model = glm::rotate(model, glm::radians(0.0f), current.rotation); // TODO: Explore rotation with quaternions. For now we will not rotate, but a rotation angle should be set in the object.
+		model = glm::rotate(model, glm::radians(0.0f), current.rotationAxis); // TODO: Explore rotation with quaternions. For now we will not rotate, but a rotation angle should be set in the object.
 
 		shader.setUniformMat4("model", model);
 		shader.setUniformMat4("projection", cam.getProjection());

@@ -60,53 +60,6 @@ int main()
 		return -1;
 	}
 
-	// set up vertex data (and buffer(s)) and configure vertex attributes
-	// ------------------------------------------------------------------
-	float vertices[] = {
-		// positions          // normals           // texture coords
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
-	};
-
 	ShaderProgram defaultShader;
 	defaultShader.init();
 	defaultShader.attachVertexShader("src/engine/shaders/default_vertex");
@@ -131,7 +84,7 @@ int main()
 
 	Object triangle;
 	triangle.position = glm::vec3(0.0f, 0.0f, 0.0f);
-	triangle.rotation = glm::vec3(1.0f);
+	triangle.rotationAxis = glm::vec3(1.0f);
 	triangle.velocity = glm::vec3(0.0f);
 	triangle.type = ObjectType::TRIANGLE;
 	triangle.textureUnit = 0;
@@ -140,25 +93,25 @@ int main()
 
 	Object triangle2;
 	triangle2.position = glm::vec3(0.0f, 0.1f, 0.1f);
-	triangle2.rotation = glm::vec3(1.0f);
+	triangle2.rotationAxis = glm::vec3(1.0f);
 	triangle2.velocity = glm::vec3(0.0f);
 	triangle2.type = ObjectType::TRIANGLE;
 	triangle2.textureUnit = 1;
 
 	bag.add(triangle2);
 
-	Object rect1;
-	rect1.position = glm::vec3(1.0f, 0.2f, 0.0f);
-	rect1.rotation = glm::vec3(1.0f);
-	rect1.velocity = glm::vec3(0.0f);
-	rect1.type = ObjectType::RECT;
-	rect1.textureUnit = 0;
+	Object floor;
+	floor.position = glm::vec3(1.0f, 0.2f, 0.0f);
+	floor.rotationAxis = glm::vec3(1.0f);
+	floor.velocity = glm::vec3(0.0f);
+	floor.type = ObjectType::RECT;
+	floor.textureUnit = 0;
 
-	bag.add(rect1);
+	bag.add(floor);
 
 	Object cube1;
 	cube1.position = glm::vec3(-1.0f, -0.2f, 0.0f);
-	cube1.rotation = glm::vec3(1.0f);
+	cube1.rotationAxis = glm::vec3(1.0f);
 	cube1.velocity = glm::vec3(0.0f);
 	cube1.type = ObjectType::CUBE;
 	cube1.textureUnit = 1;

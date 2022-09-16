@@ -7,6 +7,7 @@
 #include "../models/serialisation/TriangleBufferSerialiser.h"
 #include "../models/serialisation/RectBufferSerialiser.h"
 #include "../models/serialisation/CubeBufferSerialiser.h"
+#include "../buffer/BufferSwitch.h"
 
 class Camera;
 
@@ -25,10 +26,5 @@ private:
 	std::array<Object, CAPACITY> objs;
 	unsigned int size = 0;
 	ShaderProgram shader; // We will use one shader for all our purposes, but in a real game engine this would be passed from the client. Another option is to have a shader per object.
-	BufferConfigurer triangleBufferConfig;
-	BufferConfigurer rectBufferConfig;
-	BufferConfigurer cubeBufferConfigurer;
-	std::shared_ptr<TriangleBufferSerialiser> triangleSerialiserPtr;
-	std::shared_ptr<RectBufferSerialiser> rectSerialiserPtr;
-	std::shared_ptr<CubeBufferSerialiser> cubeSerialiserPtr;
+	BufferSwitch bufferSwitch;
 };
