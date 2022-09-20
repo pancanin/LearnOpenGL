@@ -18,8 +18,6 @@ void Engine::init()
 
 	window.init(width, height, "Chistkata FPS Game!", Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
-
-	//window.registerMouseButtonCallback(mouse_button_callback);
 	window.disableCursor();
 
 	// glad: load all OpenGL function pointers
@@ -32,7 +30,11 @@ void Engine::init()
 
 	bag.init(100);
 	bagLines.init(100);
-	mouseIn.init(window, std::bind(&Engine::onMouseMove, this, std::placeholders::_1, std::placeholders::_2));
+	mouseIn.init(
+		window,
+		std::bind(&Engine::onMouseMove, this, std::placeholders::_1, std::placeholders::_2),
+		std::bind(&Engine::onMouseClick, this, std::placeholders::_1, std::placeholders::_2)
+	);
 }
 
 void Engine::start()

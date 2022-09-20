@@ -12,6 +12,7 @@ class BagOfLines {
 public:
 	void init(int bagSize);
 	Line& add(const Line& o);
+	void remove(const Line& l);
 	void draw(const Camera& cam);
 	std::vector<Line>::const_iterator iter_begin() const;
 	std::vector<Line>::const_iterator iter_end() const;

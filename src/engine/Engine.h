@@ -26,6 +26,7 @@ protected:
 
 	virtual void processInput() = 0;
 	virtual void onMouseMove(double xpos, double ypos) = 0;
+	virtual void onMouseClick(int button, int action) = 0;
 
 	void loadTexture(int textureId, const std::string& pathToTexture);
 	Object& addCube(Point3D position, Vector3D scaleFactor, int textureId, bool isIntersectable);

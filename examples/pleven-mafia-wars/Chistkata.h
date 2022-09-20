@@ -10,6 +10,7 @@ public:
 
 	void processInput();
 	void onMouseMove(double xpos, double ypos);
+	void onMouseClick(int button, int action);
 private:
 	Line* laserBeam;
 

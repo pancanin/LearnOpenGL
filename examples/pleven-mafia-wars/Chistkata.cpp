@@ -6,13 +6,11 @@ void Chistkata::onStart()
 	loadTexture(GL_TEXTURE1, "assets/wall.jpg");
 
 	addCube(glm::vec3(-1.0f, -0.2f, 0.0f), Vector3D(1.0f), 1, true);
-	laserBeam = &addLine(cam.getPosition(), cam.getPosition() + cam.getFront() * 1000.0f, Color(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Chistkata::onUpdate()
 {
-	laserBeam->start = cam.getPosition() + Vector3D(0.0f, -0.2f, 0.0f);
-	laserBeam->end = cam.getPosition() + cam.getFront() * 1000.0f;
+	updateLaserPos();
 }
 
 void Chistkata::onStop()
@@ -42,14 +40,32 @@ void Chistkata::onMouseMove(double xpos, double ypos)
 	cam.onMouseMove(xpos, ypos);
 }
 
+void Chistkata::onMouseClick(int button, int action)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT) {
+		if (action == GLFW_PRESS) {
+			activateLaser();
+		}
+		else if (action == GLFW_RELEASE) {
+			deactivateLaser();
+		}
+	}
+}
+
 void Chistkata::activateLaser()
 {
+	laserBeam = &addLine(cam.getPosition(), cam.getPosition() + cam.getFront() * 1000.0f, Color(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void Chistkata::updateLaserPos()
 {
+	if (laserBeam != nullptr) {
+		laserBeam->start = cam.getPosition() + Vector3D(0.0f, -0.2f, 0.0f);
+		laserBeam->end = cam.getPosition() + cam.getFront() * 1000.0f;
+	}
 }
 
 void Chistkata::deactivateLaser()
 {
+	bagLines.remove(*laserBeam);
 }

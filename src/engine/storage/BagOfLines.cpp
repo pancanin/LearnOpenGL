@@ -35,6 +35,16 @@ Line& BagOfLines::add(const Line& o)
 	return lines[lines.size() - 1];
 }
 
+void BagOfLines::remove(const Line& l)
+{
+	for (auto it = lines.begin(); it != lines.end(); ++it) {
+		if (&l == &*it) {
+			lines.erase(it);
+			break;
+		}
+	}
+}
+
 void BagOfLines::draw(const Camera& cam)
 {
 	shader.use();
