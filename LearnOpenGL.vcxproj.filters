@@ -96,6 +96,12 @@
     <ClCompile Include="src\engine\core\PhysicsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="examples\pleven-mafia-wars\Chistkata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\input\MouseInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -195,6 +201,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\core\PhysicsSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\pleven-mafia-wars\Chistkata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\input\MouseInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
