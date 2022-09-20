@@ -211,5 +211,7 @@
     <None Include="src\engine\shaders\texture_vertex.glsl" />
     <None Include="src\engine\shaders\default_vertex.glsl" />
     <None Include="src\engine\shaders\default_fragment.glsl" />
+    <None Include="src\engine\shaders\line_fragment_shader.glsl" />
+    <None Include="src\engine\shaders\line_vertex_shader.glsl" />
   </ItemGroup>
 </Project>

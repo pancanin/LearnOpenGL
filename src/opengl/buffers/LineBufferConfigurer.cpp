@@ -3,6 +3,7 @@
 void LineBufferConfigurer::init(std::vector<VertexAttribute> attributes, std::shared_ptr<LineBufferSerialiser> serialisation)
 {
 	BufferConfigurer::init(attributes, serialisation);
+	this->serialisationPtr = serialisation;
 }
 
 void LineBufferConfigurer::loadBuffer(Point3D start, Point3D end)

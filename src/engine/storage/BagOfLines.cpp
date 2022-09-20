@@ -11,8 +11,8 @@
 void BagOfLines::init()
 {
 	shader.init();
-	shader.attachVertexShader("src/engine/shaders/default_vertex");
-	shader.attachFragmentShader("src/engine/shaders/default_fragment");
+	shader.attachVertexShader("src/engine/shaders/line_vertex_shader");
+	shader.attachFragmentShader("src/engine/shaders/line_fragment_shader");
 	shader.link();
 	shader.use();
 
@@ -21,6 +21,7 @@ void BagOfLines::init()
 	std::vector<VertexAttribute> attributes = {
 		VertexAttribute{ 0, sizeof(LineVertex::position) / sizeof(float), sizeof(LineVertex) / sizeof(float), 0 },
 		VertexAttribute{ 1, sizeof(LineVertex::color) / sizeof(float), sizeof(LineVertex) / sizeof(float), offsetof(LineVertex, LineVertex::color) / sizeof(float) },
+		VertexAttribute{ 2, sizeof(LineVertex::isEnd) / sizeof(float), sizeof(LineVertex) / sizeof(float), offsetof(LineVertex, LineVertex::isEnd) / sizeof(float) },
 	};
 
 	bufferConfig.init(attributes, lineSerPtr);
@@ -49,15 +50,18 @@ void BagOfLines::draw(const Camera& cam)
 
 	for (unsigned int idx = 0; idx < size; idx++) {
 		const Line& current = objs[idx];
-		auto model = glm::mat4(1.0f);
+		auto startLineModel = glm::mat4(1.0f);
+		startLineModel = glm::translate(startLineModel, current.start);
+		shader.setUniformMat4("lineStart", startLineModel);
 
-		shader.setUniformMat4("model", model);
+		auto endLineModel = glm::mat4(1.0f);
+		endLineModel = glm::translate(endLineModel, current.end);
+		shader.setUniformMat4("lineEnd", endLineModel);
+		
 		shader.setUniformMat4("projection", cam.getProjection());
 		shader.setUniformMat4("view", cam.getView());
 
 		bufferConfig.activate();
-		bufferConfig.loadBuffer(current.start, current.end);
-		// TODO: In order for the line to show we have to create a new shader
 
 		glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 	}

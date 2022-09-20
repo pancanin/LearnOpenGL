@@ -213,6 +213,8 @@
     <None Include="src\engine\shaders\default_vertex.glsl" />
     <None Include="src\engine\shaders\fragment_2.glsl" />
     <None Include="src\engine\shaders\light_fragment.glsl" />
+    <None Include="src\engine\shaders\line_fragment_shader.glsl" />
+    <None Include="src\engine\shaders\line_vertex_shader.glsl" />
     <None Include="src\engine\shaders\model_fragment.glsl" />
     <None Include="src\engine\shaders\shined_upon.glsl" />
     <None Include="src\engine\shaders\simple_fragment.glsl" />

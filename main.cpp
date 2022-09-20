@@ -16,6 +16,7 @@
 #include "src/opengl/texture/TextureComponent.h"
 #include "src/opengl/models/Vertex.h"
 #include "src/engine/storage/BagOfObjects.h"
+#include "src/engine/storage/BagOfLines.h"
 #include "src/engine/models/Object.h"
 
 #include <iostream>
@@ -118,15 +119,15 @@ int main()
 
 	bag.add(cube1);
 
-	Object line;
-	line.position = glm::vec3(0.2f, -0.5f, 0.0f);
-	line.rotationAxis = glm::vec3(0.0f, 1.0f, 0.0f);
-	line.rotationAngle = 87.0f;
-	line.velocity = glm::vec3(0.0f);
-	line.type = ObjectType::LINE;
-	line.textureUnit = 1;
+	BagOfLines bagLines;
+	bagLines.init();
 
-	Object& l = bag.add(line);
+	Line line;
+	line.start = cam.getPosition();
+	line.end = Vector3D(0.0f, 0.0f, 100.0f);
+	line.color = Color(1.0f, 0.0f, 0.0f, 1.0f);
+
+	Line& realLine = bagLines.add(line);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
@@ -144,7 +145,11 @@ int main()
 		texture.bind();
 		texture2.bind();
 
-		l.position = cam.getPosition() + (cam.getFront() * 0.2f);
+		auto camPos = cam.getPosition();
+		realLine.start = cam.getPosition() + Vector3D(0.0f, -0.2f, 0.0f);
+		realLine.end =  cam.getPosition() + cam.getFront() * 1000.0f;
+
+		bagLines.draw(cam);
 		bag.draw(cam);
 		
 		window.swapBuffers();
