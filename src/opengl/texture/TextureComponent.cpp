@@ -6,6 +6,7 @@
 
 void TextureComponent::init(int textureUnit)
 {
+
 	this->textureUnit = textureUnit;
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);

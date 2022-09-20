@@ -1,5 +1,5 @@
 #pragma once
-#include <array>
+#include <vector>
 
 #include "../../opengl/shader/ShaderProgram.h"
 #include "../models/Object.h"
@@ -18,13 +18,14 @@ class Camera;
 /// </summary>
 class BagOfObjects {
 public:
-	void init();
+	void init(int bagSize);
 	Object& add(const Object& o);
 	void draw(const Camera& cam); // TODO: Revisit const-correctness on every class
+	std::vector<Object>::const_iterator iter_begin() const;
+	std::vector<Object>::const_iterator iter_end() const;
 private:
-	const static unsigned int CAPACITY = 100; // The size could come as template argument, so it is known at compile time, but I am not that versed in templates and they are pain to debug and visual studio does not highlight code when using templates.
-	std::array<Object, CAPACITY> objs;
+	std::vector<Object> objs;
 	unsigned int size = 0;
-	ShaderProgram shader; // We will use one shader for all our purposes, but in a real game engine this would be passed from the client. Another option is to have a shader per object.
+	ShaderProgram shader;
 	BufferSwitch bufferSwitch;
 };

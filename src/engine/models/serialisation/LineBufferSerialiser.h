@@ -8,7 +8,6 @@
 class LineBufferSerialiser : public BufferSerialiser {
 public:
 	float* serialise() const;
-	float* serialise(Point3D start, Point3D end) const;
 	unsigned int size() const;
 	unsigned int vertexCount() const;
 	unsigned int* indices() const;

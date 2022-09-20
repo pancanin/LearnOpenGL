@@ -4,6 +4,5 @@
 
 struct LineVertex {
 	Point3D position;
-	Color color;
 	float isEnd;
 };

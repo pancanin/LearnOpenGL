@@ -6,6 +6,8 @@
 #include "./models/TypeDefs.h"
 #include "../opengl/shader/ShaderProgram.h"
 #include "./input/KeyboardInput.h"
+#include "./camera/FPSCamera.h"
+#include "./core/PhysicsSystem.h"
 
 class Engine {
 public:
@@ -27,6 +29,11 @@ protected:
 	//RectComponent<TexturedRect> trectComp;
 private:
 	Graphics graphics;
+	FPSCamera cam;
+	Window window;
+	PhysicsSystem physics;
+	BagOfLines bagLines;
+	BagOfObjects bag;
 	/*RectAttributeConfigurer rectAttributeConfigurer;
 	std::shared_ptr<RectBufferSerialiser> rectSerialisationPtr;*/
 	

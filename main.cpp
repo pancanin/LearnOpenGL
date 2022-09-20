@@ -18,6 +18,7 @@
 #include "src/engine/storage/BagOfObjects.h"
 #include "src/engine/storage/BagOfLines.h"
 #include "src/engine/models/Object.h"
+#include "src/engine/core/PhysicsSystem.h"
 
 #include <iostream>
 #include <string>
@@ -81,7 +82,7 @@ int main()
 
 	// Create triangle the new way.
 	BagOfObjects bag;
-	bag.init();
+	bag.init(100);
 
 	Object triangle;
 	triangle.position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -120,7 +121,7 @@ int main()
 	bag.add(cube1);
 
 	BagOfLines bagLines;
-	bagLines.init();
+	bagLines.init(100);
 
 	Line line;
 	line.start = cam.getPosition();
@@ -128,6 +129,10 @@ int main()
 	line.color = Color(1.0f, 0.0f, 0.0f, 1.0f);
 
 	Line& realLine = bagLines.add(line);
+
+	PhysicsSystem physics;
+
+	
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
@@ -145,9 +150,27 @@ int main()
 		texture.bind();
 		texture2.bind();
 
-		auto camPos = cam.getPosition();
 		realLine.start = cam.getPosition() + Vector3D(0.0f, -0.2f, 0.0f);
 		realLine.end =  cam.getPosition() + cam.getFront() * 1000.0f;
+
+		physics.checkCollisions(bagLines, bag);
+
+		// Put a cap on how many intersections we process per frame
+		while (!physics.intersectionPoints.empty()) {
+			Point3D point = physics.intersectionPoints.front();
+			physics.intersectionPoints.pop();
+
+			Object explosion;
+			explosion.position = point;
+			explosion.rotationAxis = glm::vec3(1.0f);
+			explosion.velocity = glm::vec3(0.0f);
+			explosion.scaleFactor = glm::vec3(0.05f, 0.05f, 0.05f);
+			explosion.type = ObjectType::CUBE;
+			explosion.textureUnit = 1;
+			explosion.intersectible = false;
+
+			bag.add(explosion);
+		}
 
 		bagLines.draw(cam);
 		bag.draw(cam);

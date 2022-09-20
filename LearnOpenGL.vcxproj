@@ -149,6 +149,7 @@
     <ClCompile Include="src\engine\camera\Camera.cpp" />
     <ClCompile Include="src\engine\camera\FPSCamera.cpp" />
     <ClCompile Include="src\engine\core\Graphics.cpp" />
+    <ClCompile Include="src\engine\core\PhysicsSystem.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\engine\input\KeyboardInput.cpp" />
     <ClCompile Include="src\engine\models\Rect.cpp" />
@@ -163,7 +164,6 @@
     <ClCompile Include="src\engine\storage\BagOfObjects.cpp" />
     <ClCompile Include="src\engine\ui\Window.cpp" />
     <ClCompile Include="src\opengl\buffers\BufferConfigurer.cpp" />
-    <ClCompile Include="src\opengl\buffers\LineBufferConfigurer.cpp" />
     <ClCompile Include="src\opengl\ebo\ElementBufferObject.cpp" />
     <ClCompile Include="src\opengl\shader\ShaderProgram.cpp" />
     <ClCompile Include="src\opengl\texture\TextureComponent.cpp" />
@@ -176,6 +176,7 @@
     <ClInclude Include="src\engine\camera\Camera.h" />
     <ClInclude Include="src\engine\camera\FPSCamera.h" />
     <ClInclude Include="src\engine\core\Graphics.h" />
+    <ClInclude Include="src\engine\core\PhysicsSystem.h" />
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\engine\input\KeyboardInput.h" />
     <ClInclude Include="src\engine\models\ColorTriangle.h" />
@@ -196,7 +197,6 @@
     <ClInclude Include="src\engine\storage\BagOfObjects.h" />
     <ClInclude Include="src\engine\ui\Window.h" />
     <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
-    <ClInclude Include="src\opengl\buffers\LineBufferConfigurer.h" />
     <ClInclude Include="src\opengl\ebo\ElementBufferObject.h" />
     <ClInclude Include="src\opengl\models\LineVertex.h" />
     <ClInclude Include="src\opengl\models\Vertex.h" />

@@ -3,16 +3,8 @@
 float* LineBufferSerialiser::serialise() const
 {
 	return new float[floatsPerLine] {
-		0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f
-	};
-}
-
-float* LineBufferSerialiser::serialise(Point3D start, Point3D end) const
-{
-	return new float[floatsPerLine] {
-		start.x, start.y, start.z, 0.0f, 0.0f, 0.0f, 1.0f,
-		end.x, end.y, end.z, 0.0f, 0.0f, 0.0f, 1.0f
+		0.0f, 0.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f, 1.0f
 	};
 }
 

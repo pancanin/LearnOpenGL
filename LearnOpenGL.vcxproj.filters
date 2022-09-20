@@ -93,7 +93,7 @@
     <ClCompile Include="src\engine\storage\BagOfLines.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\opengl\buffers\LineBufferConfigurer.cpp">
+    <ClCompile Include="src\engine\core\PhysicsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,10 +191,10 @@
     <ClInclude Include="src\engine\models\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\opengl\buffers\LineBufferConfigurer.h">
+    <ClInclude Include="src\opengl\models\LineVertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\opengl\models\LineVertex.h">
+    <ClInclude Include="src\engine\core\PhysicsSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
