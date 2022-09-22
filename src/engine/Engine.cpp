@@ -1,6 +1,8 @@
 #include "Engine.h"
 
 #include <functional>
+#include <chrono>
+#include <thread>
 
 #include <GLFW/glfw3.h>
 
@@ -47,11 +49,14 @@ void Engine::start()
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	typedef std::chrono::high_resolution_clock Clock;
+
 	while (!window.shouldClose()) {
+		auto t0 = Clock::now();
+
 		processInput();
 		window.clear();
 
-		// we need to bind the textures here, so we need a way to store textures.
 		for (TextureComponent& tex : textures) {
 			tex.bind();
 		}
@@ -59,6 +64,8 @@ void Engine::start()
 		onUpdate();
 
 		physics.checkCollisions(bagLines, bag);
+
+		
 
 		// Put a cap on how many intersections we process per frame
 		while (!physics.intersectionPoints.empty()) {
@@ -82,6 +89,13 @@ void Engine::start()
 
 		window.swapBuffers();
 		graphics.pollEvents();
+
+		auto t1 = Clock::now();
+		auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+		
+		auto sleepDur = std::chrono::milliseconds(1000 / fps) - diff;
+
+		std::this_thread::sleep_for(sleepDur);
 	}
 }
 

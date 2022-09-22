@@ -1,6 +1,10 @@
 # Learning OpenGL(GLFW)
 
-Disclamer: Folder structure is messed up - things need moving around, please do not judge harshly :)
+Learning OpenGL and building somewhat of a game engine.
+
+## FPS Game
+
+![Shooting a cube till it's dead](https://github.com/pancanin/LearnOpenGL/blob/master/scshts/fps-beginning.gif?raw=true)
 
 ## Point inside Triangle
 

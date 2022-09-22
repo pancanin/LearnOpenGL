@@ -45,6 +45,7 @@ protected:
 	MouseInput mouseIn;
 private:
 	std::vector<TextureComponent> textures;
+	int fps = 60;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
 };
