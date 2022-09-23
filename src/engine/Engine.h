@@ -29,8 +29,8 @@ protected:
 	virtual void onMouseClick(int button, int action) = 0;
 
 	void loadTexture(int textureId, const std::string& pathToTexture);
-	Object& addCube(Point3D position, Vector3D scaleFactor, int textureId, bool isIntersectable);
-	Line& addLine(Point3D start, Point3D end, Color color);
+	Object& addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable);
+	Line& addLine(const Point3D& start, const Point3D& end, const Color& color);
 
 	bool isKeyActioned(int keyId, int action);
 	

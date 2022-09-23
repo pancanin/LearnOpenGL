@@ -7,6 +7,9 @@
 
 void PhysicsSystem::checkCollisions(const BagOfLines& bagOfLines, const BagOfObjects& bagOfObjects)
 {
+	// TODO: Rework this approach as it won't scale well with collisions between every combination of objects.
+	// Maybe there should be a common interface between all objects and we can do simple O(n^2) comparison algorithm.
+
 	for (auto it = bagOfLines.iter_begin(); it != bagOfLines.iter_end(); ++it) {
 		const Line& currentLine = *it;
 
@@ -72,9 +75,9 @@ bool PhysicsSystem::checkBoxLineCollision(const Object& box, const Line& line)
 	Point3D intersectionPoint = line.start + (tmin * rayDir);
 
 	// TODO: Implement a queue class with limit
-	intersectionPoints.push(intersectionPoint);
-	if (intersectionPoints.size() > 100) {
-		intersectionPoints.pop();
+	collisionPoints.push(intersectionPoint);
+	if (collisionPoints.size() > 100) {
+		collisionPoints.pop();
 	}
 
 	return true;

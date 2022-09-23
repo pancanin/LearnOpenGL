@@ -68,9 +68,9 @@ void Engine::start()
 		
 
 		// Put a cap on how many intersections we process per frame
-		while (!physics.intersectionPoints.empty()) {
-			Point3D point = physics.intersectionPoints.front();
-			physics.intersectionPoints.pop();
+		while (!physics.collisionPoints.empty()) {
+			Point3D point = physics.collisionPoints.front();
+			physics.collisionPoints.pop();
 
 			Object explosion;
 			explosion.position = point;
@@ -119,7 +119,7 @@ void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos
 	engine.onMouseMove(xpos, ypos);
 }
 
-Object& Engine::addCube(Point3D position, Vector3D scaleFactor, int textureId, bool isIntersectable)
+Object& Engine::addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable)
 {
 	Object cube1;
 	cube1.position = position;
@@ -133,12 +133,7 @@ Object& Engine::addCube(Point3D position, Vector3D scaleFactor, int textureId, b
 	return bag.add(cube1);
 }
 
-Line& Engine::addLine(Point3D start, Point3D end, Color color)
+Line& Engine::addLine(const Point3D& start, const Point3D& end, const Color& color)
 {
-	Line line;
-	line.start = start;
-	line.end = end;
-	line.color = color;
-
-	return bagLines.add(line);
+	return bagLines.add(Line(start, end, color));
 }
