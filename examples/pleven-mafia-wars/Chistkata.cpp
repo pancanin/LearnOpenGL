@@ -4,8 +4,22 @@ void Chistkata::onStart()
 {
 	loadTexture(GL_TEXTURE0, "assets/container.jpg");
 	loadTexture(GL_TEXTURE1, "assets/wall.jpg");
+	loadTexture(GL_TEXTURE2, "assets/blue.png");
 
-	addCube(glm::vec3(-1.0f, -0.2f, 0.0f), Vector3D(1.0f), 1, true);
+	addTriangle(
+		glm::vec3(0.0f, 1.0f, 0.0f),
+		Vector3D(1.5f, 1.0f, 1.0f),
+		Vector3D(0.0f, 0.0f, 1.0f),
+		0.0f,
+		2,
+		true);
+	addTriangle(
+		glm::vec3(0.0f, -1.2f, 0.0f),
+		Vector3D(1.5f, 1.0f, 1.0f),
+		Vector3D(0.0f, 0.0f, 1.0f),
+		180.0f,
+		2,
+		true);
 }
 
 void Chistkata::onUpdate()

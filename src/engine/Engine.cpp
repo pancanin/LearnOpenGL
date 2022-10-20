@@ -30,7 +30,7 @@ void Engine::init()
 		return;
 	}
 
-	bag.init(100);
+	objectsBag.init(100);
 	bagLines.init(100);
 	mouseIn.init(
 		window,
@@ -63,29 +63,10 @@ void Engine::start()
 
 		onUpdate();
 
-		physics.checkCollisions(bagLines, bag);
-
 		
-
-		// Put a cap on how many intersections we process per frame
-		while (!physics.collisionPoints.empty()) {
-			Point3D point = physics.collisionPoints.front();
-			physics.collisionPoints.pop();
-
-			Object explosion;
-			explosion.position = point;
-			explosion.rotationAxis = glm::vec3(1.0f);
-			explosion.velocity = glm::vec3(0.0f);
-			explosion.scaleFactor = glm::vec3(0.05f, 0.05f, 0.05f);
-			explosion.type = ObjectType::CUBE;
-			explosion.textureUnit = 1;
-			explosion.intersectible = false;
-
-			bag.add(explosion);
-		}
 		
 		bagLines.draw(cam);
-		bag.draw(cam);
+		objectsBag.draw(cam);
 
 		window.swapBuffers();
 		graphics.pollEvents();
@@ -119,18 +100,43 @@ void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos
 	engine.onMouseMove(xpos, ypos);
 }
 
+Object& Engine::addObject(
+	ObjectType type,
+	const Point3D& position,
+	const Vector3D& scaleFactor,
+	const Vector3D& rotationAxis,
+	float rotationAngle,
+	int textureId,
+	bool isIntersectable
+	)
+{
+	Object object;
+	object.position = position;
+	object.rotationAxis = rotationAxis;
+	object.rotationAngle = rotationAngle;
+	object.velocity = glm::vec3(0.0f);
+	object.type = type;
+	object.intersectible = isIntersectable;
+	object.scaleFactor = scaleFactor;
+	object.textureUnit = textureId;
+
+	return objectsBag.add(object);
+}
+
 Object& Engine::addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable)
 {
-	Object cube1;
-	cube1.position = position;
-	cube1.rotationAxis = glm::vec3(1.0f);
-	cube1.velocity = glm::vec3(0.0f);
-	cube1.type = ObjectType::CUBE;
-	cube1.intersectible = isIntersectable;
-	cube1.scaleFactor = scaleFactor;
-	cube1.textureUnit = 1;
+	return addObject(ObjectType::CUBE, position, scaleFactor, Vector3D(0.0f), 0.0f, textureId, isIntersectable);
+}
 
-	return bag.add(cube1);
+Object& Engine::addTriangle(
+	const Point3D& position,
+	const Vector3D& scaleFactor,
+	const Vector3D& rotationAxis,
+	float rotationAngle,
+	int textureId,
+	bool isIntersectable)
+{
+	return addObject(ObjectType::TRIANGLE, position, scaleFactor, rotationAxis, rotationAngle, textureId, isIntersectable);
 }
 
 Line& Engine::addLine(const Point3D& start, const Point3D& end, const Color& color)

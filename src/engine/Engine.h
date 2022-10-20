@@ -30,7 +30,15 @@ protected:
 
 	void loadTexture(int textureId, const std::string& pathToTexture);
 	Object& addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable);
+	Object& addTriangle(
+		const Point3D& position,
+		const Vector3D& scaleFactor,
+		const Vector3D& rotationAxis,
+		float rotationAngle,
+		int textureId,
+		bool isIntersectable);
 	Line& addLine(const Point3D& start, const Point3D& end, const Color& color);
+
 
 	bool isKeyActioned(int keyId, int action);
 	
@@ -41,11 +49,20 @@ protected:
 	Window window;
 	PhysicsSystem physics;
 	BagOfLines bagLines;
-	BagOfObjects bag;
+	BagOfObjects objectsBag;
 	MouseInput mouseIn;
 private:
 	std::vector<TextureComponent> textures;
 	int fps = 60;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
+
+	Object& addObject(
+		ObjectType type,
+		const Point3D& position,
+		const Vector3D& scaleFactor,
+		const Vector3D& rotationAxis,
+		float rotationAngle,
+		int textureId,
+		bool isIntersectable);
 };
