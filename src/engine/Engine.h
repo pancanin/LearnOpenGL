@@ -10,8 +10,10 @@
 #include "./core/PhysicsSystem.h"
 #include "./storage/BagOfObjects.h"
 #include "./storage/BagOfLines.h"
+#include "./storage/BagOf.h"
 #include "../opengl/texture/TextureComponent.h"
 #include "input/MouseInput.h"
+#include "render/Renderer.h"
 
 struct GLFWwindow;
 
@@ -39,9 +41,7 @@ protected:
 		bool isIntersectable);
 	Line& addLine(const Point3D& start, const Point3D& end, const Color& color);
 
-
 	bool isKeyActioned(int keyId, int action);
-	
 private:
 	Graphics graphics;
 protected:
@@ -50,12 +50,26 @@ protected:
 	PhysicsSystem physics;
 	BagOfLines bagLines;
 	BagOfObjects objectsBag;
+	BagOf<Object> objects;
+	BagOf<Line> lines;
 	MouseInput mouseIn;
+	Renderer renderer;
 private:
 	std::vector<TextureComponent> textures;
+	std::shared_ptr<ShaderProgram> defaultObjectShader;
 	int fps = 60;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
+
+	Object& addObject(
+		ObjectType type,
+		const Point3D& position,
+		const Vector3D& scaleFactor,
+		const Vector3D& rotationAxis,
+		float rotationAngle,
+		int textureId,
+		std::shared_ptr<ShaderProgram> shader,
+		bool isIntersectable);
 
 	Object& addObject(
 		ObjectType type,

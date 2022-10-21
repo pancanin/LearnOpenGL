@@ -1,7 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include "TypeDefs.h"
 #include "ObjectType.h"
+#include "../../opengl/shader/ShaderProgram.h"
 
 struct Object {
 	glm::vec3 position;
@@ -12,4 +15,5 @@ struct Object {
 	unsigned int textureUnit;
 	float rotationAngle = 0.0f;
 	bool intersectible = true;
+	std::shared_ptr<ShaderProgram> shader;
 };

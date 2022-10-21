@@ -30,13 +30,23 @@ void Engine::init()
 		return;
 	}
 
-	objectsBag.init(100);
-	bagLines.init(100);
+	objects.init(100);
+	lines.init(100);
+
 	mouseIn.init(
 		window,
 		std::bind(&Engine::onMouseMove, this, std::placeholders::_1, std::placeholders::_2),
 		std::bind(&Engine::onMouseClick, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
+	renderer.init();
+
+	defaultObjectShader = std::make_shared<ShaderProgram>();
+	defaultObjectShader->init();
+	defaultObjectShader->attachVertexShader("src/engine/shaders/default_vertex");
+	defaultObjectShader->attachFragmentShader("src/engine/shaders/default_fragment");
+	defaultObjectShader->link();
+	defaultObjectShader->use();
 }
 
 void Engine::start()
@@ -63,10 +73,13 @@ void Engine::start()
 
 		onUpdate();
 
-		
-		
-		bagLines.draw(cam);
-		objectsBag.draw(cam);
+		for (auto& line : lines.data) {
+			renderer.render(cam, line);
+		}
+
+		for (auto& object : objects.data) {
+			renderer.render(cam, object);
+		}
 
 		window.swapBuffers();
 		graphics.pollEvents();
@@ -107,8 +120,18 @@ Object& Engine::addObject(
 	const Vector3D& rotationAxis,
 	float rotationAngle,
 	int textureId,
+	std::shared_ptr<ShaderProgram> shader,
 	bool isIntersectable
 	)
+{
+	Object& object = addObject(type, position, scaleFactor, rotationAxis, rotationAngle, textureId, isIntersectable);
+
+	object.shader = shader;
+
+	return object;
+}
+
+Object& Engine::addObject(ObjectType type, const Point3D& position, const Vector3D& scaleFactor, const Vector3D& rotationAxis, float rotationAngle, int textureId, bool isIntersectable)
 {
 	Object object;
 	object.position = position;
@@ -119,8 +142,9 @@ Object& Engine::addObject(
 	object.intersectible = isIntersectable;
 	object.scaleFactor = scaleFactor;
 	object.textureUnit = textureId;
+	object.shader = defaultObjectShader;
 
-	return objectsBag.add(object);
+	return objects.add(object);
 }
 
 Object& Engine::addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable)
@@ -141,5 +165,5 @@ Object& Engine::addTriangle(
 
 Line& Engine::addLine(const Point3D& start, const Point3D& end, const Color& color)
 {
-	return bagLines.add(Line(start, end, color));
+	return lines.add(Line(start, end, color));
 }

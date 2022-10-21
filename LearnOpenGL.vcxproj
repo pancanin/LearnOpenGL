@@ -161,6 +161,7 @@
     <ClCompile Include="src\engine\models\serialisation\TriangleBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\TexturedRect.cpp" />
     <ClCompile Include="src\engine\models\Triangle.cpp" />
+    <ClCompile Include="src\engine\render\Renderer.cpp" />
     <ClCompile Include="src\engine\shaders\ShaderLoader.cpp" />
     <ClCompile Include="src\engine\storage\BagOfLines.cpp" />
     <ClCompile Include="src\engine\storage\BagOfObjects.cpp" />
@@ -196,7 +197,9 @@
     <ClInclude Include="src\engine\models\TexturedTriangle.h" />
     <ClInclude Include="src\engine\models\Triangle.h" />
     <ClInclude Include="src\engine\models\TypeDefs.h" />
+    <ClInclude Include="src\engine\render\Renderer.h" />
     <ClInclude Include="src\engine\shaders\ShaderLoader.h" />
+    <ClInclude Include="src\engine\storage\BagOf.h" />
     <ClInclude Include="src\engine\storage\BagOfLines.h" />
     <ClInclude Include="src\engine\storage\BagOfObjects.h" />
     <ClInclude Include="src\engine\ui\Window.h" />
