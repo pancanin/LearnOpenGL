@@ -48,8 +48,6 @@ protected:
 	FPSCamera cam;
 	Window window;
 	PhysicsSystem physics;
-	BagOfLines bagLines;
-	BagOfObjects objectsBag;
 	BagOf<Object> objects;
 	BagOf<Line> lines;
 	MouseInput mouseIn;

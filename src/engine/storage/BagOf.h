@@ -12,5 +12,14 @@ public:
 		return data[data.size() - 1];
 	}
 
+	void remove(const Something& s) {
+		for (auto it = data.begin(); it != data.end(); ++it) {
+			if (&s == &*it) {
+				data.erase(it);
+				break;
+			}
+		}
+	}
+
 	std::vector<Something> data;
 };

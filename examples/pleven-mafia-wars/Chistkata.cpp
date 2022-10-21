@@ -81,5 +81,5 @@ void Chistkata::updateLaserPos()
 
 void Chistkata::deactivateLaser()
 {
-	bagLines.remove(*laserBeam);
+	lines.remove(*laserBeam);
 }

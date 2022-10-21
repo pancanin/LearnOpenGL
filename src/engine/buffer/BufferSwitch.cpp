@@ -25,8 +25,13 @@ void BufferSwitch::init()
 	cubeBufferConfigurer.activate();
 	cubeBufferConfigurer.loadBuffer();
 
+	std::vector<VertexAttribute> lineAttrs = {
+		VertexAttribute{ 0, sizeof(LineVertex::position) / sizeof(float), sizeof(LineVertex) / sizeof(float), 0 },
+		VertexAttribute{ 1, sizeof(LineVertex::isEnd) / sizeof(float), sizeof(LineVertex) / sizeof(float), offsetof(LineVertex, LineVertex::isEnd) / sizeof(float) },
+	};
+
 	lineSerialiserPtr = std::make_shared<LineBufferSerialiser>();
-	lineBufferConfigurer.init(attributes, lineSerialiserPtr);
+	lineBufferConfigurer.init(lineAttrs, lineSerialiserPtr);
 	lineBufferConfigurer.activate();
 	lineBufferConfigurer.loadBuffer();
 }

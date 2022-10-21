@@ -44,6 +44,7 @@ void Renderer::render(const Camera& camera, const Line& line)
 	}
 
 	lineShaderProgramPtr->use();
+	bufferSwitch.switchBuffer(ObjectType::LINE);
 
 	auto startLineModel = glm::mat4(1.0f);
 	startLineModel = glm::translate(startLineModel, line.start);
@@ -57,8 +58,6 @@ void Renderer::render(const Camera& camera, const Line& line)
 	lineShaderProgramPtr->setUniformMat4("view", camera.getView());
 
 	lineShaderProgramPtr->setUniformVec4("color", line.color);
-
-	bufferSwitch.switchBuffer(ObjectType::LINE);
 
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
