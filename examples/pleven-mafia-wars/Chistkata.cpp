@@ -12,14 +12,12 @@ void Chistkata::onStart()
 		glm::vec3(0.0f, 1.0f, 0.0f),
 		Vector3D(1.5f, 1.0f, 1.0f),
 		Vector3D(0.0f, 0.0f, 1.0f),
-		0.0f,
 		2,
 		true);
 	addTriangle(
 		glm::vec3(0.0f, -1.2f, 0.0f),
 		Vector3D(1.5f, 1.0f, 1.0f),
 		Vector3D(0.0f, 0.0f, 1.0f),
-		180.0f,
 		2,
 		true);
 	addLine(
@@ -40,25 +38,13 @@ void Chistkata::onStop()
 
 void Chistkata::processInput()
 {
-	if (isKeyActioned(GLFW_KEY_ESCAPE, GLFW_PRESS))
-		window.close();
-	else if (isKeyActioned(GLFW_KEY_W, GLFW_PRESS)) {
-		cam.moveForward();
-	}
-	else if (isKeyActioned(GLFW_KEY_S, GLFW_PRESS)) {
-		cam.moveBackward();
-	}
-	else if (isKeyActioned(GLFW_KEY_A, GLFW_PRESS)) {
-		cam.moveLeft();
-	}
-	else if (isKeyActioned(GLFW_KEY_D, GLFW_PRESS)) {
-		cam.moveRight();
-	}
+	
+	Engine::processInput();
 }
 
 void Chistkata::onMouseMove(double xpos, double ypos)
 {
-	cam.onMouseMove(xpos, ypos);
+	//cam.onMouseMove(xpos, ypos);
 }
 
 void Chistkata::onMouseClick(int button, int action)

@@ -15,6 +15,7 @@
 #include "models/Line.h"
 #include "models/Object.h"
 #include "models/Triangle.h"
+#include "models/Rect.h"
 
 struct GLFWwindow;
 struct Plane;
@@ -28,7 +29,7 @@ protected:
 	virtual void onUpdate() = 0;
 	virtual void onStop() = 0;
 
-	virtual void processInput() = 0;
+	virtual void processInput();
 	virtual void onMouseMove(double xpos, double ypos) = 0;
 	virtual void onMouseClick(int button, int action) = 0;
 
@@ -42,7 +43,7 @@ protected:
 		bool isIntersectable);
 	Line& addLine(const Point3D& start, const Point3D& end, const Color& color);
 	Plane& addPlane(const Vector3D& point, const Vector3D& normal, const Color& color);
-
+	
 	bool isKeyActioned(int keyId, int action);
 private:
 	Graphics graphics;

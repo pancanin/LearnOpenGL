@@ -105,6 +105,24 @@ bool Engine::isKeyActioned(int keyId, int action)
 	return glfwGetKey(window.getRaw(), keyId) == action;
 }
 
+void Engine::processInput()
+{
+	if (isKeyActioned(GLFW_KEY_ESCAPE, GLFW_PRESS))
+		window.close();
+	/*else if (isKeyActioned(GLFW_KEY_W, GLFW_PRESS)) {
+		cam.moveForward();
+	}
+	else if (isKeyActioned(GLFW_KEY_S, GLFW_PRESS)) {
+		cam.moveBackward();
+	}
+	else if (isKeyActioned(GLFW_KEY_A, GLFW_PRESS)) {
+		cam.moveLeft();
+	}
+	else if (isKeyActioned(GLFW_KEY_D, GLFW_PRESS)) {
+		cam.moveRight();
+	}*/
+}
+
 void Engine::loadTexture(int textureId, const std::string& pathToTexture)
 {
 	TextureComponent texture;
