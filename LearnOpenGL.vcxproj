@@ -163,8 +163,6 @@
     <ClCompile Include="src\engine\models\Triangle.cpp" />
     <ClCompile Include="src\engine\render\Renderer.cpp" />
     <ClCompile Include="src\engine\shaders\ShaderLoader.cpp" />
-    <ClCompile Include="src\engine\storage\BagOfLines.cpp" />
-    <ClCompile Include="src\engine\storage\BagOfObjects.cpp" />
     <ClCompile Include="src\engine\ui\Window.cpp" />
     <ClCompile Include="src\opengl\buffers\BufferConfigurer.cpp" />
     <ClCompile Include="src\opengl\ebo\ElementBufferObject.cpp" />
@@ -188,6 +186,7 @@
     <ClInclude Include="src\engine\models\Line.h" />
     <ClInclude Include="src\engine\models\Object.h" />
     <ClInclude Include="src\engine\models\ObjectType.h" />
+    <ClInclude Include="src\engine\models\Plane.h" />
     <ClInclude Include="src\engine\models\Rect.h" />
     <ClInclude Include="src\engine\models\serialisation\CubeBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\LineBufferSerialiser.h" />
@@ -200,8 +199,6 @@
     <ClInclude Include="src\engine\render\Renderer.h" />
     <ClInclude Include="src\engine\shaders\ShaderLoader.h" />
     <ClInclude Include="src\engine\storage\BagOf.h" />
-    <ClInclude Include="src\engine\storage\BagOfLines.h" />
-    <ClInclude Include="src\engine\storage\BagOfObjects.h" />
     <ClInclude Include="src\engine\ui\Window.h" />
     <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
     <ClInclude Include="src\opengl\ebo\ElementBufferObject.h" />

@@ -2,15 +2,13 @@
 
 #include "PhysicsSystem.h"
 
-#include "../storage/BagOfLines.h"
-#include "../storage/BagOfObjects.h"
 
 void PhysicsSystem::checkCollisions(const BagOfLines& bagOfLines, const BagOfObjects& bagOfObjects)
 {
 	// TODO: Rework this approach as it won't scale well with collisions between every combination of objects.
 	// Maybe there should be a common interface between all objects and we can do simple O(n^2) comparison algorithm.
 
-	for (auto it = bagOfLines.iter_begin(); it != bagOfLines.iter_end(); ++it) {
+	/*for (auto it = bagOfLines.iter_begin(); it != bagOfLines.iter_end(); ++it) {
 		const Line& currentLine = *it;
 
 		for (auto oit = bagOfObjects.iter_begin(); oit != bagOfObjects.iter_end(); ++oit) {
@@ -20,65 +18,66 @@ void PhysicsSystem::checkCollisions(const BagOfLines& bagOfLines, const BagOfObj
 				
 			}
 		}
-	}
+	}*/
 }
 
 bool PhysicsSystem::checkBoxLineCollision(const Object& box, const Line& line)
 {
-	if (!box.intersectible) { return false; }
-	// Calculating the min point and max point of the bounding volume / box.
-	float minX = box.position.x - (1 * box.scaleFactor.x);
-	float minY = box.position.y - (1 * box.scaleFactor.y);
-	float minZ = box.position.z - (1 * box.scaleFactor.z);
+	//if (!box.intersectible) { return false; }
+	//// Calculating the min point and max point of the bounding volume / box.
+	//float minX = box.position.x - (1 * box.scaleFactor.x);
+	//float minY = box.position.y - (1 * box.scaleFactor.y);
+	//float minZ = box.position.z - (1 * box.scaleFactor.z);
 
-	float maxX = box.position.x + (1 * box.scaleFactor.x);
-	float maxY = box.position.y + (1 * box.scaleFactor.y);
-	float maxZ = box.position.z + (1 * box.scaleFactor.z);
+	//float maxX = box.position.x + (1 * box.scaleFactor.x);
+	//float maxY = box.position.y + (1 * box.scaleFactor.y);
+	//float maxZ = box.position.z + (1 * box.scaleFactor.z);
 
-	Point3D collisionInfo;
+	//Point3D collisionInfo;
 
-	Vector3D rayDir = glm::normalize(line.end - line.start);
+	//Vector3D rayDir = glm::normalize(line.end - line.start);
 
-	float tmin = (minX - line.start.x) / rayDir.x;
-	float tmax = (maxX - line.start.x) / rayDir.x;
+	//float tmin = (minX - line.start.x) / rayDir.x;
+	//float tmax = (maxX - line.start.x) / rayDir.x;
 
-	if (tmin > tmax) std::swap(tmin, tmax);
+	//if (tmin > tmax) std::swap(tmin, tmax);
 
-	float tymin = (minY - line.start.y) / rayDir.y;
-	float tymax = (maxY - line.start.y) / rayDir.y;
+	//float tymin = (minY - line.start.y) / rayDir.y;
+	//float tymax = (maxY - line.start.y) / rayDir.y;
 
-	if (tymin > tymax) std::swap(tymin, tymax);
+	//if (tymin > tymax) std::swap(tymin, tymax);
 
-	if ((tmin > tymax) || (tymin > tmax))
-		return false;
+	//if ((tmin > tymax) || (tymin > tmax))
+	//	return false;
 
-	if (tymin > tmin)
-		tmin = tymin;
+	//if (tymin > tmin)
+	//	tmin = tymin;
 
-	if (tymax < tmax)
-		tmax = tymax;
+	//if (tymax < tmax)
+	//	tmax = tymax;
 
-	float tzmin = (minZ - line.start.z) / rayDir.z;
-	float tzmax = (maxZ - line.start.z) / rayDir.z;
+	//float tzmin = (minZ - line.start.z) / rayDir.z;
+	//float tzmax = (maxZ - line.start.z) / rayDir.z;
 
-	if (tzmin > tzmax) std::swap(tzmin, tzmax);
+	//if (tzmin > tzmax) std::swap(tzmin, tzmax);
 
-	if ((tmin > tzmax) || (tzmin > tmax))
-		return false;
+	//if ((tmin > tzmax) || (tzmin > tmax))
+	//	return false;
 
-	if (tzmin > tmin)
-		tmin = tzmin;
+	//if (tzmin > tmin)
+	//	tmin = tzmin;
 
-	if (tzmax < tmax)
-		tmax = tzmax;
+	//if (tzmax < tmax)
+	//	tmax = tzmax;
 
-	Point3D intersectionPoint = line.start + (tmin * rayDir);
+	//Point3D intersectionPoint = line.start + (tmin * rayDir);
 
-	// TODO: Implement a queue class with limit
-	collisionPoints.push(intersectionPoint);
-	if (collisionPoints.size() > 100) {
-		collisionPoints.pop();
-	}
+	//// TODO: Implement a queue class with limit
+	//collisionPoints.push(intersectionPoint);
+	//if (collisionPoints.size() > 100) {
+	//	collisionPoints.pop();
+	//}
 
+	//return true;
 	return true;
 }

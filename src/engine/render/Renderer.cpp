@@ -6,6 +6,7 @@
 #include "../models/TypeDefs.h"
 #include "../models/Object.h"
 #include "../models/Line.h"
+#include "../models/Triangle.h"
 #include "../../opengl/shader/ShaderProgram.h"
 
 void Renderer::init()
@@ -60,4 +61,13 @@ void Renderer::render(const Camera& camera, const Line& line)
 	lineShaderProgramPtr->setUniformVec4("color", line.color);
 
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+}
+
+void Renderer::render(const Camera& cam, const Triangle& triangle)
+{
+	triangle.shader->use();
+
+	std::shared_ptr<BufferSerialiser> bufferSerPtr = bufferSwitch.switchBuffer(ObjectType::TRIANGLE);
+
+
 }

@@ -72,9 +72,6 @@
     <ClCompile Include="src\opengl\texture\TextureComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\storage\BagOfObjects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\opengl\ebo\ElementBufferObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,9 +85,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\models\serialisation\LineBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\storage\BagOfLines.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\core\PhysicsSystem.cpp">
@@ -176,9 +170,6 @@
     <ClInclude Include="src\engine\models\ObjectType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\storage\BagOfObjects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\opengl\ebo\ElementBufferObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -192,9 +183,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\models\serialisation\LineBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\storage\BagOfLines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\models\Line.h">
@@ -216,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\render\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\models\Plane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

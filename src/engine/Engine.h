@@ -8,14 +8,16 @@
 #include "./input/KeyboardInput.h"
 #include "./camera/FPSCamera.h"
 #include "./core/PhysicsSystem.h"
-#include "./storage/BagOfObjects.h"
-#include "./storage/BagOfLines.h"
 #include "./storage/BagOf.h"
 #include "../opengl/texture/TextureComponent.h"
 #include "input/MouseInput.h"
 #include "render/Renderer.h"
+#include "models/Line.h"
+#include "models/Object.h"
+#include "models/Triangle.h"
 
 struct GLFWwindow;
+struct Plane;
 
 class Engine {
 public:
@@ -32,14 +34,14 @@ protected:
 
 	void loadTexture(int textureId, const std::string& pathToTexture);
 	Object& addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable);
-	Object& addTriangle(
-		const Point3D& position,
-		const Vector3D& scaleFactor,
-		const Vector3D& rotationAxis,
-		float rotationAngle,
+	Triangle& addTriangle(
+		const Point3D& p1,
+		const Point3D& p2,
+		const Point3D& p3,
 		int textureId,
 		bool isIntersectable);
 	Line& addLine(const Point3D& start, const Point3D& end, const Color& color);
+	Plane& addPlane(const Vector3D& point, const Vector3D& normal, const Color& color);
 
 	bool isKeyActioned(int keyId, int action);
 private:
@@ -50,6 +52,7 @@ protected:
 	PhysicsSystem physics;
 	BagOf<Object> objects;
 	BagOf<Line> lines;
+	BagOf<Triangle> triangles;
 	MouseInput mouseIn;
 	Renderer renderer;
 private:

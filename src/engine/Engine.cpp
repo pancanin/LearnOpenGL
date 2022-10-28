@@ -8,6 +8,9 @@
 
 #include "../../libs/glm/glm.hpp"
 
+#include "models/Object.h"
+#include "models/Plane.h"
+
 void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
 
 void Engine::init()
@@ -81,6 +84,10 @@ void Engine::start()
 			renderer.render(cam, object);
 		}
 
+		for (auto& triangle : triangles.data) {
+			renderer.render(cam, triangle);
+		}
+
 		window.swapBuffers();
 		graphics.pollEvents();
 
@@ -152,18 +159,27 @@ Object& Engine::addCube(const Point3D& position, const Vector3D& scaleFactor, in
 	return addObject(ObjectType::CUBE, position, scaleFactor, Vector3D(0.0f), 0.0f, textureId, isIntersectable);
 }
 
-Object& Engine::addTriangle(
-	const Point3D& position,
-	const Vector3D& scaleFactor,
-	const Vector3D& rotationAxis,
-	float rotationAngle,
+Triangle& Engine::addTriangle(
+	const Point3D& p1,
+	const Point3D& p2,
+	const Point3D& p3,
 	int textureId,
 	bool isIntersectable)
 {
-	return addObject(ObjectType::TRIANGLE, position, scaleFactor, rotationAxis, rotationAngle, textureId, isIntersectable);
+	return triangles.add(Triangle(p1, p2, p3, Vector3D(1.0f), textureId, defaultObjectShader));
 }
 
 Line& Engine::addLine(const Point3D& start, const Point3D& end, const Color& color)
 {
 	return lines.add(Line(start, end, color));
+}
+
+Plane& Engine::addPlane(const Vector3D& point, const Vector3D& normal, const Color& color)
+{
+	Vector3D p2 = glm::cross(point, normal);
+	Vector3D p3 = glm::cross(p2 - point, normal);
+	Vector3D p4 = p2 + p3;
+
+	Plane p;
+	return p;
 }

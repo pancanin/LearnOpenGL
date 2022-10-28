@@ -1,5 +1,7 @@
 #include "Chistkata.h"
 
+#include "../../src/engine/models/Line.h"
+
 void Chistkata::onStart()
 {
 	loadTexture(GL_TEXTURE0, "assets/container.jpg");
@@ -20,6 +22,11 @@ void Chistkata::onStart()
 		180.0f,
 		2,
 		true);
+	addLine(
+		Vector3D(0.0f, 0.0f, 0.0f),
+		Vector3D(1.0f, 1.0f, 0.0f),
+		Color(1.0f, 0.0f, 0.0f, 1.0f)
+	);
 }
 
 void Chistkata::onUpdate()
