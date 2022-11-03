@@ -203,6 +203,7 @@
     <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
     <ClInclude Include="src\opengl\ebo\ElementBufferObject.h" />
     <ClInclude Include="src\opengl\models\LineVertex.h" />
+    <ClInclude Include="src\opengl\models\TriangleVertex.h" />
     <ClInclude Include="src\opengl\models\Vertex.h" />
     <ClInclude Include="src\opengl\shader\ShaderProgram.h" />
     <ClInclude Include="src\opengl\texture\TextureComponent.h" />
@@ -225,6 +226,7 @@
     <None Include="src\engine\shaders\simple_vertex.glsl" />
     <None Include="src\engine\shaders\texture_fragment.glsl" />
     <None Include="src\engine\shaders\texture_vertex.glsl" />
+    <None Include="src\engine\shaders\triangle_vertex_shader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

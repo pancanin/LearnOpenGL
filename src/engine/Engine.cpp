@@ -3,6 +3,7 @@
 #include <functional>
 #include <chrono>
 #include <thread>
+#include <limits>
 
 #include <GLFW/glfw3.h>
 
@@ -49,7 +50,12 @@ void Engine::init()
 	defaultObjectShader->attachVertexShader("src/engine/shaders/default_vertex");
 	defaultObjectShader->attachFragmentShader("src/engine/shaders/default_fragment");
 	defaultObjectShader->link();
-	defaultObjectShader->use();
+
+	defaultTriangleShader = std::make_shared<ShaderProgram>();
+	defaultTriangleShader->init();
+	defaultTriangleShader->attachVertexShader("src/engine/shaders/triangle_vertex_shader");
+	defaultTriangleShader->attachFragmentShader("src/engine/shaders/default_fragment");
+	defaultTriangleShader->link();
 }
 
 void Engine::start()
@@ -109,18 +115,6 @@ void Engine::processInput()
 {
 	if (isKeyActioned(GLFW_KEY_ESCAPE, GLFW_PRESS))
 		window.close();
-	/*else if (isKeyActioned(GLFW_KEY_W, GLFW_PRESS)) {
-		cam.moveForward();
-	}
-	else if (isKeyActioned(GLFW_KEY_S, GLFW_PRESS)) {
-		cam.moveBackward();
-	}
-	else if (isKeyActioned(GLFW_KEY_A, GLFW_PRESS)) {
-		cam.moveLeft();
-	}
-	else if (isKeyActioned(GLFW_KEY_D, GLFW_PRESS)) {
-		cam.moveRight();
-	}*/
 }
 
 void Engine::loadTexture(int textureId, const std::string& pathToTexture)
@@ -184,7 +178,12 @@ Triangle& Engine::addTriangle(
 	int textureId,
 	bool isIntersectable)
 {
-	return triangles.add(Triangle(p1, p2, p3, Vector3D(1.0f), textureId, defaultObjectShader));
+	return addTriangle(p1, p2, p3, Vector3D(1.0f), textureId, isIntersectable);
+}
+
+Triangle& Engine::addTriangle(const Point3D& p1, const Point3D& p2, const Point3D& p3, const Vector3D& scale, int textureId, bool isIntersectable)
+{
+	return triangles.add(Triangle(p1, p2, p3, scale, textureId, defaultTriangleShader));
 }
 
 Line& Engine::addLine(const Point3D& start, const Point3D& end, const Color& color)

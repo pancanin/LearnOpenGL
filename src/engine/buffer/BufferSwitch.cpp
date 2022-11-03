@@ -1,11 +1,14 @@
 #include "BufferSwitch.h"
 
+#include "../../opengl/models/TriangleVertex.h"
+
 void BufferSwitch::init()
 {
 	std::vector<VertexAttribute> attributes = {
-		VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 },
-		VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) / sizeof(float) },
-		VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) / sizeof(float) }
+		VertexAttribute{ 0, sizeof(TriangleVertex::position) / sizeof(float), sizeof(TriangleVertex) / sizeof(float), 0 },
+		VertexAttribute{ 1, sizeof(TriangleVertex::normal) / sizeof(float), sizeof(TriangleVertex) / sizeof(float), offsetof(TriangleVertex, TriangleVertex::normal) / sizeof(float) },
+		VertexAttribute{ 2, sizeof(TriangleVertex::textureCoords) / sizeof(float), sizeof(TriangleVertex) / sizeof(float), offsetof(TriangleVertex, TriangleVertex::textureCoords) / sizeof(float) },
+		VertexAttribute{ 3, sizeof(TriangleVertex::idx) / sizeof(float), sizeof(TriangleVertex) / sizeof(float), offsetof(TriangleVertex, TriangleVertex::idx) / sizeof(float) }
 	};
 
 	triangleSerialiserPtr = std::make_shared<TriangleBufferSerialiser>();

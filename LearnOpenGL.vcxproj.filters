@@ -209,6 +209,9 @@
     <ClInclude Include="src\engine\models\Plane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\opengl\models\TriangleVertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -225,5 +228,6 @@
     <None Include="src\engine\shaders\default_fragment.glsl" />
     <None Include="src\engine\shaders\line_fragment_shader.glsl" />
     <None Include="src\engine\shaders\line_vertex_shader.glsl" />
+    <None Include="src\engine\shaders\triangle_vertex_shader.glsl" />
   </ItemGroup>
 </Project>

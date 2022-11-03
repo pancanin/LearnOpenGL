@@ -63,11 +63,23 @@ void Renderer::render(const Camera& camera, const Line& line)
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
 }
 
-void Renderer::render(const Camera& cam, const Triangle& triangle)
+void Renderer::render(const Camera& camera, const Triangle& triangle)
 {
 	triangle.shader->use();
 
 	std::shared_ptr<BufferSerialiser> bufferSerPtr = bufferSwitch.switchBuffer(ObjectType::TRIANGLE);
 
+	auto model = glm::mat4(1.0f);
 
+	model = glm::scale(model, triangle.scale);
+	triangle.shader->setUniformMat4("model", model);
+	triangle.shader->setUniformMat4("projection", camera.getProjection());
+	triangle.shader->setUniformMat4("view", camera.getView());
+	triangle.shader->setInt("dtexture", triangle.textureUnit);
+
+	triangle.shader->setUniformVec3("v1pos", triangle.p1);
+	triangle.shader->setUniformVec3("v2pos", triangle.p2);
+	triangle.shader->setUniformVec3("v3pos", triangle.p3);
+
+	glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
 }

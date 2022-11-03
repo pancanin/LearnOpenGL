@@ -41,6 +41,13 @@ protected:
 		const Point3D& p3,
 		int textureId,
 		bool isIntersectable);
+	Triangle& addTriangle(
+		const Point3D& p1,
+		const Point3D& p2,
+		const Point3D& p3,
+		const Vector3D& scale,
+		int textureId,
+		bool isIntersectable);
 	Line& addLine(const Point3D& start, const Point3D& end, const Color& color);
 	Plane& addPlane(const Vector3D& point, const Vector3D& normal, const Color& color);
 	
@@ -59,6 +66,7 @@ protected:
 private:
 	std::vector<TextureComponent> textures;
 	std::shared_ptr<ShaderProgram> defaultObjectShader;
+	std::shared_ptr<ShaderProgram> defaultTriangleShader;
 	int fps = 60;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
