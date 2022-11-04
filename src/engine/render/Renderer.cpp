@@ -101,8 +101,8 @@ void Renderer::render(const Camera& camera, const Rect& rect)
 
 	rect.shader->setUniformVec3("v1pos", rect.p1);
 	rect.shader->setUniformVec3("v2pos", rect.p2);
-	rect.shader->setUniformVec3("p3pos", rect.p3);
-	rect.shader->setUniformVec3("p4pos", rect.p4);
+	rect.shader->setUniformVec3("v3pos", rect.p3);
+	rect.shader->setUniformVec3("v4pos", rect.p4);
 
 	glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
 }
