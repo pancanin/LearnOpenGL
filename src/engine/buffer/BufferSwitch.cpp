@@ -29,7 +29,6 @@ void BufferSwitch::init()
 
 	std::vector<VertexAttribute> lineAttrs = {
 		VertexAttribute{ 0, sizeof(LineVertex::position) / sizeof(float), sizeof(LineVertex) / sizeof(float), 0 },
-		VertexAttribute{ 1, sizeof(LineVertex::isEnd) / sizeof(float), sizeof(LineVertex) / sizeof(float), offsetof(LineVertex, LineVertex::isEnd) / sizeof(float) },
 	};
 
 	lineSerialiserPtr = std::make_shared<LineBufferSerialiser>();

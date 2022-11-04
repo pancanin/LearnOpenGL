@@ -52,9 +52,10 @@ void Renderer::render(const Camera& camera, const Line& line)
 	startLineModel = glm::translate(startLineModel, line.start);
 	lineShaderProgramPtr->setUniformMat4("lineStart", startLineModel);
 
-	auto endLineModel = glm::mat4(1.0f);
-	endLineModel = glm::translate(endLineModel, line.end);
-	lineShaderProgramPtr->setUniformMat4("lineEnd", endLineModel);
+	auto direction = glm::mat4(1.0f);
+	direction = glm::translate(direction, line.direction);
+	direction = glm::scale(direction, glm::vec3(10.0f, 10.0f, 25.0f));
+	lineShaderProgramPtr->setUniformMat4("direction", direction);
 
 	lineShaderProgramPtr->setUniformMat4("projection", camera.getProjection());
 	lineShaderProgramPtr->setUniformMat4("view", camera.getView());

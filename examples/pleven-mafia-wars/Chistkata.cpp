@@ -26,7 +26,7 @@ void Chistkata::onStart()
 
 	addLine(
 		Vector3D(0.0f, 0.0f, 0.0f),
-		Vector3D(1.0f, 1.0f, 0.0f),
+		Vector3D(0.0f, 0.0f, -1.0f),
 		Color(1.0f, 0.0f, 0.0f, 1.0f)
 	);
 }
@@ -84,7 +84,7 @@ void Chistkata::updateLaserPos()
 {
 	if (laserBeam != nullptr) {
 		laserBeam->start = cam.getPosition() + Vector3D(0.0f, -0.2f, 0.0f);
-		laserBeam->end = cam.getPosition() + cam.getFront() * 1000.0f;
+		laserBeam->direction = cam.getPosition() + cam.getFront() * 1000.0f;
 	}
 }
 
