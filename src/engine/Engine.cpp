@@ -36,6 +36,8 @@ void Engine::init()
 
 	objects.init(100);
 	lines.init(100);
+	triangles.init(100);
+	rects.init(100);
 
 	mouseIn.init(
 		window,
@@ -51,11 +53,11 @@ void Engine::init()
 	defaultObjectShader->attachFragmentShader("src/engine/shaders/default_fragment");
 	defaultObjectShader->link();
 
-	defaultTriangleShader = std::make_shared<ShaderProgram>();
-	defaultTriangleShader->init();
-	defaultTriangleShader->attachVertexShader("src/engine/shaders/triangle_vertex_shader");
-	defaultTriangleShader->attachFragmentShader("src/engine/shaders/default_fragment");
-	defaultTriangleShader->link();
+	vertexIdxAwareShader = std::make_shared<ShaderProgram>();
+	vertexIdxAwareShader->init();
+	vertexIdxAwareShader->attachVertexShader("src/engine/shaders/vertex_index_aware_vertex_shader");
+	vertexIdxAwareShader->attachFragmentShader("src/engine/shaders/default_fragment");
+	vertexIdxAwareShader->link();
 }
 
 void Engine::start()
@@ -92,6 +94,10 @@ void Engine::start()
 
 		for (auto& triangle : triangles.data) {
 			renderer.render(cam, triangle);
+		}
+
+		for (auto& rect : rects.data) {
+			renderer.render(cam, rect);
 		}
 
 		window.swapBuffers();
@@ -183,7 +189,7 @@ Triangle& Engine::addTriangle(
 
 Triangle& Engine::addTriangle(const Point3D& p1, const Point3D& p2, const Point3D& p3, const Vector3D& scale, int textureId, bool isIntersectable)
 {
-	return triangles.add(Triangle(p1, p2, p3, scale, textureId, defaultTriangleShader));
+	return triangles.add(Triangle(p1, p2, p3, scale, textureId, vertexIdxAwareShader));
 }
 
 Line& Engine::addLine(const Point3D& start, const Point3D& end, const Color& color)
@@ -199,4 +205,9 @@ Plane& Engine::addPlane(const Vector3D& point, const Vector3D& normal, const Col
 
 	Plane p;
 	return p;
+}
+
+Rect& Engine::addRect(const Point3D& p1, const Point3D& p2, const Point3D& p3, const Point3D& p4, const Vector3D& scale, int textureId, bool isIntersectable)
+{
+	return rects.add(Rect(p1, p2, p3, p4, scale, textureId, vertexIdxAwareShader));
 }

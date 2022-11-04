@@ -7,6 +7,7 @@
 #include "../models/Object.h"
 #include "../models/Line.h"
 #include "../models/Triangle.h"
+#include "../models/Rect.h"
 #include "../../opengl/shader/ShaderProgram.h"
 
 void Renderer::init()
@@ -77,9 +78,31 @@ void Renderer::render(const Camera& camera, const Triangle& triangle)
 	triangle.shader->setUniformMat4("view", camera.getView());
 	triangle.shader->setInt("dtexture", triangle.textureUnit);
 
-	triangle.shader->setUniformVec3("v1pos", triangle.p1);
-	triangle.shader->setUniformVec3("v2pos", triangle.p2);
-	triangle.shader->setUniformVec3("v3pos", triangle.p3);
+	triangle.shader->setUniformVec3("triangle.v1", triangle.p1);
+	triangle.shader->setUniformVec3("triangle.v2", triangle.p2);
+	triangle.shader->setUniformVec3("triangle.v3", triangle.p3);
+
+	glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
+}
+
+void Renderer::render(const Camera& camera, const Rect& rect)
+{
+	rect.shader->use();
+
+	std::shared_ptr<BufferSerialiser> bufferSerPtr = bufferSwitch.switchBuffer(ObjectType::RECT);
+
+	auto model = glm::mat4(1.0f);
+
+	model = glm::scale(model, rect.scale);
+	rect.shader->setUniformMat4("model", model);
+	rect.shader->setUniformMat4("projection", camera.getProjection());
+	rect.shader->setUniformMat4("view", camera.getView());
+	rect.shader->setInt("dtexture", rect.textureUnit);
+
+	rect.shader->setUniformVec3("v1pos", rect.p1);
+	rect.shader->setUniformVec3("v2pos", rect.p2);
+	rect.shader->setUniformVec3("p3pos", rect.p3);
+	rect.shader->setUniformVec3("p4pos", rect.p4);
 
 	glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
 }

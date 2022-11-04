@@ -20,5 +20,5 @@ struct Triangle {
 	Vector3D scale;
 	unsigned int textureUnit;
 	std::shared_ptr<ShaderProgram> shader;
-	bool intersectible = true;
+	bool intersectible = true; // This should come from the constructor
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "../../../libs/glm/glm.hpp"
 
 typedef glm::vec3 Point3D;

@@ -159,7 +159,6 @@
     <ClCompile Include="src\engine\models\serialisation\LineBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\RectBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\TriangleBufferSerialiser.cpp" />
-    <ClCompile Include="src\engine\models\TexturedRect.cpp" />
     <ClCompile Include="src\engine\models\Triangle.cpp" />
     <ClCompile Include="src\engine\render\Renderer.cpp" />
     <ClCompile Include="src\engine\shaders\ShaderLoader.cpp" />
@@ -192,7 +191,6 @@
     <ClInclude Include="src\engine\models\serialisation\LineBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\RectBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\TriangleBufferSerialiser.h" />
-    <ClInclude Include="src\engine\models\TexturedRect.h" />
     <ClInclude Include="src\engine\models\TexturedTriangle.h" />
     <ClInclude Include="src\engine\models\Triangle.h" />
     <ClInclude Include="src\engine\models\TypeDefs.h" />
@@ -203,7 +201,6 @@
     <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
     <ClInclude Include="src\opengl\ebo\ElementBufferObject.h" />
     <ClInclude Include="src\opengl\models\LineVertex.h" />
-    <ClInclude Include="src\opengl\models\TriangleVertex.h" />
     <ClInclude Include="src\opengl\models\Vertex.h" />
     <ClInclude Include="src\opengl\shader\ShaderProgram.h" />
     <ClInclude Include="src\opengl\texture\TextureComponent.h" />
@@ -226,7 +223,7 @@
     <None Include="src\engine\shaders\simple_vertex.glsl" />
     <None Include="src\engine\shaders\texture_fragment.glsl" />
     <None Include="src\engine\shaders\texture_vertex.glsl" />
-    <None Include="src\engine\shaders\triangle_vertex_shader.glsl" />
+    <None Include="src\engine\shaders\vertex_index_aware_vertex_shader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,19 +2,28 @@
 
 #include "../../src/engine/models/Line.h"
 
+// Helper to debug object position
+void printVec(const Vector3D& vec) {
+	using namespace std;
+
+	cout << "x=" << vec.x << ";y=" << vec.y << ";z=" << vec.z << endl;
+}
+
 void Chistkata::onStart()
 {
 	loadTexture(GL_TEXTURE0, "assets/container.jpg");
 	loadTexture(GL_TEXTURE1, "assets/wall.jpg");
 	loadTexture(GL_TEXTURE2, "assets/blue.png");
 
-	addTriangle(
-		glm::vec3(0.0f, 0.0f, -1.0f),
-		Vector3D(-1.0f, 0.0f, 0.0f),
-		Vector3D(1.0f, 0.0f, 0.0f),
-		Vector3D(10.0f),
+	Rect& r = addRect(
+		glm::vec3(-1.0f, 1.0f, 0.0f),
+		Vector3D(1.0f, 1.0f, 0.0f),
+		Vector3D(1.0f, -1.0f, 0.0f),
+		Vector3D(-1.0f, -1.0f, 0.0f),
+		Vector3D(1.0f),
 		0,
 		true);
+
 	addLine(
 		Vector3D(0.0f, 0.0f, 0.0f),
 		Vector3D(1.0f, 1.0f, 0.0f),

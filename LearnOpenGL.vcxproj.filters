@@ -33,9 +33,6 @@
     <ClCompile Include="src\engine\models\Rect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\models\TexturedRect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\models\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -114,9 +111,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\models\Rect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\TexturedRect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\models\TexturedTriangle.h">
@@ -209,9 +203,6 @@
     <ClInclude Include="src\engine\models\Plane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\opengl\models\TriangleVertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -228,6 +219,6 @@
     <None Include="src\engine\shaders\default_fragment.glsl" />
     <None Include="src\engine\shaders\line_fragment_shader.glsl" />
     <None Include="src\engine\shaders\line_vertex_shader.glsl" />
-    <None Include="src\engine\shaders\triangle_vertex_shader.glsl" />
+    <None Include="src\engine\shaders\vertex_index_aware_vertex_shader.glsl" />
   </ItemGroup>
 </Project>

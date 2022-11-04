@@ -50,6 +50,14 @@ protected:
 		bool isIntersectable);
 	Line& addLine(const Point3D& start, const Point3D& end, const Color& color);
 	Plane& addPlane(const Vector3D& point, const Vector3D& normal, const Color& color);
+	Rect& addRect(
+		const Point3D& p1,
+		const Point3D& p2,
+		const Point3D& p3,
+		const Point3D& p4,
+		const Vector3D& scale,
+		int textureId,
+		bool isIntersectable);
 	
 	bool isKeyActioned(int keyId, int action);
 private:
@@ -61,12 +69,13 @@ protected:
 	BagOf<Object> objects;
 	BagOf<Line> lines;
 	BagOf<Triangle> triangles;
+	BagOf<Rect> rects;
 	MouseInput mouseIn;
 	Renderer renderer;
 private:
 	std::vector<TextureComponent> textures;
 	std::shared_ptr<ShaderProgram> defaultObjectShader;
-	std::shared_ptr<ShaderProgram> defaultTriangleShader;
+	std::shared_ptr<ShaderProgram> vertexIdxAwareShader;
 	int fps = 60;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
