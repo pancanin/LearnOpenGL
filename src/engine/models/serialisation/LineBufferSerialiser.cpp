@@ -4,7 +4,7 @@ float* LineBufferSerialiser::serialise() const
 {
 	return new float[floatsPerLine] {
 		0.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 1.0f
+		0.0f, 0.0f, 0.0f
 	};
 }
 

@@ -26,7 +26,7 @@ void Chistkata::onStart()
 
 	addLine(
 		Vector3D(0.0f, 0.0f, 0.0f),
-		Vector3D(0.0f, 0.0f, -1.0f),
+		Vector3D(0.0f, 0.0f, 1.0f),
 		Color(1.0f, 0.0f, 0.0f, 1.0f)
 	);
 }

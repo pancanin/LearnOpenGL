@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+#include <limits>
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -53,8 +55,8 @@ void Renderer::render(const Camera& camera, const Line& line)
 	lineShaderProgramPtr->setUniformMat4("lineStart", startLineModel);
 
 	auto direction = glm::mat4(1.0f);
-	direction = glm::translate(direction, line.direction);
-	direction = glm::scale(direction, glm::vec3(10.0f, 10.0f, 25.0f));
+	float farPlane = 100.0f;
+	direction = glm::translate(direction, line.direction * farPlane);
 	lineShaderProgramPtr->setUniformMat4("direction", direction);
 
 	lineShaderProgramPtr->setUniformMat4("projection", camera.getProjection());

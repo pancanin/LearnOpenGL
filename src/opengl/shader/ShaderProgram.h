@@ -14,6 +14,7 @@
 * We can load the shaders into the program and link them.
 * Later when we need to use/activate the shaders we call use(). That way we can toggle between shader sets.
 */
+// TODO: We can create Shader Objects from each phase and reuse compiled shader programs.
 class ShaderProgram
 {
 public:

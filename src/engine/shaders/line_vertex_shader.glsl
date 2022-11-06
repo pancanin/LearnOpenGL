@@ -12,13 +12,17 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform vec4 color;
 
+vec4 calcPos(mat4 localPos) {
+	return projection * view * localPos * vec4(aPos, 1.0);
+}
+
 void main()
 {
   Color = color;
 
 	if (0 == gl_VertexID) {
-		gl_Position = projection * view * lineStart * vec4(aPos, 1.0);
+		gl_Position = calcPos(lineStart);
 	} else {
-		gl_Position = projection * view * direction * vec4(aPos, 1.0);
+		gl_Position = calcPos(direction);
 	}
 }
