@@ -35,6 +35,12 @@ void BufferSwitch::init()
 	lineBufferConfigurer.init(lineAttrs, lineSerialiserPtr);
 	lineBufferConfigurer.activate();
 	lineBufferConfigurer.loadBuffer();
+
+	pointSerialiserPtr = std::make_shared<PointBufferSerialiser>();
+	// Reusing lineAttrs here but this might break if Line attributes change.
+	pointBufferConfigurer.init(lineAttrs, pointSerialiserPtr);
+	pointBufferConfigurer.activate();
+	pointBufferConfigurer.loadBuffer();
 }
 
 std::shared_ptr<BufferSerialiser> BufferSwitch::switchBuffer(ObjectType type)
@@ -52,6 +58,9 @@ std::shared_ptr<BufferSerialiser> BufferSwitch::switchBuffer(ObjectType type)
 	case ObjectType::LINE:
 		lineBufferConfigurer.activate();
 		return lineSerialiserPtr;
+	case ObjectType::POINT:
+		pointBufferConfigurer.activate();
+		return pointSerialiserPtr;
 	}
 
 	return nullptr;

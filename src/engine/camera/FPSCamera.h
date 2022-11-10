@@ -27,7 +27,7 @@ protected:
 	float yaw{};
 	float pitch{};
 	float sensitivity = 0.1f;
-	float cameraSpeed = 0.04f;
+	float cameraSpeed = 0.01f;
 	bool firstMouseEnter = true;
 
 	void calculateView();

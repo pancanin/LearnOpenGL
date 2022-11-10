@@ -10,6 +10,7 @@
 #include "../models/Line.h"
 #include "../models/Triangle.h"
 #include "../models/Rect.h"
+#include "../models/Point.h"
 #include "../../opengl/shader/ShaderProgram.h"
 
 void Renderer::init()
@@ -108,4 +109,23 @@ void Renderer::render(const Camera& camera, const Rect& rect)
 	rect.shader->setUniformVec3("v4pos", rect.p4);
 
 	glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
+}
+
+void Renderer::render(const Camera& camera, const Point& point)
+{
+	point.shader->use();
+
+	std::shared_ptr<BufferSerialiser> bufferSerPtr = bufferSwitch.switchBuffer(ObjectType::POINT);
+
+	auto model = glm::mat4(1.0f);
+
+	model = glm::translate(model, point.position);
+	point.shader->setUniformMat4("model", model);
+	point.shader->setUniformMat4("projection", camera.getProjection());
+	point.shader->setUniformMat4("view", camera.getView());
+
+	point.shader->setUniformVec4("color", point.color);
+	point.shader->setUniformF("size", point.size);
+
+	glDrawElements(GL_POINTS, 1, GL_UNSIGNED_INT, 0);
 }

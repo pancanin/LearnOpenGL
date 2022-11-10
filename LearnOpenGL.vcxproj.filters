@@ -96,6 +96,9 @@
     <ClCompile Include="src\engine\render\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\models\serialisation\PointBufferSerialiser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -203,6 +206,12 @@
     <ClInclude Include="src\engine\models\Plane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\engine\models\Point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\models\serialisation\PointBufferSerialiser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -220,5 +229,7 @@
     <None Include="src\engine\shaders\line_fragment_shader.glsl" />
     <None Include="src\engine\shaders\line_vertex_shader.glsl" />
     <None Include="src\engine\shaders\vertex_index_aware_vertex_shader.glsl" />
+    <None Include="src\engine\shaders\point_fs.glsl" />
+    <None Include="src\engine\shaders\point_vs.glsl" />
   </ItemGroup>
 </Project>

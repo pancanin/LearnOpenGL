@@ -4,5 +4,6 @@ enum class ObjectType {
 	TRIANGLE,
 	RECT,
 	CUBE,
-	LINE
+	LINE,
+	POINT
 };

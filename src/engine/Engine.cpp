@@ -20,7 +20,7 @@ void Engine::init()
 	// Some defaults here to simplify the API, but these should be configurable.
 	float width = 800;
 	float height = 600;
-	cam.init(glm::radians(45.0f), width / height, 0.1f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f), width, height);
+	cam.init(glm::radians(45.0f), width / height, 0.001f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f), width, height);
 
 	window.init(width, height, "Chistkata FPS Game!", Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
@@ -38,6 +38,7 @@ void Engine::init()
 	lines.init(100);
 	triangles.init(100);
 	rects.init(100);
+	points.init(100);
 
 	mouseIn.init(
 		window,
@@ -58,6 +59,12 @@ void Engine::init()
 	vertexIdxAwareShader->attachVertexShader("src/engine/shaders/vertex_index_aware_vertex_shader");
 	vertexIdxAwareShader->attachFragmentShader("src/engine/shaders/default_fragment");
 	vertexIdxAwareShader->link();
+
+	pointShader = std::make_shared<ShaderProgram>();
+	pointShader->init();
+	pointShader->attachVertexShader("src/engine/shaders/point_vs");
+	pointShader->attachFragmentShader("src/engine/shaders/point_fs");
+	pointShader->link();
 }
 
 void Engine::start()
@@ -67,6 +74,7 @@ void Engine::start()
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
+	glEnable(GL_PROGRAM_POINT_SIZE);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -98,6 +106,10 @@ void Engine::start()
 
 		for (auto& rect : rects.data) {
 			renderer.render(cam, rect);
+		}
+
+		for (auto& point : points.data) {
+			renderer.render(cam, point);
 		}
 
 		window.swapBuffers();
@@ -210,4 +222,9 @@ Plane& Engine::addPlane(const Vector3D& point, const Vector3D& normal, const Col
 Rect& Engine::addRect(const Point3D& p1, const Point3D& p2, const Point3D& p3, const Point3D& p4, const Vector3D& scale, int textureId, bool isIntersectable)
 {
 	return rects.add(Rect(p1, p2, p3, p4, scale, textureId, vertexIdxAwareShader));
+}
+
+Point& Engine::addPoint(const Point3D& position, const Color& color, float size)
+{
+	return points.add(Point(position, color, size, pointShader));
 }

@@ -16,6 +16,7 @@
 #include "models/Object.h"
 #include "models/Triangle.h"
 #include "models/Rect.h"
+#include "models/Point.h"
 
 struct GLFWwindow;
 struct Plane;
@@ -58,6 +59,7 @@ protected:
 		const Vector3D& scale,
 		int textureId,
 		bool isIntersectable);
+	Point& addPoint(const Point3D& position, const Color&, float size);
 	
 	bool isKeyActioned(int keyId, int action);
 private:
@@ -70,12 +72,14 @@ protected:
 	BagOf<Line> lines;
 	BagOf<Triangle> triangles;
 	BagOf<Rect> rects;
+	BagOf<Point> points;
 	MouseInput mouseIn;
 	Renderer renderer;
 private:
 	std::vector<TextureComponent> textures;
 	std::shared_ptr<ShaderProgram> defaultObjectShader;
 	std::shared_ptr<ShaderProgram> vertexIdxAwareShader;
+	std::shared_ptr<ShaderProgram> pointShader;
 	int fps = 60;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);

@@ -157,6 +157,7 @@
     <ClCompile Include="src\engine\models\Rect.cpp" />
     <ClCompile Include="src\engine\models\serialisation\CubeBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\LineBufferSerialiser.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\PointBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\RectBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\TriangleBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\Triangle.cpp" />
@@ -186,9 +187,11 @@
     <ClInclude Include="src\engine\models\Object.h" />
     <ClInclude Include="src\engine\models\ObjectType.h" />
     <ClInclude Include="src\engine\models\Plane.h" />
+    <ClInclude Include="src\engine\models\Point.h" />
     <ClInclude Include="src\engine\models\Rect.h" />
     <ClInclude Include="src\engine\models\serialisation\CubeBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\LineBufferSerialiser.h" />
+    <ClInclude Include="src\engine\models\serialisation\PointBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\RectBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\serialisation\TriangleBufferSerialiser.h" />
     <ClInclude Include="src\engine\models\TexturedTriangle.h" />
@@ -218,6 +221,8 @@
     <None Include="src\engine\shaders\line_fragment_shader.glsl" />
     <None Include="src\engine\shaders\line_vertex_shader.glsl" />
     <None Include="src\engine\shaders\model_fragment.glsl" />
+    <None Include="src\engine\shaders\point_fs.glsl" />
+    <None Include="src\engine\shaders\point_vs.glsl" />
     <None Include="src\engine\shaders\shined_upon.glsl" />
     <None Include="src\engine\shaders\simple_fragment.glsl" />
     <None Include="src\engine\shaders\simple_vertex.glsl" />

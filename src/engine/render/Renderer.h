@@ -9,6 +9,7 @@ struct Object;
 struct Line;
 struct Triangle;
 struct Rect;
+struct Point;
 struct ShaderProgram;
 
 class Renderer {
@@ -20,6 +21,7 @@ public:
 	void render(const Camera&, const Line&);
 	void render(const Camera&, const Triangle&);
 	void render(const Camera&, const Rect&);
+	void render(const Camera&, const Point&);
 private:
 	BufferSwitch bufferSwitch;
 	std::shared_ptr<ShaderProgram> lineShaderProgramPtr;
