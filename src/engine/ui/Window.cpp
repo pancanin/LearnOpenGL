@@ -81,6 +81,11 @@ void Window::registerScrollCallback(void* callback)
 	glfwSetScrollCallback(window, static_cast<GLFWscrollfun>(callback));
 }
 
+void Window::registerKeyCallback(void* callback)
+{
+	glfwSetKeyCallback(window, static_cast<GLFWkeyfun>(callback));
+}
+
 void Window::deinit() const
 {
 	if (window != nullptr) {

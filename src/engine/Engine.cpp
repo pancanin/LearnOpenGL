@@ -11,16 +11,15 @@
 
 #include "models/Object.h"
 #include "models/Plane.h"
+#include "camera/Camera.h"
 
 void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
+void key_callback(Engine&, GLFWwindow*, int key, int scancode, int action, int mods);
 
 void Engine::init()
 {
 	graphics.init();
-	// Some defaults here to simplify the API, but these should be configurable.
-	float width = 800;
-	float height = 600;
-	cam.init(glm::radians(45.0f), width / height, 0.001f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f), width, height);
+	configureStandardCamera();
 
 	window.init(width, height, "Chistkata FPS Game!", Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
@@ -44,6 +43,13 @@ void Engine::init()
 		window,
 		std::bind(&Engine::onMouseMove, this, std::placeholders::_1, std::placeholders::_2),
 		std::bind(&Engine::onMouseClick, this, std::placeholders::_1, std::placeholders::_2)
+	);
+
+	window.registerKeyCallback(
+		std::bind(key_callback, this, window.getRaw(), std::placeholders::_1,
+			std::placeholders::_2,
+			std::placeholders::_3,
+			std::placeholders::_4)
 	);
 
 	renderer.init();
@@ -93,23 +99,23 @@ void Engine::start()
 		onUpdate();
 
 		for (auto& line : lines.data) {
-			renderer.render(cam, line);
+			renderer.render(*cam, line);
 		}
 
 		for (auto& object : objects.data) {
-			renderer.render(cam, object);
+			renderer.render(*cam, object);
 		}
 
 		for (auto& triangle : triangles.data) {
-			renderer.render(cam, triangle);
+			renderer.render(*cam, triangle);
 		}
 
 		for (auto& rect : rects.data) {
-			renderer.render(cam, rect);
+			renderer.render(*cam, rect);
 		}
 
 		for (auto& point : points.data) {
-			renderer.render(cam, point);
+			renderer.render(*cam, point);
 		}
 
 		window.swapBuffers();
@@ -131,8 +137,28 @@ bool Engine::isKeyActioned(int keyId, int action)
 
 void Engine::processInput()
 {
+	if (isFPSCamera) {
+		auto fpsCam = static_cast<FPSCamera*>(cam.get());
+
+		if (isKeyActioned(GLFW_KEY_W, GLFW_PRESS))
+			fpsCam->moveForward();
+		else if (isKeyActioned(GLFW_KEY_S, GLFW_PRESS))
+			fpsCam->moveBackward();
+		else if (isKeyActioned(GLFW_KEY_A, GLFW_PRESS))
+			fpsCam->moveLeft();
+		else if (isKeyActioned(GLFW_KEY_D, GLFW_PRESS))
+			fpsCam->moveRight();
+	}
+
 	if (isKeyActioned(GLFW_KEY_ESCAPE, GLFW_PRESS))
 		window.close();
+}
+
+void Engine::onMouseMove(double xpos, double ypos)
+{
+	if (isFPSCamera) {
+		static_cast<FPSCamera*>(cam.get())->onMouseMove(xpos, ypos);
+	}
 }
 
 void Engine::loadTexture(int textureId, const std::string& pathToTexture)
@@ -146,8 +172,19 @@ void Engine::loadTexture(int textureId, const std::string& pathToTexture)
 
 void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos)
 {
-	engine.cam.onMouseMove(xpos, ypos);
+	if (engine.isFPSCamera) {
+		static_cast<FPSCamera*>(engine.cam.get())->onMouseMove(xpos, ypos);
+	}
+
 	engine.onMouseMove(xpos, ypos);
+}
+
+void key_callback(Engine& engine, GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_C && action == GLFW_RELEASE) {
+		std::cout << "Key released!" << std::endl;
+		engine.toggleCamera();
+	}
 }
 
 Object& Engine::addObject(
@@ -182,6 +219,36 @@ Object& Engine::addObject(ObjectType type, const Point3D& position, const Vector
 	object.shader = defaultObjectShader;
 
 	return objects.add(object);
+}
+
+void Engine::configureStandardCamera()
+{
+	cam = std::make_shared<Camera>();
+
+	// Configured with some standard parameters
+	// For now we will reset the position of the camera
+	cam->init(glm::radians(45.0f), width / height, 0.01f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f));
+}
+
+void Engine::configureFPSCamera()
+{
+	cam = std::make_shared<FPSCamera>();
+
+	// Configured with some standard parameters
+	// For now we will reset the position of the camera
+	cam->init(glm::radians(45.0f), width / height, 0.01f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f));
+}
+
+void Engine::toggleCamera()
+{
+	if (isFPSCamera) {
+		configureStandardCamera();
+	}
+	else {
+		configureFPSCamera();
+	}
+
+	isFPSCamera = !isFPSCamera;
 }
 
 Object& Engine::addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable)

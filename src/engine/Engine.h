@@ -31,7 +31,7 @@ protected:
 	virtual void onStop() = 0;
 
 	virtual void processInput();
-	virtual void onMouseMove(double xpos, double ypos) = 0;
+	virtual void onMouseMove(double xpos, double ypos);
 	virtual void onMouseClick(int button, int action) = 0;
 
 	void loadTexture(int textureId, const std::string& pathToTexture);
@@ -65,7 +65,7 @@ protected:
 private:
 	Graphics graphics;
 protected:
-	FPSCamera cam;
+	std::shared_ptr<Camera> cam;
 	Window window;
 	PhysicsSystem physics;
 	BagOf<Object> objects;
@@ -75,14 +75,18 @@ protected:
 	BagOf<Point> points;
 	MouseInput mouseIn;
 	Renderer renderer;
+	float width = 800;
+	float height = 600;
 private:
 	std::vector<TextureComponent> textures;
 	std::shared_ptr<ShaderProgram> defaultObjectShader;
 	std::shared_ptr<ShaderProgram> vertexIdxAwareShader;
 	std::shared_ptr<ShaderProgram> pointShader;
 	int fps = 60;
+	bool isFPSCamera = false;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
+	friend void key_callback(Engine&, GLFWwindow*, int key, int scancode, int action, int mods);
 
 	Object& addObject(
 		ObjectType type,
@@ -102,4 +106,8 @@ private:
 		float rotationAngle,
 		int textureId,
 		bool isIntersectable);
+
+	void configureStandardCamera();
+	void configureFPSCamera();
+	void toggleCamera();
 };
