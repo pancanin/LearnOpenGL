@@ -84,7 +84,7 @@ private:
 	std::shared_ptr<ShaderProgram> vertexIdxAwareShader;
 	std::shared_ptr<ShaderProgram> pointShader;
 	int fps = 60;
-	bool isFPSCamera = false;
+	bool isFPSCamera = true;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
 	friend void key_callback(Engine&, GLFWwindow*, int key, int scancode, int action, int mods);

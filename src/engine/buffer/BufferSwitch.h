@@ -17,18 +17,7 @@ public:
 
 	std::shared_ptr<BufferSerialiser> switchBuffer(ObjectType type);
 private:
-	const static uint32_t objectTypesCount = 4;
+	const static uint32_t objectTypesCount = 5;
 	BufferConfigurer configurations[objectTypesCount];
 	std::shared_ptr<BufferSerialiser> serialisers[objectTypesCount];
-
-	BufferConfigurer triangleBufferConfig;
-	BufferConfigurer rectBufferConfig;
-	BufferConfigurer cubeBufferConfigurer;
-	BufferConfigurer lineBufferConfigurer;
-	BufferConfigurer pointBufferConfigurer;
-	std::shared_ptr<TriangleBufferSerialiser> triangleSerialiserPtr;
-	std::shared_ptr<RectBufferSerialiser> rectSerialiserPtr;
-	std::shared_ptr<CubeBufferSerialiser> cubeSerialiserPtr;
-	std::shared_ptr<LineBufferSerialiser> lineSerialiserPtr;
-	std::shared_ptr<PointBufferSerialiser> pointSerialiserPtr;
 };

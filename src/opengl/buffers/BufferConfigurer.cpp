@@ -1,6 +1,6 @@
 #include "BufferConfigurer.h"
 
-BufferConfigurer& BufferConfigurer::init(
+void BufferConfigurer::init(
 	std::shared_ptr<BufferSerialiser> serialisation
 ) {
 	this->serialisation = serialisation;
@@ -14,16 +14,17 @@ BufferConfigurer& BufferConfigurer::init(
 		this->vao.addAttribute(attr);
 	}
 
+	activate();
 	loadBuffer();
 }
 
-BufferConfigurer& BufferConfigurer::activate() {
+void BufferConfigurer::activate() {
 	this->vao.bind();
 	this->vbo.bind();
 	this->ebo.bind();
 }
 
-BufferConfigurer& BufferConfigurer::loadBuffer() {
+void BufferConfigurer::loadBuffer() {
 	float* buffer = serialisation->serialise();
 	vbo.fillBuffer(buffer, serialisation->size());
 	delete[] buffer;
@@ -33,7 +34,7 @@ BufferConfigurer& BufferConfigurer::loadBuffer() {
 	delete[] indices;
 }
 
-BufferConfigurer& BufferConfigurer::deactivate() {
+void BufferConfigurer::deactivate() {
 	this->vbo.unbind(); // TODO: Unbind rest of the buffer objects.
 }
 

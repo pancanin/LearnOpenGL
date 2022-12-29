@@ -1,235 +1,97 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="examples\pleven-mafia-wars\Chistkata.cpp" />
+    <ClCompile Include="glad.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\engine\buffer\BufferSwitch.cpp" />
+    <ClCompile Include="src\engine\camera\Camera.cpp" />
+    <ClCompile Include="src\engine\camera\FPSCamera.cpp" />
+    <ClCompile Include="src\engine\camera\RTSCamera.cpp" />
+    <ClCompile Include="src\engine\core\Graphics.cpp" />
+    <ClCompile Include="src\engine\core\PhysicsSystem.cpp" />
+    <ClCompile Include="src\engine\Engine.cpp" />
+    <ClCompile Include="src\engine\input\KeyboardInput.cpp" />
+    <ClCompile Include="src\engine\input\MouseInput.cpp" />
+    <ClCompile Include="src\engine\lighting\Light.cpp" />
+    <ClCompile Include="src\engine\models\Circle.cpp" />
+    <ClCompile Include="src\engine\models\Rect.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\CubeBufferSerialiser.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\LineBufferSerialiser.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\PointBufferSerialiser.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\RectBufferSerialiser.cpp" />
+    <ClCompile Include="src\engine\models\serialisation\TriangleBufferSerialiser.cpp" />
+    <ClCompile Include="src\engine\models\Triangle.cpp" />
+    <ClCompile Include="src\engine\render\Renderer.cpp" />
+    <ClCompile Include="src\engine\shaders\ShaderLoader.cpp" />
+    <ClCompile Include="src\engine\ui\Window.cpp" />
+    <ClCompile Include="src\opengl\buffers\BufferConfigurer.cpp" />
+    <ClCompile Include="src\opengl\ebo\ElementBufferObject.cpp" />
+    <ClCompile Include="src\opengl\shader\ShaderProgram.cpp" />
+    <ClCompile Include="src\opengl\texture\TextureComponent.cpp" />
+    <ClCompile Include="src\opengl\vao\VertexArrayObject.cpp" />
+    <ClCompile Include="src\opengl\vbo\VertexBufferObject.cpp" />
+    <ClCompile Include="stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stb_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\ui\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\models\Rect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\models\Triangle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\shaders\ShaderLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\vao\VertexArrayObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\vbo\VertexBufferObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\core\Graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\camera\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\camera\FPSCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\shader\ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\input\KeyboardInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\buffers\BufferConfigurer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\models\serialisation\TriangleBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\texture\TextureComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\opengl\ebo\ElementBufferObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\models\serialisation\RectBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\models\serialisation\CubeBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\buffer\BufferSwitch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\models\serialisation\LineBufferSerialiser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\core\PhysicsSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="examples\pleven-mafia-wars\Chistkata.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\input\MouseInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\render\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\models\Circle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\lighting\Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\engine\camera\RTSCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\Engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\ui\Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\ColorTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\Rect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\TexturedTriangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\Triangle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\TypeDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\shaders\ShaderLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\vao\VertexArrayObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\vbo\VertexBufferObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\core\Graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\camera\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\camera\FPSCamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\shader\ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\input\KeyboardInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\buffers\BufferConfigurer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\serialisation\TriangleBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\texture\TextureComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\models\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\Object.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\ObjectType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\ebo\ElementBufferObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\serialisation\RectBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\serialisation\CubeBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\buffer\BufferSwitch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\serialisation\LineBufferSerialiser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\Line.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\opengl\models\LineVertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\core\PhysicsSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="examples\pleven-mafia-wars\Chistkata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\input\MouseInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\storage\BagOf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\render\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\engine\models\Plane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="examples\pleven-mafia-wars\Chistkata.h" />
+    <ClInclude Include="src\engine\buffer\BufferSwitch.h" />
+    <ClInclude Include="src\engine\camera\Camera.h" />
+    <ClInclude Include="src\engine\camera\FPSCamera.h" />
+    <ClInclude Include="src\engine\camera\RTSCamera.h" />
+    <ClInclude Include="src\engine\core\Graphics.h" />
+    <ClInclude Include="src\engine\core\PhysicsSystem.h" />
+    <ClInclude Include="src\engine\Engine.h" />
+    <ClInclude Include="src\engine\input\KeyboardInput.h" />
+    <ClInclude Include="src\engine\input\MouseInput.h" />
+    <ClInclude Include="src\engine\lighting\Light.h" />
+    <ClInclude Include="src\engine\models\Circle.h" />
+    <ClInclude Include="src\engine\models\ColorTriangle.h" />
+    <ClInclude Include="src\engine\models\Line.h" />
+    <ClInclude Include="src\engine\models\Object.h" />
+    <ClInclude Include="src\engine\models\ObjectType.h" />
+    <ClInclude Include="src\engine\models\Plane.h" />
+    <ClInclude Include="src\engine\models\Point.h" />
+    <ClInclude Include="src\engine\models\Rect.h" />
+    <ClInclude Include="src\engine\models\serialisation\CubeBufferSerialiser.h" />
+    <ClInclude Include="src\engine\models\serialisation\LineBufferSerialiser.h" />
+    <ClInclude Include="src\engine\models\serialisation\PointBufferSerialiser.h" />
+    <ClInclude Include="src\engine\models\serialisation\RectBufferSerialiser.h" />
+    <ClInclude Include="src\engine\models\serialisation\TriangleBufferSerialiser.h" />
+    <ClInclude Include="src\engine\models\TexturedTriangle.h" />
+    <ClInclude Include="src\engine\models\Triangle.h" />
+    <ClInclude Include="src\engine\models\TypeDefs.h" />
+    <ClInclude Include="src\engine\render\Renderer.h" />
+    <ClInclude Include="src\engine\shaders\ShaderLoader.h" />
+    <ClInclude Include="src\engine\storage\BagOf.h" />
+    <ClInclude Include="src\engine\ui\Window.h" />
+    <ClInclude Include="src\opengl\buffers\BufferConfigurer.h" />
+    <ClInclude Include="src\opengl\ebo\ElementBufferObject.h" />
+    <ClInclude Include="src\opengl\models\LineVertex.h" />
+    <ClInclude Include="src\opengl\models\Vertex.h" />
+    <ClInclude Include="src\opengl\shader\ShaderProgram.h" />
+    <ClInclude Include="src\opengl\texture\TextureComponent.h" />
+    <ClInclude Include="src\opengl\vao\VertexArrayObject.h" />
+    <ClInclude Include="src\opengl\vbo\VertexBufferObject.h" />
+    <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
     <None Include="src\engine\shaders\color_vertex.glsl" />
+    <None Include="src\engine\shaders\default_fragment.glsl" />
+    <None Include="src\engine\shaders\default_vertex.glsl" />
     <None Include="src\engine\shaders\fragment_2.glsl" />
     <None Include="src\engine\shaders\light_fragment.glsl" />
+    <None Include="src\engine\shaders\line_fragment_shader.glsl" />
+    <None Include="src\engine\shaders\line_vertex_shader.glsl" />
     <None Include="src\engine\shaders\model_fragment.glsl" />
+    <None Include="src\engine\shaders\point_fs.glsl" />
+    <None Include="src\engine\shaders\point_vs.glsl" />
     <None Include="src\engine\shaders\shined_upon.glsl" />
     <None Include="src\engine\shaders\simple_fragment.glsl" />
     <None Include="src\engine\shaders\simple_vertex.glsl" />
     <None Include="src\engine\shaders\texture_fragment.glsl" />
     <None Include="src\engine\shaders\texture_vertex.glsl" />
-    <None Include="src\engine\shaders\default_vertex.glsl" />
-    <None Include="src\engine\shaders\default_fragment.glsl" />
-    <None Include="src\engine\shaders\line_fragment_shader.glsl" />
-    <None Include="src\engine\shaders\line_vertex_shader.glsl" />
     <None Include="src\engine\shaders\vertex_index_aware_vertex_shader.glsl" />
-    <None Include="src\engine\shaders\point_fs.glsl" />
-    <None Include="src\engine\shaders\point_vs.glsl" />
   </ItemGroup>
 </Project>

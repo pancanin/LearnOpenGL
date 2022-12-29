@@ -10,6 +10,9 @@ public:
 	unsigned int vertexCount() const;
 	unsigned int* indices() const;
 	unsigned int indicesCount() const;
+
+	std::vector<VertexAttribute> attributes() const;
+
 private:
 	const unsigned int verticesCount = 1;
 	const unsigned int floatsPerPoint = (sizeof(Point3D) / sizeof(float)) * verticesCount;

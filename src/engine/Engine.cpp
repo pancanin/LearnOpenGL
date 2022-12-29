@@ -19,19 +19,19 @@ void key_callback(Engine&, GLFWwindow*, int key, int scancode, int action, int m
 void Engine::init()
 {
 	graphics.init();
-	configureStandardCamera();
+	
 
 	window.init(width, height, "Chistkata FPS Game!", Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
 	window.disableCursor();
 
-	// glad: load all OpenGL function pointers
-	// ---------------------------------------
 	if (!graphics.loadFunctionDefinitions())
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
+
+	configureFPSCamera();
 
 	objects.init(100);
 	lines.init(100);
@@ -45,12 +45,12 @@ void Engine::init()
 		std::bind(&Engine::onMouseClick, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
-	window.registerKeyCallback(
+	/*window.registerKeyCallback(
 		std::bind(key_callback, this, window.getRaw(), std::placeholders::_1,
 			std::placeholders::_2,
 			std::placeholders::_3,
 			std::placeholders::_4)
-	);
+	);*/
 
 	renderer.init();
 

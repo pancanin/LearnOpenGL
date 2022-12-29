@@ -1,5 +1,7 @@
 #include "PointBufferSerialiser.h"
 
+#include "../../../opengl/models/LineVertex.h"
+
 float* PointBufferSerialiser::serialise() const
 {
 	return new float[] {
@@ -25,4 +27,11 @@ unsigned int* PointBufferSerialiser::indices() const
 unsigned int PointBufferSerialiser::indicesCount() const
 {
 	return numberOfIndices;
+}
+
+std::vector<VertexAttribute> PointBufferSerialiser::attributes() const
+{
+	return {
+		VertexAttribute{ 0, sizeof(LineVertex::position) / sizeof(float), sizeof(LineVertex) / sizeof(float), 0 }
+	};
 }

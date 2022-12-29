@@ -1,6 +1,6 @@
 #include "CubeBufferSerialiser.h"
 
-// TODO: Improve texturing in the case of reused vertices (EBO)
+// TODO: Improve texturing in the case of element vertex objects
 float* CubeBufferSerialiser::serialise() const
 {
 	return new float[floatsPerCube] {

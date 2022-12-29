@@ -2,13 +2,6 @@
 
 #include "../../src/engine/models/Line.h"
 
-// Helper to debug object position
-void printVec(const Vector3D& vec) {
-	using namespace std;
-
-	cout << "x=" << vec.x << ";y=" << vec.y << ";z=" << vec.z << endl;
-}
-
 void Chistkata::onStart()
 {
 	loadTexture(GL_TEXTURE0, "assets/container.jpg");
@@ -24,6 +17,9 @@ void Chistkata::onStart()
 		1,
 		8,
 		true);
+
+	// Does not work 
+	//addCube(Point3D(1.0f, 1.0f, 1.0f), Vector3D(2.0f), 0, true);
 
 	addLine(
 		Vector3D(0.1f, 0.0f, -1.0f),

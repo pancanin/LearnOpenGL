@@ -10,7 +10,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 void MouseInput::init(
 	Window& window,
 	std::function<void(double, double)> handler,
-	std::function<void(int, int)> buttonClickHandler,
+	std::function<void(int, int)> buttonClickHandler
 	// Add the key handler in the mouse input for now...it's not great but maybe this class should handle
 	// more things than just mouse...
 	)

@@ -18,15 +18,15 @@
 class BufferConfigurer
 {
 public:
-	BufferConfigurer& init(
+	void init(
 		std::shared_ptr<BufferSerialiser> serialisation
 	);
 
-	BufferConfigurer& activate();
+	void activate();
 
-	BufferConfigurer& loadBuffer();
+	void loadBuffer();
 
-	BufferConfigurer& deactivate();
+	void deactivate();
 
 	~BufferConfigurer();
 protected:
