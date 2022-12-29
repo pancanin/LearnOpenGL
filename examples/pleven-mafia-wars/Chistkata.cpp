@@ -16,12 +16,13 @@ void Chistkata::onStart()
 	loadTexture(GL_TEXTURE2, "assets/blue.png");
 
 	Rect& r = addRect(
-		glm::vec3(-1.5f, 1.0f, 0.0f),
-		Vector3D(1.0f, 1.0f, 0.0f),
-		Vector3D(1.0f, -1.0f, 0.0f),
-		Vector3D(-1.0f, -1.0f, 0.0f),
-		Vector3D(1.0f),
-		0,
+		Vector3D(-1.0f, -.5f,-1.0f),
+		Vector3D(1.0f, -.5f, -1.0f),
+		Vector3D(1.0f, -.5f, 1.0f),
+		Vector3D(-1.0f, -.5f, 1.0f),
+		Vector3D(3.5f),
+		1,
+		8,
 		true);
 
 	addLine(

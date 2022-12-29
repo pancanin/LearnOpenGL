@@ -58,6 +58,7 @@ protected:
 		const Point3D& p4,
 		const Vector3D& scale,
 		int textureId,
+		uint32_t textureScale,
 		bool isIntersectable);
 	Point& addPoint(const Point3D& position, const Color&, float size);
 	

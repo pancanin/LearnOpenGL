@@ -1,7 +1,6 @@
 #include "BufferConfigurer.h"
 
-void BufferConfigurer::init(
-	std::vector<VertexAttribute> attributes,
+BufferConfigurer& BufferConfigurer::init(
 	std::shared_ptr<BufferSerialiser> serialisation
 ) {
 	this->serialisation = serialisation;
@@ -11,18 +10,20 @@ void BufferConfigurer::init(
 
 	activate();
 
-	for (auto& attr : attributes) {
+	for (auto& attr : serialisation->attributes()) {
 		this->vao.addAttribute(attr);
 	}
+
+	loadBuffer();
 }
 
-void BufferConfigurer::activate() {
+BufferConfigurer& BufferConfigurer::activate() {
 	this->vao.bind();
 	this->vbo.bind();
 	this->ebo.bind();
 }
 
-void BufferConfigurer::loadBuffer() {
+BufferConfigurer& BufferConfigurer::loadBuffer() {
 	float* buffer = serialisation->serialise();
 	vbo.fillBuffer(buffer, serialisation->size());
 	delete[] buffer;
@@ -32,7 +33,7 @@ void BufferConfigurer::loadBuffer() {
 	delete[] indices;
 }
 
-void BufferConfigurer::deactivate() {
+BufferConfigurer& BufferConfigurer::deactivate() {
 	this->vbo.unbind(); // TODO: Unbind rest of the buffer objects.
 }
 

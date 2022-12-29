@@ -103,6 +103,8 @@ void Renderer::render(const Camera& camera, const Rect& rect)
 	rect.shader->setUniformMat4("view", camera.getView());
 	rect.shader->setInt("dtexture", rect.textureUnit);
 
+	rect.shader->setUniformF("textureScale", rect.textureScale);
+
 	rect.shader->setUniformVec3("v1pos", rect.p1);
 	rect.shader->setUniformVec3("v2pos", rect.p2);
 	rect.shader->setUniformVec3("v3pos", rect.p3);

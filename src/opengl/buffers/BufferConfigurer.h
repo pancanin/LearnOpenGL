@@ -18,16 +18,15 @@
 class BufferConfigurer
 {
 public:
-	void init(
-		std::vector<VertexAttribute> attributes,
+	BufferConfigurer& init(
 		std::shared_ptr<BufferSerialiser> serialisation
 	);
 
-	void activate();
+	BufferConfigurer& activate();
 
-	void loadBuffer();
+	BufferConfigurer& loadBuffer();
 
-	void deactivate();
+	BufferConfigurer& deactivate();
 
 	~BufferConfigurer();
 protected:

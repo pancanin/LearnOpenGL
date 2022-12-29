@@ -1,5 +1,10 @@
 #pragma once
 
+#include <vector>
+
+#include "../../../opengl/models/VertexAttribute.h"
+#include "../../../opengl/models/Vertex.h"
+
 class BufferSerialiser {
 public:
 	virtual float* serialise() const = 0;
@@ -13,4 +18,12 @@ public:
 	virtual unsigned int* indices() const = 0;
 
 	virtual unsigned int indicesCount() const = 0;
+
+	virtual std::vector<VertexAttribute> attributes() const {
+		return {
+			VertexAttribute{ 0, sizeof(Vertex::position) / sizeof(float), sizeof(Vertex) / sizeof(float), 0 },
+			VertexAttribute{ 1, sizeof(Vertex::normal) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::normal) / sizeof(float) },
+			VertexAttribute{ 2, sizeof(Vertex::textureCoords) / sizeof(float), sizeof(Vertex) / sizeof(float), offsetof(Vertex, Vertex::textureCoords) / sizeof(float) }
+		};
+	}
 };
