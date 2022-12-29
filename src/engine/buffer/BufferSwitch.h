@@ -10,13 +10,16 @@
 #include "../models/serialisation/CubeBufferSerialiser.h"
 #include "../models/serialisation/LineBufferSerialiser.h"
 
-
 class BufferSwitch {
 public:
 	void init();
 
 	std::shared_ptr<BufferSerialiser> switchBuffer(ObjectType type);
 private:
+	const static uint32_t objectTypesCount = 4;
+	BufferConfigurer configurations[objectTypesCount];
+	std::shared_ptr<BufferSerialiser> serialisers[objectTypesCount];
+
 	BufferConfigurer triangleBufferConfig;
 	BufferConfigurer rectBufferConfig;
 	BufferConfigurer cubeBufferConfigurer;

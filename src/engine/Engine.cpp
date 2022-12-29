@@ -207,7 +207,15 @@ Plane& Engine::addPlane(const Vector3D& point, const Vector3D& normal, const Col
 	return p;
 }
 
-Rect& Engine::addRect(const Point3D& p1, const Point3D& p2, const Point3D& p3, const Point3D& p4, const Vector3D& scale, int textureId, bool isIntersectable)
+Rect& Engine::addRect(
+	const Point3D& p1,
+	const Point3D& p2,
+	const Point3D& p3,
+	const Point3D& p4,
+	const Vector3D& scale,
+	int textureId,
+	uint32_t textureScale,
+	bool isIntersectable)
 {
-	return rects.add(Rect(p1, p2, p3, p4, scale, textureId, vertexIdxAwareShader));
+	return rects.add(Rect(p1, p2, p3, p4, scale, textureId, vertexIdxAwareShader, textureScale));
 }

@@ -57,6 +57,7 @@ protected:
 		const Point3D& p4,
 		const Vector3D& scale,
 		int textureId,
+		uint32_t textureScale,
 		bool isIntersectable);
 	
 	bool isKeyActioned(int keyId, int action);

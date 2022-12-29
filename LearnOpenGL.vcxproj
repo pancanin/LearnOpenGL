@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -78,8 +78,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\libs\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Freeware Sys\source\repos\pancanin\LearnOpenGL\libs;D:\libs\source;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\libs\includes;C:\vslibs\glfw-3.3.7\include;C:\cross-platform-libs\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Freeware Sys\source\repos\pancanin\LearnOpenGL\libs;D:\libs\source;C:\vslibs\glfw-3.3.7\libs;$(LibraryPath)</LibraryPath>
     <SourcePath>C:\Users\Freeware Sys\source\repos\pancanin\LearnOpenGL\libs;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,7 +123,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,11 +149,14 @@
     <ClCompile Include="src\engine\buffer\BufferSwitch.cpp" />
     <ClCompile Include="src\engine\camera\Camera.cpp" />
     <ClCompile Include="src\engine\camera\FPSCamera.cpp" />
+    <ClCompile Include="src\engine\camera\RTSCamera.cpp" />
     <ClCompile Include="src\engine\core\Graphics.cpp" />
     <ClCompile Include="src\engine\core\PhysicsSystem.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
     <ClCompile Include="src\engine\input\KeyboardInput.cpp" />
     <ClCompile Include="src\engine\input\MouseInput.cpp" />
+    <ClCompile Include="src\engine\lighting\Light.cpp" />
+    <ClCompile Include="src\engine\models\Circle.cpp" />
     <ClCompile Include="src\engine\models\Rect.cpp" />
     <ClCompile Include="src\engine\models\serialisation\CubeBufferSerialiser.cpp" />
     <ClCompile Include="src\engine\models\serialisation\LineBufferSerialiser.cpp" />
@@ -176,11 +179,14 @@
     <ClInclude Include="src\engine\buffer\BufferSwitch.h" />
     <ClInclude Include="src\engine\camera\Camera.h" />
     <ClInclude Include="src\engine\camera\FPSCamera.h" />
+    <ClInclude Include="src\engine\camera\RTSCamera.h" />
     <ClInclude Include="src\engine\core\Graphics.h" />
     <ClInclude Include="src\engine\core\PhysicsSystem.h" />
     <ClInclude Include="src\engine\Engine.h" />
     <ClInclude Include="src\engine\input\KeyboardInput.h" />
     <ClInclude Include="src\engine\input\MouseInput.h" />
+    <ClInclude Include="src\engine\lighting\Light.h" />
+    <ClInclude Include="src\engine\models\Circle.h" />
     <ClInclude Include="src\engine\models\ColorTriangle.h" />
     <ClInclude Include="src\engine\models\Line.h" />
     <ClInclude Include="src\engine\models\Object.h" />
