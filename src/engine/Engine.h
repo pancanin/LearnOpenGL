@@ -30,11 +30,12 @@ protected:
 	virtual void onUpdate() = 0;
 	virtual void onStop() = 0;
 
-	virtual void processInput();
-	virtual void onMouseMove(double xpos, double ypos);
+	virtual void processInput() = 0;
+	virtual void onMouseMove(double xpos, double ypos) = 0;
+	
 	virtual void onMouseClick(int button, int action) = 0;
 
-	void loadTexture(int textureId, const std::string& pathToTexture);
+	uint32_t loadTexture(uint32_t textureId, const std::string& pathToTexture);
 	Object& addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable);
 	Triangle& addTriangle(
 		const Point3D& p1,
@@ -63,8 +64,6 @@ protected:
 	Point& addPoint(const Point3D& position, const Color&, float size);
 	
 	bool isKeyActioned(int keyId, int action);
-private:
-	Graphics graphics;
 protected:
 	std::shared_ptr<Camera> cam;
 	Window window;
@@ -78,7 +77,12 @@ protected:
 	Renderer renderer;
 	float width = 800;
 	float height = 600;
+
+	void configureStandardCamera();
+	void configureFPSCamera();
+	void toggleCamera();
 private:
+	Graphics graphics;
 	std::vector<TextureComponent> textures;
 	std::shared_ptr<ShaderProgram> defaultObjectShader;
 	std::shared_ptr<ShaderProgram> vertexIdxAwareShader;
@@ -107,8 +111,6 @@ private:
 		float rotationAngle,
 		int textureId,
 		bool isIntersectable);
-
-	void configureStandardCamera();
-	void configureFPSCamera();
-	void toggleCamera();
+	void _processInput();
+	void _onMouseMove(double xpos, double ypos);
 };

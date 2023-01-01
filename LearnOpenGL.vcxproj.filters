@@ -32,6 +32,7 @@
     <ClCompile Include="src\opengl\vao\VertexArrayObject.cpp" />
     <ClCompile Include="src\opengl\vbo\VertexBufferObject.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="examples\ballkek\Ballkek.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="examples\pleven-mafia-wars\Chistkata.h" />
@@ -74,6 +75,9 @@
     <ClInclude Include="src\opengl\vao\VertexArrayObject.h" />
     <ClInclude Include="src\opengl\vbo\VertexBufferObject.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="src\engine\models\DrawingData.h" />
+    <ClInclude Include="src\engine\models\Rect2D.h" />
+    <ClInclude Include="examples\ballkek\Ballkek.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

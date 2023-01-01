@@ -3,14 +3,15 @@
 #include <cstdint>
 
 #include "TypeDefs.h"
-#include "Triangle.h"
+#include "../../opengl/shader/ShaderProgram.h"
+#include "DrawingData.h"
 
-struct Rect : Triangle {
+struct Rect {
 	Rect(
-		const Point3D&,
-		const Point3D&,
-		const Point3D&,
-		const Point3D&,
+		const Point3D& topLeft,
+		const Point3D& topRight,
+		const Point3D& bottomRight,
+		const Point3D& bottomLeft,
 		const Vector3D& scale,
 		unsigned int textureId,
 		std::shared_ptr<ShaderProgram>,
@@ -18,8 +19,12 @@ struct Rect : Triangle {
 		);
 	Rect() = default;
 
-	Point3D p4;
-	uint32_t textureScale;
+	Point3D topLeft;
+	Point3D topRight;
+	Point3D bottomRight;
+	Point3D bottomLeft;
+	Point3D scale;
+	DrawingData drawingData;
 
 	static const unsigned int verticesPerRect;
 };

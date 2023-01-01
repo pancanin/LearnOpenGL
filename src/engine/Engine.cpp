@@ -41,7 +41,7 @@ void Engine::init()
 
 	mouseIn.init(
 		window,
-		std::bind(&Engine::onMouseMove, this, std::placeholders::_1, std::placeholders::_2),
+		std::bind(&Engine::_onMouseMove, this, std::placeholders::_1, std::placeholders::_2),
 		std::bind(&Engine::onMouseClick, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
@@ -89,7 +89,7 @@ void Engine::start()
 	while (!window.shouldClose()) {
 		auto t0 = Clock::now();
 
-		processInput();
+		_processInput();
 		window.clear();
 
 		for (TextureComponent& tex : textures) {
@@ -135,39 +135,45 @@ bool Engine::isKeyActioned(int keyId, int action)
 	return glfwGetKey(window.getRaw(), keyId) == action;
 }
 
-void Engine::processInput()
+void Engine::_processInput()
 {
 	if (isFPSCamera) {
 		auto fpsCam = static_cast<FPSCamera*>(cam.get());
 
 		if (isKeyActioned(GLFW_KEY_W, GLFW_PRESS))
 			fpsCam->moveForward();
-		else if (isKeyActioned(GLFW_KEY_S, GLFW_PRESS))
+		if (isKeyActioned(GLFW_KEY_S, GLFW_PRESS))
 			fpsCam->moveBackward();
-		else if (isKeyActioned(GLFW_KEY_A, GLFW_PRESS))
+		if (isKeyActioned(GLFW_KEY_A, GLFW_PRESS))
 			fpsCam->moveLeft();
-		else if (isKeyActioned(GLFW_KEY_D, GLFW_PRESS))
+		if (isKeyActioned(GLFW_KEY_D, GLFW_PRESS))
 			fpsCam->moveRight();
 	}
 
 	if (isKeyActioned(GLFW_KEY_ESCAPE, GLFW_PRESS))
 		window.close();
+
+	processInput();
 }
 
-void Engine::onMouseMove(double xpos, double ypos)
+void Engine::_onMouseMove(double xpos, double ypos)
 {
 	if (isFPSCamera) {
 		static_cast<FPSCamera*>(cam.get())->onMouseMove(xpos, ypos);
 	}
+
+	onMouseMove(xpos, ypos);
 }
 
-void Engine::loadTexture(int textureId, const std::string& pathToTexture)
+uint32_t Engine::loadTexture(uint32_t textureId, const std::string& pathToTexture)
 {
 	TextureComponent texture;
 	texture.init(textureId);
 	texture.load(pathToTexture);
 	texture.bind();
 	textures.push_back(texture);
+
+	return textureId - GL_TEXTURE0;
 }
 
 void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos)
@@ -176,7 +182,7 @@ void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos
 		static_cast<FPSCamera*>(engine.cam.get())->onMouseMove(xpos, ypos);
 	}
 
-	engine.onMouseMove(xpos, ypos);
+	engine._onMouseMove(xpos, ypos);
 }
 
 void key_callback(Engine& engine, GLFWwindow* window, int key, int scancode, int action, int mods)

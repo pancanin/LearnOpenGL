@@ -1,0 +1,6 @@
+#ifndef ENGINE_MODELS_RECT2D
+#define ENGINE_MODELS_RECT2D
+
+struct Rect2D {};
+
+#endif // !ENGINE_MODELS_RECT2D

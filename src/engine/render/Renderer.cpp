@@ -91,24 +91,24 @@ void Renderer::render(const Camera& camera, const Triangle& triangle)
 
 void Renderer::render(const Camera& camera, const Rect& rect)
 {
-	rect.shader->use();
+	auto shader = rect.drawingData.shaderProgramPtr;
+	shader->use();
 
 	std::shared_ptr<BufferSerialiser> bufferSerPtr = bufferSwitch.switchBuffer(ObjectType::RECT);
 
 	auto model = glm::mat4(1.0f);
 
 	model = glm::scale(model, rect.scale);
-	rect.shader->setUniformMat4("model", model);
-	rect.shader->setUniformMat4("projection", camera.getProjection());
-	rect.shader->setUniformMat4("view", camera.getView());
-	rect.shader->setInt("dtexture", rect.textureUnit);
+	shader->setUniformMat4("model", model);
+	shader->setUniformMat4("projection", camera.getProjection());
+	shader->setUniformMat4("view", camera.getView());
+	shader->setInt("dtexture", rect.drawingData.textureId);
+	shader->setUniformF("textureScale", rect.drawingData.textureScale);
 
-	rect.shader->setUniformF("textureScale", rect.textureScale);
-
-	rect.shader->setUniformVec3("v1pos", rect.p1);
-	rect.shader->setUniformVec3("v2pos", rect.p2);
-	rect.shader->setUniformVec3("v3pos", rect.p3);
-	rect.shader->setUniformVec3("v4pos", rect.p4);
+	shader->setUniformVec3("v1pos", rect.topLeft);
+	shader->setUniformVec3("v2pos", rect.topRight);
+	shader->setUniformVec3("v3pos", rect.bottomRight);
+	shader->setUniformVec3("v4pos", rect.bottomLeft);
 
 	glDrawElements(GL_TRIANGLES, bufferSerPtr->indicesCount(), GL_UNSIGNED_INT, 0);
 }

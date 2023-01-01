@@ -9,6 +9,9 @@ Rect::Rect(
 	unsigned int textureId,
 	std::shared_ptr<ShaderProgram> shader,
 	uint32_t textureScale
-): Triangle(p1, p2, p3, scale, textureId, shader), p4(p4), textureScale(textureScale) {}
+): 
+	topLeft(p1), topRight(p2), bottomRight(p3), bottomLeft(p4), scale(scale),
+	drawingData(DrawingData(textureId, shader, textureScale))
+{}
 
 const unsigned int Rect::verticesPerRect = 4;

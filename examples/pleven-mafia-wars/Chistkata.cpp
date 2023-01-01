@@ -45,12 +45,10 @@ void Chistkata::onStop()
 
 void Chistkata::processInput()
 {
-	Engine::processInput();
 }
 
 void Chistkata::onMouseMove(double xpos, double ypos)
 {
-	Engine::onMouseMove(xpos, ypos);
 }
 
 void Chistkata::onMouseClick(int button, int action)
