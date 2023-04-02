@@ -16,10 +16,12 @@
 void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
 void key_callback(Engine&, GLFWwindow*, int key, int scancode, int action, int mods);
 
-void Engine::init()
+void Engine::init(uint32_t width, uint32_t height)
 {
 	graphics.init();
 	
+	this->width = width;
+	this->height = height;
 
 	window.init(width, height, "Chistkata FPS Game!", Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
@@ -30,8 +32,6 @@ void Engine::init()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
-
-	configureFPSCamera();
 
 	objects.init(100);
 	lines.init(100);
@@ -137,7 +137,7 @@ bool Engine::isKeyActioned(int keyId, int action)
 
 void Engine::_processInput()
 {
-	if (isFPSCamera) {
+	if (isFPSCamera) { // THis can be enabled runtime
 		auto fpsCam = static_cast<FPSCamera*>(cam.get());
 
 		if (isKeyActioned(GLFW_KEY_W, GLFW_PRESS))
@@ -187,10 +187,16 @@ void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos
 
 void key_callback(Engine& engine, GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_C && action == GLFW_RELEASE) {
-		std::cout << "Key released!" << std::endl;
-		engine.toggleCamera();
-	}
+}
+
+void Engine::setCamera(std::unique_ptr<Camera> cam)
+{
+	this->cam = std::move(cam);
+}
+
+void Engine::setFPS(uint32_t frameRate)
+{
+	this->fps = frameRate;
 }
 
 Object& Engine::addObject(
@@ -225,36 +231,6 @@ Object& Engine::addObject(ObjectType type, const Point3D& position, const Vector
 	object.shader = defaultObjectShader;
 
 	return objects.add(object);
-}
-
-void Engine::configureStandardCamera()
-{
-	cam = std::make_shared<Camera>();
-
-	// Configured with some standard parameters
-	// For now we will reset the position of the camera
-	cam->init(glm::radians(45.0f), width / height, 0.01f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f));
-}
-
-void Engine::configureFPSCamera()
-{
-	cam = std::make_shared<FPSCamera>();
-
-	// Configured with some standard parameters
-	// For now we will reset the position of the camera
-	cam->init(glm::radians(45.0f), width / height, 0.01f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f));
-}
-
-void Engine::toggleCamera()
-{
-	if (isFPSCamera) {
-		configureStandardCamera();
-	}
-	else {
-		configureFPSCamera();
-	}
-
-	isFPSCamera = !isFPSCamera;
 }
 
 Object& Engine::addCube(const Point3D& position, const Vector3D& scaleFactor, int textureId, bool isIntersectable)

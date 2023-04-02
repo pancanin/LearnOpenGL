@@ -1,5 +1,6 @@
 #include <memory>
 #include <string>
+#include <cstdint>
 
 #include "./core/Graphics.h"
 #include "./ui/Window.h"
@@ -24,7 +25,7 @@ struct Plane;
 class Engine {
 public:
 	void start();
-	void init();
+	void init(uint32_t width, uint32_t height);
 protected:
 	virtual void onStart() = 0;
 	virtual void onUpdate() = 0;
@@ -65,7 +66,7 @@ protected:
 	
 	bool isKeyActioned(int keyId, int action);
 protected:
-	std::shared_ptr<Camera> cam;
+	std::unique_ptr<Camera> cam;
 	Window window;
 	PhysicsSystem physics;
 	BagOf<Object> objects;
@@ -75,12 +76,12 @@ protected:
 	BagOf<Point> points;
 	MouseInput mouseIn;
 	Renderer renderer;
-	float width = 800;
-	float height = 600;
+	float width;
+	float height;
+	bool isFPSCamera = false;
 
-	void configureStandardCamera();
-	void configureFPSCamera();
-	void toggleCamera();
+	void setCamera(std::unique_ptr<Camera> cam);
+	void setFPS(uint32_t frameRate);
 private:
 	Graphics graphics;
 	std::vector<TextureComponent> textures;
@@ -88,7 +89,6 @@ private:
 	std::shared_ptr<ShaderProgram> vertexIdxAwareShader;
 	std::shared_ptr<ShaderProgram> pointShader;
 	int fps = 60;
-	bool isFPSCamera = true;
 
 	friend void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
 	friend void key_callback(Engine&, GLFWwindow*, int key, int scancode, int action, int mods);

@@ -1,8 +1,14 @@
 #include "Ballkek.h"
 
+#include "../../src/engine/camera/FPSCamera.h"
+
 void Ballkek::onStart()
 {
-	configureFPSCamera();
+	std::unique_ptr<FPSCamera> cam = std::make_unique<FPSCamera>();
+
+	cam->init(glm::radians(45.0f), width / height, 0.01f, 100.0f, Point3D(0.0f, 0.0f, -3.0f), Point3D(0.0f), width, height);
+	setCamera(std::move(cam));
+
 	auto textureId = loadTexture(GL_TEXTURE0, "assets/container.jpg");
 	auto textureId2 = loadTexture(GL_TEXTURE1, "assets/wall.jpg");
 
