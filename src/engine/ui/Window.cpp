@@ -61,11 +61,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-GLFWwindow* Window::getRaw() const 
-{
-	return window;
-}
-
 void Window::registerCursorPositionCallback(void* callback)
 {
 	glfwSetCursorPosCallback(window, static_cast<GLFWcursorposfun>(callback));
