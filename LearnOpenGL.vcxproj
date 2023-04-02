@@ -145,7 +145,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="examples\ballkek\Ballkek.cpp" />
-    <ClCompile Include="examples\pleven-mafia-wars\Chistkata.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\engine\buffer\BufferSwitch.cpp" />
@@ -178,7 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="examples\ballkek\Ballkek.h" />
-    <ClInclude Include="examples\pleven-mafia-wars\Chistkata.h" />
     <ClInclude Include="src\engine\buffer\BufferSwitch.h" />
     <ClInclude Include="src\engine\camera\Camera.h" />
     <ClInclude Include="src\engine\camera\FPSCamera.h" />
