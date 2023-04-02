@@ -90,3 +90,14 @@ void ShaderProgram::setInt(const std::string& uniformVarName, unsigned int value
 	int loc = findLocation(uniformVarName);
 	glUniform1i(findLocation(uniformVarName), value);
 }
+
+std::shared_ptr<ShaderProgram> ShaderProgram::create(const std::string& vertexShaderFilePath, const std::string& fragmentSharedFilePath)
+{
+	auto p = std::shared_ptr<ShaderProgram>();
+	p->init();
+	p->attachVertexShader(vertexShaderFilePath);
+	p->attachFragmentShader(fragmentSharedFilePath);
+	p->link();
+
+	return p;
+}

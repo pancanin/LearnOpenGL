@@ -11,7 +11,6 @@
     <ClCompile Include="src\engine\core\Graphics.cpp" />
     <ClCompile Include="src\engine\core\PhysicsSystem.cpp" />
     <ClCompile Include="src\engine\Engine.cpp" />
-    <ClCompile Include="src\engine\input\KeyboardInput.cpp" />
     <ClCompile Include="src\engine\input\MouseInput.cpp" />
     <ClCompile Include="src\engine\lighting\Light.cpp" />
     <ClCompile Include="src\engine\models\Circle.cpp" />
@@ -43,7 +42,6 @@
     <ClInclude Include="src\engine\core\Graphics.h" />
     <ClInclude Include="src\engine\core\PhysicsSystem.h" />
     <ClInclude Include="src\engine\Engine.h" />
-    <ClInclude Include="src\engine\input\KeyboardInput.h" />
     <ClInclude Include="src\engine\input\MouseInput.h" />
     <ClInclude Include="src\engine\lighting\Light.h" />
     <ClInclude Include="src\engine\models\Circle.h" />
@@ -78,6 +76,7 @@
     <ClInclude Include="src\engine\models\DrawingData.h" />
     <ClInclude Include="src\engine\models\Rect2D.h" />
     <ClInclude Include="examples\ballkek\Ballkek.h" />
+    <ClInclude Include="src\engine\Constants.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

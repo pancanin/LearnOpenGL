@@ -86,6 +86,11 @@ void Window::registerKeyCallback(void* callback)
 	glfwSetKeyCallback(window, static_cast<GLFWkeyfun>(callback));
 }
 
+bool Window::isKeyActioned(int keyId, int action)
+{
+	return glfwGetKey(window, keyId) == action;
+}
+
 void Window::deinit() const
 {
 	if (window != nullptr) {

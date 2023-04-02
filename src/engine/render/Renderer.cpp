@@ -12,6 +12,7 @@
 #include "../models/Rect.h"
 #include "../models/Point.h"
 #include "../../opengl/shader/ShaderProgram.h"
+#include "../Constants.h"
 
 void Renderer::init()
 {
@@ -105,7 +106,7 @@ void Renderer::render(const Camera& camera, const Rect& rect)
 	shader->setInt("dtexture", rect.drawingData.textureId);
 	shader->setUniformF("textureScale", rect.drawingData.textureScale);
 
-	shader->setUniformVec3("v1pos", rect.topLeft);
+	shader->setUniformVec3(Constants::SHADER_VERTEX_1_POS, rect.topLeft);
 	shader->setUniformVec3("v2pos", rect.topRight);
 	shader->setUniformVec3("v3pos", rect.bottomRight);
 	shader->setUniformVec3("v4pos", rect.bottomLeft);

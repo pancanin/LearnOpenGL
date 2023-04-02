@@ -6,7 +6,6 @@
 #include "./ui/Window.h"
 #include "./models/TypeDefs.h"
 #include "../opengl/shader/ShaderProgram.h"
-#include "./input/KeyboardInput.h"
 #include "./camera/FPSCamera.h"
 #include "./core/PhysicsSystem.h"
 #include "./storage/BagOf.h"
@@ -25,7 +24,7 @@ struct Plane;
 class Engine {
 public:
 	void start();
-	void init(uint32_t width, uint32_t height);
+	void init(uint32_t width, uint32_t height, const std::string& title);
 protected:
 	virtual void onStart() = 0;
 	virtual void onUpdate() = 0;
@@ -63,8 +62,6 @@ protected:
 		uint32_t textureScale,
 		bool isIntersectable);
 	Point& addPoint(const Point3D& position, const Color&, float size);
-	
-	bool isKeyActioned(int keyId, int action);
 protected:
 	std::unique_ptr<Camera> cam;
 	Window window;

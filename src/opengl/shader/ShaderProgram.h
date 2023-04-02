@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <memory>
 
 #include "../../../libs//glm/glm.hpp"
 #include "../../../libs/glm/gtc/matrix_transform.hpp"
@@ -28,6 +29,9 @@ public:
 	void setUniformVec3(const std::string& uniformVarName, const glm::vec3& value) const;
 	void setUniformF(const std::string& uniformVarName, float value) const;
 	void setInt(const std::string& uniformVarName, unsigned int value) const;
+
+	static std::shared_ptr<ShaderProgram> create(const std::string& vertexShaderFilePath,
+		const std::string& fragmentSharedFilePath);
 private:
 	ShaderLoader shaderLoader;
 	unsigned int shaderProgram;

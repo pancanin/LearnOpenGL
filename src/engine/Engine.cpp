@@ -16,14 +16,14 @@
 void mouse_callback(Engine& engine, GLFWwindow* window, double xpos, double ypos);
 void key_callback(Engine&, GLFWwindow*, int key, int scancode, int action, int mods);
 
-void Engine::init(uint32_t width, uint32_t height)
+void Engine::init(uint32_t width, uint32_t height, const std::string& title)
 {
 	graphics.init();
 	
 	this->width = width;
 	this->height = height;
 
-	window.init(width, height, "Chistkata FPS Game!", Color(0.2f, 0.2f, 0.2f, 1.0f));
+	window.init(width, height, title, Color(0.2f, 0.2f, 0.2f, 1.0f));
 	window.makeActive();
 	window.disableCursor();
 
@@ -32,6 +32,9 @@ void Engine::init(uint32_t width, uint32_t height)
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
+
+	// Do not move this call from here - everything will break!
+	graphics.configure();
 
 	objects.init(100);
 	lines.init(100);
@@ -54,35 +57,14 @@ void Engine::init(uint32_t width, uint32_t height)
 
 	renderer.init();
 
-	defaultObjectShader = std::make_shared<ShaderProgram>();
-	defaultObjectShader->init();
-	defaultObjectShader->attachVertexShader("src/engine/shaders/default_vertex");
-	defaultObjectShader->attachFragmentShader("src/engine/shaders/default_fragment");
-	defaultObjectShader->link();
-
-	vertexIdxAwareShader = std::make_shared<ShaderProgram>();
-	vertexIdxAwareShader->init();
-	vertexIdxAwareShader->attachVertexShader("src/engine/shaders/vertex_index_aware_vertex_shader");
-	vertexIdxAwareShader->attachFragmentShader("src/engine/shaders/default_fragment");
-	vertexIdxAwareShader->link();
-
-	pointShader = std::make_shared<ShaderProgram>();
-	pointShader->init();
-	pointShader->attachVertexShader("src/engine/shaders/point_vs");
-	pointShader->attachFragmentShader("src/engine/shaders/point_fs");
-	pointShader->link();
+	defaultObjectShader = ShaderProgram::create("src/engine/shaders/default_vertex", "src/engine/shaders/default_fragment");
+	vertexIdxAwareShader = ShaderProgram::create("src/engine/shaders/vertex_index_aware_vertex_shader", "src/engine/shaders/default_fragment");
+	pointShader = ShaderProgram::create("src/engine/shaders/point_vs", "src/engine/shaders/point_fs");
 }
 
 void Engine::start()
 {
 	onStart();
-
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glEnable(GL_PROGRAM_POINT_SIZE);
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	typedef std::chrono::high_resolution_clock Clock;
 
@@ -130,27 +112,22 @@ void Engine::start()
 	}
 }
 
-bool Engine::isKeyActioned(int keyId, int action)
-{
-	return glfwGetKey(window.getRaw(), keyId) == action;
-}
-
 void Engine::_processInput()
 {
-	if (isFPSCamera) { // THis can be enabled runtime
+	if (isFPSCamera) { // THis can be enabled at compile time
 		auto fpsCam = static_cast<FPSCamera*>(cam.get());
 
-		if (isKeyActioned(GLFW_KEY_W, GLFW_PRESS))
+		if (window.isKeyActioned(GLFW_KEY_W, GLFW_PRESS))
 			fpsCam->moveForward();
-		if (isKeyActioned(GLFW_KEY_S, GLFW_PRESS))
+		if (window.isKeyActioned(GLFW_KEY_S, GLFW_PRESS))
 			fpsCam->moveBackward();
-		if (isKeyActioned(GLFW_KEY_A, GLFW_PRESS))
+		if (window.isKeyActioned(GLFW_KEY_A, GLFW_PRESS))
 			fpsCam->moveLeft();
-		if (isKeyActioned(GLFW_KEY_D, GLFW_PRESS))
+		if (window.isKeyActioned(GLFW_KEY_D, GLFW_PRESS))
 			fpsCam->moveRight();
 	}
 
-	if (isKeyActioned(GLFW_KEY_ESCAPE, GLFW_PRESS))
+	if (window.isKeyActioned(GLFW_KEY_ESCAPE, GLFW_PRESS))
 		window.close();
 
 	processInput();

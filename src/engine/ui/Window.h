@@ -26,6 +26,7 @@ public:
 	void registerMouseButtonCallback(void* callback);
 	void registerScrollCallback(void* callback);
 	void registerKeyCallback(void* callback);
+	bool isKeyActioned(int keyId, int action);
 
 	int getWidth() const { return width; }
 	int getHeight() const { return height; }
