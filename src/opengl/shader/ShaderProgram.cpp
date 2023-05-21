@@ -93,7 +93,7 @@ void ShaderProgram::setInt(const std::string& uniformVarName, unsigned int value
 
 std::shared_ptr<ShaderProgram> ShaderProgram::create(const std::string& vertexShaderFilePath, const std::string& fragmentSharedFilePath)
 {
-	auto p = std::shared_ptr<ShaderProgram>();
+	auto p = std::make_shared<ShaderProgram>();
 	p->init();
 	p->attachVertexShader(vertexShaderFilePath);
 	p->attachFragmentShader(fragmentSharedFilePath);
